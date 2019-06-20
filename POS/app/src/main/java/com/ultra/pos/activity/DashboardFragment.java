@@ -1,5 +1,6 @@
 package com.ultra.pos.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,7 +18,6 @@ import com.ultra.pos.adapter.AdapterPilihProduk;
 import com.ultra.pos.model.ProdukModel;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class DashboardFragment extends Fragment {
@@ -26,7 +26,8 @@ public class DashboardFragment extends Fragment {
     RecyclerView recProduk;
     private List<ProdukModel> dataProduk;
     private AdapterPilihProduk adapter;
-    LinearLayout linearLihatPesanan;
+    LinearLayout linearLihatPesanan, linearBukaPelanggan;
+    boolean status = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -42,6 +43,11 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         linearLihatPesanan = view.findViewById(R.id.llDashboardLihatPesanan);
+        linearBukaPelanggan = view.findViewById(R.id.llDashboardBukaPelanggan);
+
+        linearBukaPelanggan.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), PelangganActivity.class));
+        });
 
         dataProduk = new ArrayList<>();
         dataProduk.clear();
@@ -63,15 +69,6 @@ public class DashboardFragment extends Fragment {
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.animation_slide_from_right);
         recProduk.setLayoutAnimation(animation);
         adapter.notifyDataSetChanged();
-
-        view.setOnClickListener(v -> {
-            view.setClickable(true);
-            if (!view.isClickable()){
-                linearLihatPesanan.setVisibility(View.GONE);
-            } else{
-                linearLihatPesanan.setVisibility(View.VISIBLE);
-            }
-        });
 
     }
 }

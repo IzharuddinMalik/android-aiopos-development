@@ -28,20 +28,31 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
         ImageView gambarProduk;
         TextView namaProduk, hargaProduk;
         EditText inputJumlahProduk;
+        LinearLayout llDashboardLihatPesanan;
 
-        public ProdukViewHolder(View view){
+        public ProdukViewHolder(View view, View view2){
             super(view);
 
             gambarProduk = view.findViewById(R.id.ivDashboardGambarProduk);
             namaProduk = view.findViewById(R.id.tvDashboardNamaProduk);
             hargaProduk = view.findViewById(R.id.tvDashboardHargaProduk);
             inputJumlahProduk = view.findViewById(R.id.edtDashboardJumlahProduk);
+            llDashboardLihatPesanan = view2.findViewById(R.id.llDashboardLihatPesanan);
+
+            inputJumlahProduk.setOnClickListener(v -> {
+                if (!v.isClickable()){
+                    this.llDashboardLihatPesanan.setVisibility(View.VISIBLE);
+                }else{
+                    this.llDashboardLihatPesanan.setVisibility(View.GONE);
+                }
+            });
 
             stylingUtils.robotoRegularTextview(mCtx, namaProduk);
             stylingUtils.robotoRegularTextview(mCtx, hargaProduk);
             stylingUtils.robotoRegularEdittext(mCtx, inputJumlahProduk);
         }
     }
+
 
     public AdapterPilihProduk(Context context, List<ProdukModel> listProduk){
         this.mCtx = context;
@@ -52,8 +63,9 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
     public ProdukViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.inflater_list_fragment_dashboard, parent, false);
+        View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dashboard, parent, false);
 
-        return new ProdukViewHolder(viewItem);
+        return new ProdukViewHolder(viewItem, view2);
     }
 
     public void onBindViewHolder(final ProdukViewHolder holder, final int position){

@@ -38,7 +38,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/llDashboardLihatPesanan"
         android:orientation="horizontal"
-        android:background="@color/colorBlueBasic">
+        android:background="@color/colorBlueBasic"
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
