@@ -21,15 +21,15 @@ public class PelangganModel implements Serializable {
 
     @SerializedName("")
     @Expose
-    private String idProvince;
+    private String namaProvinsi;
 
     @SerializedName("")
     @Expose
-    private String idRegencies;
+    private String namaKabKota;
 
     @SerializedName("")
     @Expose
-    private String idDistrict;
+    private String namaKecamatan;
 
     @SerializedName("")
     @Expose
@@ -47,14 +47,14 @@ public class PelangganModel implements Serializable {
     @Expose
     private String telpPelanggan2;
 
-    public PelangganModel(String idPelanggan, String idBusiness, String idOutlet, String idProvince, String idRegencies, String idDistrict,
+    public PelangganModel(String idPelanggan, String idBusiness, String idOutlet, String namaProvinsi, String namaKabKota, String namaKecamatan,
                           String namaPelanggan, String emailPelanggan, String telpPelanggan, String telpPelanggan2){
         this.idPelanggan = idPelanggan;
         this.idBusiness = idBusiness;
         this.idOutlet = idOutlet;
-        this.idProvince = idProvince;
-        this.idRegencies = idRegencies;
-        this.idDistrict = idDistrict;
+        this.namaProvinsi = namaProvinsi;
+        this.namaKabKota = namaKabKota;
+        this.namaKecamatan = namaKecamatan;
         this.namaPelanggan = namaPelanggan;
         this.emailPelanggan = emailPelanggan;
         this.telpPelanggan = telpPelanggan;
@@ -73,16 +73,16 @@ public class PelangganModel implements Serializable {
         this.idOutlet = idOutlet;
     }
 
-    public void setIdProvince(String idProvince) {
-        this.idProvince = idProvince;
+    public void setNamaProvinsi(String namaProvinsi) {
+        this.namaProvinsi = namaProvinsi;
     }
 
-    public void setIdRegencies(String idRegencies) {
-        this.idRegencies = idRegencies;
+    public void setNamaKabKota(String namaKabKota) {
+        this.namaKabKota = namaKabKota;
     }
 
-    public void setIdDistrict(String idDistrict) {
-        this.idDistrict = idDistrict;
+    public void setNamaKecamatan(String namaKecamatan) {
+        this.namaKecamatan = namaKecamatan;
     }
 
     public void setNamaPelanggan(String namaPelanggan) {
@@ -113,16 +113,16 @@ public class PelangganModel implements Serializable {
         return idOutlet;
     }
 
-    public String getIdProvince() {
-        return idProvince;
+    public String getNamaKabKota() {
+        return namaKabKota;
     }
 
-    public String getIdRegencies() {
-        return idRegencies;
+    public String getNamaKecamatan() {
+        return namaKecamatan;
     }
 
-    public String getIdDistrict() {
-        return idDistrict;
+    public String getNamaProvinsi() {
+        return namaProvinsi;
     }
 
     public String getNamaPelanggan() {

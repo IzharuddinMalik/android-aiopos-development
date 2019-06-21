@@ -9,9 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PelangganActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+        <activity android:name=".activity.DetailPelangganActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.EditPelangganActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.AddPelangganActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PelangganActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activity.Dashboard"
             android:label="@string/title_activity_dashboard"
