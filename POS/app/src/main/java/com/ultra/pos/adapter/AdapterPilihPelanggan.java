@@ -1,6 +1,7 @@
 package com.ultra.pos.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.ultra.pos.R;
+import com.ultra.pos.activity.DetailPelangganActivity;
 import com.ultra.pos.model.PelangganModel;
 import com.ultra.pos.util.StylingUtils;
 
@@ -35,6 +37,21 @@ public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPela
             listNamaPelanggan = view.findViewById(R.id.tvMenuPelangganListNamaPelanggan);
             listNoTelpPelanggan = view.findViewById(R.id.tvMenuPelangganListNoTelpPelanggan);
             listEmailPelanggan = view.findViewById(R.id.tvMenuPelangganListEmailPelanggan);
+
+            view.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION){
+                    Intent intent = new Intent(view.getContext(), DetailPelangganActivity.class);
+                    intent.putExtra("namaPelanggan", listPelanggan.get(position).getNamaPelanggan());
+                    intent.putExtra("noHp", listPelanggan.get(position).getTelpPelanggan());
+                    intent.putExtra("emailPelanggan", listPelanggan.get(position).getEmailPelanggan());
+                    intent.putExtra("namaProvinsi", listPelanggan.get(position).getNamaProvinsi());
+                    intent.putExtra("namaKabKot", listPelanggan.get(position).getNamaKabKota());
+                    intent.putExtra("namaKecamatan", listPelanggan.get(position).getNamaKecamatan());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(intent);
+                }
+            });
 
             stylingUtils.robotoRegularTextview(mCtx, listNamaPelanggan);
             stylingUtils.robotoRegularTextview(mCtx, listNoTelpPelanggan);
