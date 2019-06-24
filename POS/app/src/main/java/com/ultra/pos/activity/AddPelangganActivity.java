@@ -1,11 +1,13 @@
 package com.ultra.pos.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 
 import com.ultra.pos.R;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class AddPelangganActivity extends AppCompatActivity {
 
     AutoCompleteTextView actvProvinsiPelanggan, actvKabupatenPelanggan, actvKecamatanPelanggan;
+    ImageView ivAddPelangganBtnKembali;
     String[] provinsi = {"Aceh", "Sumatera Utara", "Sumatera Barat", "Sumatera Selatan", "Lampung", "Riau", "Banten", "DKI Jakarta",
             "Jawa Barat", "DI Yogyakarta", "Jawa Tengah", "Jawa Timur"};
     String[] kabupaten = {"Nanggroe Aceh Darussalam", "Medan", "Padang", "Palembang", "Lampung", "Pekanbaru", "Tangerang", "Jakarta Pusat",
@@ -38,5 +41,14 @@ public class AddPelangganActivity extends AppCompatActivity {
         actvKecamatanPelanggan = findViewById(R.id.actvMenuTambahPelangganKecamatanPelanggan);
         actvKecamatanPelanggan.setThreshold(1);
         actvKecamatanPelanggan.setAdapter(adapter2);
+
+        ivAddPelangganBtnKembali = findViewById(R.id.ivMenuTambahPelangganArrowBack);
+        ivAddPelangganBtnKembali.setOnClickListener(v -> {
+            startActivity(new Intent(this, PelangganActivity.class));
+        });
+    }
+
+    public void onBackPressed(){
+        startActivity(new Intent(this, PelangganActivity.class));
     }
 }

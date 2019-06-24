@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.TabAdapter;
@@ -24,6 +25,7 @@ public class Dashboard extends AppCompatActivity
     TabAdapter adapter;
     ViewPager viewPager;
     ImageView ivKeranjang;
+    int backpress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +65,11 @@ public class Dashboard extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        backpress = (backpress + 1);
+        Toast.makeText(this, "Tekan Tombol Sekali Lagi", Toast.LENGTH_SHORT).show();
+
+        if (backpress > 1){
+            this.finishAndRemoveTask();
         }
     }
 

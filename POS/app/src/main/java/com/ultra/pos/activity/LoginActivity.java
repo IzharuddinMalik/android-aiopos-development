@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> {
             startActivity(new Intent(this, Dashboard.class));
+            finish();
         });
     }
 }

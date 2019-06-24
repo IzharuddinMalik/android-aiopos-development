@@ -73,4 +73,8 @@ public class PelangganActivity extends AppCompatActivity {
         recPelanggan.setLayoutAnimation(animation);
         adapter.notifyDataSetChanged();
     }
+
+    public void onBackPressed(){
+        startActivity(new Intent(this, Dashboard.class));
+    }
 }

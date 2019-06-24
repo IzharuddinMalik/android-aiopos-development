@@ -1,15 +1,18 @@
 package com.ultra.pos.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 
 import com.ultra.pos.R;
 
 public class EditPelangganActivity extends AppCompatActivity {
 
     AutoCompleteTextView actvEditProvinsiPelanggan, actvEditKabupatenPelanggan, actvEditKecamatanPelanggan;
+    ImageView ivEditBtnKembali;
     String[] provinsi = {"Aceh", "Sumatera Utara", "Sumatera Barat", "Sumatera Selatan", "Lampung", "Riau", "Banten", "DKI Jakarta",
             "Jawa Barat", "DI Yogyakarta", "Jawa Tengah", "Jawa Timur"};
     String[] kabupaten = {"Nanggroe Aceh Darussalam", "Medan", "Padang", "Palembang", "Lampung", "Pekanbaru", "Tangerang", "Jakarta Pusat",
@@ -34,5 +37,14 @@ public class EditPelangganActivity extends AppCompatActivity {
         actvEditKecamatanPelanggan = findViewById(R.id.actvMenuEditPelangganKecamatanPelanggan);
         actvEditKecamatanPelanggan.setThreshold(1);
         actvEditKecamatanPelanggan.setAdapter(adapter2);
+
+        ivEditBtnKembali = findViewById(R.id.ivMenuEdtiPelangganArrowBack);
+        ivEditBtnKembali.setOnClickListener(v -> {
+            startActivity(new Intent(this, DetailPelangganActivity.class));
+        });
+    }
+
+    public void onBackPressed(){
+        startActivity(new Intent(this, DetailPelangganActivity.class));
     }
 }
