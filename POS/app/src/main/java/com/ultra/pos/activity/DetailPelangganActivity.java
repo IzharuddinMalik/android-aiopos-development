@@ -33,6 +33,7 @@ public class DetailPelangganActivity extends AppCompatActivity {
         tvDetailNamaProvPelanggan.setText(getIntent().getStringExtra("namaProvinsi"));
         tvDetailNamaKabKotPelanggan.setText(getIntent().getStringExtra("namaKabKot"));
         tvDetailNamaKecPelanggan.setText(getIntent().getStringExtra("namaKecamatan"));
+
         ivDetailBtnEditPelanggan.setOnClickListener(v -> {
             startActivity(new Intent(this, EditPelangganActivity.class));
         });

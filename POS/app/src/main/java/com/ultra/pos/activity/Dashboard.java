@@ -1,5 +1,6 @@
 package com.ultra.pos.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -69,7 +70,7 @@ public class Dashboard extends AppCompatActivity
         Toast.makeText(this, "Tekan Tombol Sekali Lagi", Toast.LENGTH_SHORT).show();
 
         if (backpress > 1){
-            this.finishAndRemoveTask();
+            finish();
         }
     }
 
@@ -85,7 +86,8 @@ public class Dashboard extends AppCompatActivity
         } else if (id == R.id.nav_transhistory) {
 
         } else if (id == R.id.nav_shiftkerja) {
-
+            startActivity(new Intent(this, ShiftActivity.class));
+            finish();
         } else if (id == R.id.nav_pengaturan) {
 
         }

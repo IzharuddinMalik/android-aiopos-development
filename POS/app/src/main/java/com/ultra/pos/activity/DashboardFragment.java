@@ -26,6 +26,7 @@ public class DashboardFragment extends Fragment {
     RecyclerView recProduk;
     private List<ProdukModel> dataProduk;
     private AdapterPilihProduk adapter;
+    public static final String API_Produk = "http://pos.ultrapreneur.id/produk_get_kategori.php";
     LinearLayout linearLihatPesanan, linearBukaPelanggan;
     boolean status = false;
 
