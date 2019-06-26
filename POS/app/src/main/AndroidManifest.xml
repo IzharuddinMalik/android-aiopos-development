@@ -12,7 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.ShiftSaatIniActivity"></activity>
+        <activity android:name=".activity.DetailShiftActivity"></activity>
+        <activity android:name=".activity.ShiftHistoryActivity" />
+        <activity android:name=".activity.ShiftOtomatisActivity" />
+        <activity android:name=".activity.ShiftBerakhirLastActivity" />
+        <activity android:name=".activity.ShiftBerakhirActivity" />
+        <activity android:name=".activity.ShiftSaatIniActivity" />
         <activity
             android:name=".activity.PilihanShiftActivity"
             android:theme="@style/AppTheme.NoActionBar" />

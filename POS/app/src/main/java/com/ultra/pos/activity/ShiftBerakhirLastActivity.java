@@ -7,20 +7,21 @@ import android.view.View;
 
 import com.ultra.pos.R;
 
-public class ShiftSaatIniActivity extends AppCompatActivity {
+public class ShiftBerakhirLastActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shift_saat_ini);
+        setContentView(R.layout.activity_shift_berakhir_last);
     }
 
     public void akhiri(View view){
-        startActivity(new Intent(this, ShiftBerakhirActivity.class));
+        startActivity(new Intent(this, ShiftOtomatisActivity.class));
         finish();
     }
 
-    public void back(View view){
-        startActivity(new Intent(this, ShiftActivity.class));
+    @Override
+    public void onBackPressed() {
+
     }
 }

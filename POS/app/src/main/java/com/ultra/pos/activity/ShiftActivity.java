@@ -38,12 +38,14 @@ public class ShiftActivity extends AppCompatActivity
 
     public void pilihan_shift(View view){
         startActivity(new Intent(this, PilihanShiftActivity.class));
-        finish();
     }
     public void shift_saat_ini(View view){
         startActivity(new Intent(this, ShiftSaatIniActivity.class));
-        finish();
     }
+    public void history_shift(View view){
+        startActivity(new Intent(this, ShiftHistoryActivity.class));
+    }
+
 
     @Override
     public void onBackPressed() {
