@@ -82,14 +82,16 @@ public class Dashboard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_transaksi) {
-            // Handle the camera action
+            startActivity(new Intent(this, Dashboard.class));
+            finish();
         } else if (id == R.id.nav_transhistory) {
 
         } else if (id == R.id.nav_shiftkerja) {
             startActivity(new Intent(this, ShiftActivity.class));
             finish();
         } else if (id == R.id.nav_pengaturan) {
-
+            startActivity(new Intent(this, PengaturanActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

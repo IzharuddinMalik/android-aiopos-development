@@ -1,5 +1,6 @@
 package com.ultra.pos.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -49,5 +50,10 @@ public class ShiftHistoryActivity extends AppCompatActivity {
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.animation_slide_from_right);
         recHistory.setLayoutAnimation(animation);
         adapter.notifyDataSetChanged();
+    }
+
+    public void back(View view){
+        startActivity(new Intent(this, ShiftActivity.class));
+        finish();
     }
 }

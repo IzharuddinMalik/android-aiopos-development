@@ -11,50 +11,44 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.ultra.pos.R;
 
-public class ShiftActivity extends AppCompatActivity
+public class PengaturanActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    int backpress;
-
+    LinearLayout llProfilAkun,llPrinter,llBantuan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shift);
-        Toolbar toolbar = findViewById(R.id.shift_toolbar);
+        setContentView(R.layout.activity_pengaturan);
+        Toolbar toolbar = findViewById(R.id.pengaturan_toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_shift_layout);
-        NavigationView navigationView = findViewById(R.id.nav_shift_view);
+        DrawerLayout drawer = findViewById(R.id.drawer_pengaturan_layout);
+        NavigationView navigationView = findViewById(R.id.nav_pengaturan_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
-    public void pilihan_shift(View view){
-        startActivity(new Intent(this, PilihanShiftActivity.class));
-    }
-    public void shift_saat_ini(View view){
-        startActivity(new Intent(this, ShiftSaatIniActivity.class));
-    }
-    public void history_shift(View view){
-        startActivity(new Intent(this, ShiftHistoryActivity.class));
-    }
+        llProfilAkun=findViewById(R.id.llProfilAkun);
+        llPrinter=findViewById(R.id.llPrinter);
+        llBantuan=findViewById(R.id.llBantuan);
 
+        llProfilAkun.setOnClickListener(v -> {
+            startActivity(new Intent(this, ProfilActivity.class));
+        });
 
-    @Override
-    public void onBackPressed() {
-        backpress = (backpress + 1);
-        Toast.makeText(this, "Tekan Tombol Sekali Lagi", Toast.LENGTH_SHORT).show();
+        llPrinter.setOnClickListener(v -> {
+            startActivity(new Intent(this, PrinterActivity.class));
+        });
 
-        if (backpress > 1){
-            finish();
-        }
+        llBantuan.setOnClickListener(v -> {
+            startActivity(new Intent(this, BantuanActivity.class));
+        });
     }
 
     @Override
