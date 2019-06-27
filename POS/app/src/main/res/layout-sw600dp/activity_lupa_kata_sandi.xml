@@ -9,14 +9,11 @@
     android:gravity="center"
     android:background="#ffffff">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvNamaLogoLupaKataSandi"
-        android:text="UltraPOS"
-        android:textColor="@color/colorBlueBasic"
-        android:textStyle="bold"
-        android:textSize="@dimen/_48ssp"/>
+    <ImageView
+        android:id="@+id/ivLogoAIO"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:src="@drawable/logopos" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -38,17 +38,8 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
             hargaProduk = view.findViewById(R.id.tvDashboardHargaProduk);
             inputJumlahProduk = view.findViewById(R.id.edtDashboardJumlahProduk);
 
-            inputJumlahProduk.setOnClickListener(v -> {
-                if (!v.isClickable()){
-                    this.llDashboardLihatPesanan.setVisibility(View.VISIBLE);
-                }else{
-                    this.llDashboardLihatPesanan.setVisibility(View.GONE);
-                }
-            });
-
             stylingUtils.robotoRegularTextview(mCtx, namaProduk);
             stylingUtils.robotoRegularTextview(mCtx, hargaProduk);
-            stylingUtils.robotoRegularEdittext(mCtx, inputJumlahProduk);
         }
     }
 

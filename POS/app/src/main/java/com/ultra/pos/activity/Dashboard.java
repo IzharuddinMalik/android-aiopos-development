@@ -1,12 +1,16 @@
 package com.ultra.pos.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
@@ -71,22 +75,35 @@ public class Dashboard extends AppCompatActivity
             tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
         }
 
-        ivSearch = findViewById(R.id.ivDashboardGambarSearch);
-        svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
-
-        ivSearch.setOnClickListener(v -> {
-            while (status == false){
-                svNamaProduk.setVisibility(View.GONE);
-            }
-        });
-
         llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
         llDashboardBukaPelanggan.setOnClickListener(v -> {
             startActivity(new Intent(this, PelangganActivity.class));
         });
 
-        ivOptionMenu = findViewById(R.id.ivDashboardMenuOptions);
-        ivOptionMenu.setOnClickListener(this::onClickRight);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        Log.d("Width", "" + width);
+        Log.d("height", "" + height);
+
+        if (width >= 1920 && height >= 1200){
+            ivSearch = findViewById(R.id.ivDashboardGambarSearch);
+            svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
+
+            ivSearch.setOnClickListener(v -> {
+                while (status == false){
+                    svNamaProduk.setVisibility(View.GONE);
+                }
+            });
+            ivOptionMenu = findViewById(R.id.ivDashboardMenuOptions);
+            ivOptionMenu.setOnClickListener(this::onClickRight);
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void onClickRight(View view) {
