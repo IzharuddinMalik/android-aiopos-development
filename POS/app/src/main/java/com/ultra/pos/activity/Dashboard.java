@@ -7,13 +7,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.ultra.pos.R;
@@ -25,8 +29,11 @@ public class Dashboard extends AppCompatActivity
     TabLayout tabLayout;
     TabAdapter adapter;
     ViewPager viewPager;
-    ImageView ivKeranjang;
+    ImageView ivKeranjang, ivOptionMenu, ivSearch;
+    LinearLayout llDashboardBukaPelanggan;
+    SearchView svNamaProduk;
     int backpress;
+    Boolean status = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,33 @@ public class Dashboard extends AppCompatActivity
         }else{
             tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
         }
+
+        ivSearch = findViewById(R.id.ivDashboardGambarSearch);
+        svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
+
+        ivSearch.setOnClickListener(v -> {
+            while (status == false){
+                svNamaProduk.setVisibility(View.GONE);
+            }
+        });
+
+        llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
+        llDashboardBukaPelanggan.setOnClickListener(v -> {
+            startActivity(new Intent(this, PelangganActivity.class));
+        });
+
+        ivOptionMenu = findViewById(R.id.ivDashboardMenuOptions);
+        ivOptionMenu.setOnClickListener(this::onClickRight);
+    }
+
+    private void onClickRight(View view) {
+        setContentView(R.layout.activity_dashboard_right_button);
+        DrawerLayout drawerRight = findViewById(R.id.drawer_layout_right_button);
+        NavigationView navigationView1 = findViewById(R.id.nav_view_right_button);
+        ActionBarDrawerToggle toggle1 = new ActionBarDrawerToggle(this, drawerRight, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerRight.addDrawerListener(toggle1);
+        toggle1.syncState();
+        navigationView1.setNavigationItemSelectedListener(this::onNavigationItemSelected1);
     }
 
     @Override
@@ -96,6 +130,22 @@ public class Dashboard extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public boolean onNavigationItemSelected1(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.nav_diskon){
+
+        } else if (id == R.id.nav_nama){
+
+        } else if (id == R.id.nav_batalkanTransaksi){
+
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout_right_button);
+        drawerLayout.closeDrawer(Gravity.END);
         return true;
     }
 }

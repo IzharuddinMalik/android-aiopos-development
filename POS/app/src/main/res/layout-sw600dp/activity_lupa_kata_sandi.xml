@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LupaKataSandiActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#ffffff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvNamaLogoLupaKataSandi"
+        android:text="UltraPOS"
+        android:textColor="@color/colorBlueBasic"
+        android:textStyle="bold"
+        android:textSize="@dimen/_48ssp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvJudulLupaKataSandi"
+        android:text="Lupa Kata Sandi?"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@android:color/darker_gray"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPenjelasanLupaKataSandi"
+        android:text="Untuk mengganti kata sandi akun Anda, masukkan"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@android:color/darker_gray" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPenjelasanLupaKataSandi2"
+        android:text="alamat email yang terdaftar di UltraPOS dan kami akan"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@android:color/darker_gray" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPenjelasanLupaKataSandi3"
+        android:text="mengirimkan instruksi untuk menyetel ulang kata sandi Anda"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@android:color/darker_gray"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtEmailYangTerdaftar"
+        android:hint="Alamat Email yang Terdaftar"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="@dimen/_16ssp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnKirimLupaPassword"
+        android:text="Kirim"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:background="@color/colorBlueBasic"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMasukLupaKataSandi"
+            android:text="Masuk"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/colorBlueBasic"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/_20sdp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSekarangLupaKataSandi"
+            android:text="sekarang"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</LinearLayout>

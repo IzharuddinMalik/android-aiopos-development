@@ -27,7 +27,7 @@ public class DashboardFragment extends Fragment {
     private List<ProdukModel> dataProduk;
     private AdapterPilihProduk adapter;
     public static final String API_Produk = "http://pos.ultrapreneur.id/produk_get_kategori.php";
-    LinearLayout linearLihatPesanan, linearBukaPelanggan;
+    LinearLayout linearBukaPelanggan;
     boolean status = false;
 
     @Override
@@ -43,7 +43,6 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        linearLihatPesanan = view.findViewById(R.id.llDashboardLihatPesanan);
         linearBukaPelanggan = view.findViewById(R.id.llDashboardBukaPelanggan);
 
         linearBukaPelanggan.setOnClickListener(v -> {
