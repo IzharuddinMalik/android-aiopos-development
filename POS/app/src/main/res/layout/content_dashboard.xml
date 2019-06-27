@@ -18,7 +18,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabIndicatorColor="@color/colorBlueBasic"
             app:tabIndicatorHeight="1dp"
             app:tabSelectedTextColor="@color/colorBlueBasic" />
 

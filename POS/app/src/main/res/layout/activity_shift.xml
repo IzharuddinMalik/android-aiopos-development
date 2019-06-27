@@ -18,7 +18,7 @@
             android:id="@+id/shift_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorBlueBasic"
+            android:background="@color/colorWhiteffffff"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
@@ -43,8 +43,9 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp"
-                    android:src="@drawable/logopos" />
+                    android:layout_height="@dimen/_80sdp"
+                    android:src="@drawable/logopos"
+                    android:layout_margin="@dimen/_10sdp"/>
 
                 <TextView
                     android:layout_width="match_parent"

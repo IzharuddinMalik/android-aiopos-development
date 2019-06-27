@@ -32,6 +32,7 @@ public class PengaturanActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorGray4d4d4d));
         navigationView.setNavigationItemSelectedListener(this);
 
         llProfilAkun=findViewById(R.id.llProfilAkun);
