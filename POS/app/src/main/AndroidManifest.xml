@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.BantuanActivity"></activity>
+        <activity
+            android:name=".activity.RingkasanOrderActivity"
+            android:label="@string/title_activity_ringkasan_order"
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
+        <activity android:name=".activity.BantuanActivity" />
         <activity android:name=".activity.PrinterActivity" />
         <activity
             android:name=".activity.ProfilActivity"

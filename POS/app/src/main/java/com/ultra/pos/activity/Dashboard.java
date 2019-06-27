@@ -1,7 +1,6 @@
 package com.ultra.pos.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -75,10 +74,10 @@ public class Dashboard extends AppCompatActivity
             tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
         }
 
-        llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
-        llDashboardBukaPelanggan.setOnClickListener(v -> {
-            startActivity(new Intent(this, PelangganActivity.class));
-        });
+        ivSearch = findViewById(R.id.ivDashboardGambarSearch);
+        svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
+
+
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -88,22 +87,24 @@ public class Dashboard extends AppCompatActivity
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width >= 1920 && height >= 1200){
-            ivSearch = findViewById(R.id.ivDashboardGambarSearch);
-            svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
+        if (width == 720 && height == 1280){
 
+        }else{
             ivSearch.setOnClickListener(v -> {
                 while (status == false){
                     svNamaProduk.setVisibility(View.GONE);
                 }
             });
+
             ivOptionMenu = findViewById(R.id.ivDashboardMenuOptions);
             ivOptionMenu.setOnClickListener(this::onClickRight);
-
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
+        llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
+        llDashboardBukaPelanggan.setOnClickListener(v -> {
+            startActivity(new Intent(this, PelangganActivity.class));
+        });
+
     }
 
     private void onClickRight(View view) {
@@ -137,7 +138,8 @@ public class Dashboard extends AppCompatActivity
             startActivity(new Intent(this, Dashboard.class));
             finish();
         } else if (id == R.id.nav_transhistory) {
-
+            startActivity(new Intent(this,RingkasanOrderActivity.class));
+            finish();
         } else if (id == R.id.nav_shiftkerja) {
             startActivity(new Intent(this, ShiftActivity.class));
             finish();

@@ -77,7 +77,7 @@ public class DashboardFragment extends Fragment {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width == 1920 && height == 1200){
+        if (width == 720 && height == 1280){
 
         }
 

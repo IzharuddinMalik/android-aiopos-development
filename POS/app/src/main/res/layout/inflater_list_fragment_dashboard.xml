@@ -32,14 +32,43 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"/>
-        <EditText
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtDashboardJumlahProduk"
-            android:hint="Masukkan Jumlah"
-            android:textSize="@dimen/_16ssp"
-            android:textColor="@android:color/black"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"/>
+            android:layout_marginLeft="@dimen/_10sdp">
+
+            <Button
+                android:id="@+id/minus"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-"
+                android:visibility="invisible"
+                android:background="@color/colorRede53935"/>
+
+
+            <EditText
+                android:id="@+id/edtDashboardJumlahProduk"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:hint="Jumlah"
+                android:inputType="numberSigned"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_16ssp" />
+
+            <Button
+                android:id="@+id/plus"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="+"
+                android:background="@color/colorGreen4caf50"/>
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

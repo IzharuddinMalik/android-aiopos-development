@@ -69,4 +69,5 @@
         <item>DI Yogyakarta</item>
         <item>Jawa Timur</item>
     </string-array>
+    <string name="title_activity_ringkasan_order">RingkasanOrderActivity</string>
 </resources>
