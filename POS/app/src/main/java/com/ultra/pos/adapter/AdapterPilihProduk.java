@@ -37,7 +37,6 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
             namaProduk = view.findViewById(R.id.tvDashboardNamaProduk);
             hargaProduk = view.findViewById(R.id.tvDashboardHargaProduk);
             inputJumlahProduk = view.findViewById(R.id.edtDashboardJumlahProduk);
-            llDashboardLihatPesanan = view2.findViewById(R.id.llDashboardLihatPesanan);
 
             inputJumlahProduk.setOnClickListener(v -> {
                 if (!v.isClickable()){

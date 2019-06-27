@@ -1,11 +1,14 @@
 package com.ultra.pos.activity;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +30,8 @@ public class DashboardFragment extends Fragment {
     private List<ProdukModel> dataProduk;
     private AdapterPilihProduk adapter;
     public static final String API_Produk = "http://pos.ultrapreneur.id/produk_get_kategori.php";
-    LinearLayout linearBukaPelanggan;
     boolean status = false;
+    LinearLayout linearLihatPesanan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -43,11 +46,7 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        linearBukaPelanggan = view.findViewById(R.id.llDashboardBukaPelanggan);
-
-        linearBukaPelanggan.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), PelangganActivity.class));
-        });
+        linearLihatPesanan = view.findViewById(R.id.llDashboardLihatPesanan);
 
         dataProduk = new ArrayList<>();
         dataProduk.clear();
@@ -69,6 +68,18 @@ public class DashboardFragment extends Fragment {
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.animation_slide_from_right);
         recProduk.setLayoutAnimation(animation);
         adapter.notifyDataSetChanged();
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        Log.d("Width", "" + width);
+        Log.d("height", "" + height);
+
+        if (width == 1920 && height == 1200){
+
+        }
 
     }
 }
