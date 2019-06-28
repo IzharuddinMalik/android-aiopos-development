@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterRingkasanOrder;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class RingkasanOrderActivity extends AppCompatActivity {
     RecyclerView recOrder;
+    Button simpan,bayar;
     private List<OrderModel> listOrder;
     private AdapterRingkasanOrder adapter;
 
@@ -33,6 +35,8 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         recOrder = findViewById(R.id.rvRingkasanOrder);
+        simpan=findViewById(R.id.btnSimpanOrder);
+        bayar=findViewById(R.id.btnBayarOrder);
         listOrder = new ArrayList<>();
         listOrder.clear();
 
@@ -55,6 +59,15 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.animation_slide_from_right);
         recOrder.setLayoutAnimation(animation);
         adapter.notifyDataSetChanged();
+
+        simpan.setOnClickListener(v -> {
+            startActivity(new Intent(this,TransaksiTersimpanActivity.class));
+            finish();
+        });
+
+        bayar.setOnClickListener(v -> {
+            startActivity(new Intent(this,PembayaranActivity.class));
+        });
     }
 
     @Override
@@ -65,7 +78,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     }
 
     public void back(View view){
-        startActivity(new Intent(this, PengaturanActivity.class));
+        startActivity(new Intent(this, Dashboard.class));
         finish();
     }
 }

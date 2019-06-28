@@ -12,10 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".activity.PembayaranSuksesActivity"></activity>
+        <activity android:name=".activity.PembayaranActivity" />
+        <activity android:name=".activity.DetailTransaksiTesimpanActivity" />
+        <activity android:name=".activity.TransaksiTersimpanActivity" />
         <activity
             android:name=".activity.RingkasanOrderActivity"
             android:label="@string/title_activity_ringkasan_order"
-            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity android:name=".activity.BantuanActivity" />
         <activity android:name=".activity.PrinterActivity" />
         <activity

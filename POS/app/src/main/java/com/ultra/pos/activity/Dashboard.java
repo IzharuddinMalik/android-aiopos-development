@@ -77,7 +77,9 @@ public class Dashboard extends AppCompatActivity
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
 
-
+        ivKeranjang.setOnClickListener(v -> {
+            startActivity(new Intent(this,TransaksiTersimpanActivity.class));
+        });
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();

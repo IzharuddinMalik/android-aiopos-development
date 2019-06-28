@@ -74,7 +74,8 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvRingkasanOrder"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
 
                 </android.support.v7.widget.RecyclerView>
 
@@ -146,7 +147,8 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp">
+                android:paddingRight="@dimen/_10sdp"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -184,7 +186,8 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp">
+                android:paddingRight="@dimen/_10sdp"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -223,20 +226,20 @@
                 android:padding="@dimen/_5sdp">
 
                 <Button
-                    android:id="@+id/button8"
+                    android:id="@+id/btnSimpanOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Simpan" />
 
                 <Button
-                    android:id="@+id/button9"
+                    android:id="@+id/btnBayarOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Bayar" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
