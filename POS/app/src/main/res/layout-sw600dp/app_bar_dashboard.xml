@@ -15,36 +15,51 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBlueBasic"
+            android:background="@color/colorWhiteffffff"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right">
-                <ImageView
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ic_local_grocery_store_black_24dp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:id="@+id/ivDashboardKeranjang"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"/>
-                <TextView
+                android:layout_height="wrap_content">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tvDashboardMenuTersimpan"
-                    android:text="TERSIMPAN"
-                    android:textSize="@dimen/_8ssp"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_10sdp"/>
-                <ImageView
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:id="@+id/ivDashboardMenuOptions"
-                    android:src="@drawable/ic_more_vert_white_24dp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"/>
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/ivLogoAIO"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/logopos"
+                        android:layout_marginTop="@dimen/_5sdp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:src="@drawable/ic_local_grocery_store_bluebasic_24dp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:id="@+id/ivDashboardKeranjang"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvDashboardMenuTersimpan"
+                        android:text="TERSIMPAN"
+                        android:textSize="@dimen/_8ssp"
+                        android:textColor="@color/colorBlueBasic"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_10sdp"/>
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:id="@+id/ivDashboardMenuOptions"
+                        android:src="@drawable/ic_more_vert_bluebasic_24dp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp"/>
+                </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 

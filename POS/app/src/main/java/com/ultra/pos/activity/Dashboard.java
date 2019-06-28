@@ -1,6 +1,7 @@
 package com.ultra.pos.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,9 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +22,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -32,11 +38,17 @@ public class Dashboard extends AppCompatActivity
     TabLayout tabLayout;
     TabAdapter adapter;
     ViewPager viewPager;
-    ImageView ivKeranjang, ivOptionMenu, ivSearch;
+    ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama;
     LinearLayout llDashboardBukaPelanggan;
     SearchView svNamaProduk;
     int backpress;
     Boolean status = false;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
+    View dialogView;
+    CardView cvDiskon, cvNama, cvBatalTransaksi;
+    EditText edtDialogDiskonNilai, edtDialogNamaNilai;
+    Button btnSimpanDialogDiskon, btnSimpanDialogNama;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +89,13 @@ public class Dashboard extends AppCompatActivity
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
 
+<<<<<<< HEAD
         ivKeranjang.setOnClickListener(v -> {
             startActivity(new Intent(this,TransaksiTersimpanActivity.class));
         });
 
+=======
+>>>>>>> master
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -90,16 +105,14 @@ public class Dashboard extends AppCompatActivity
         Log.d("height", "" + height);
 
         if (width == 720 && height == 1280){
-
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }else{
-            ivSearch.setOnClickListener(v -> {
-                while (status == false){
-                    svNamaProduk.setVisibility(View.GONE);
-                }
-            });
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
             ivOptionMenu = findViewById(R.id.ivDashboardMenuOptions);
-            ivOptionMenu.setOnClickListener(this::onClickRight);
+            ivOptionMenu.setOnClickListener(v -> {
+                dialogFormOptionsMenu();
+            });
         }
 
         llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
@@ -109,14 +122,69 @@ public class Dashboard extends AppCompatActivity
 
     }
 
-    private void onClickRight(View view) {
-        setContentView(R.layout.activity_dashboard_right_button);
-        DrawerLayout drawerRight = findViewById(R.id.drawer_layout_right_button);
-        NavigationView navigationView1 = findViewById(R.id.nav_view_right_button);
-        ActionBarDrawerToggle toggle1 = new ActionBarDrawerToggle(this, drawerRight, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerRight.addDrawerListener(toggle1);
-        toggle1.syncState();
-        navigationView1.setNavigationItemSelectedListener(this::onNavigationItemSelected1);
+    public void dialogFormOptionsMenu(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_option_menu, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        cvDiskon = dialogView.findViewById(R.id.cvDashboardDiskon);
+        cvNama = dialogView.findViewById(R.id.cvDashboardNama);
+        cvBatalTransaksi = dialogView.findViewById(R.id.cvDashboardBatalTransaksi);
+
+        cvDiskon.setOnClickListener(v -> {
+            dialogMenuDiskon();
+        });
+
+        cvNama.setOnClickListener(v -> {
+            dialogMenuNama();
+        });
+
+        dialog.show();
+    }
+
+    public void dialogMenuDiskon(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_diskon,null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(false);
+
+        ivCancelDialogDiskon = dialogView.findViewById(R.id.ivCancelDialogDiskon);
+        ivCancelDialogDiskon.setOnClickListener(v -> {
+            startActivity(new Intent(this, Dashboard.class));
+            this.finish();
+        });
+
+        btnSimpanDialogDiskon = dialogView.findViewById(R.id.btnDialogFormSimpan);
+        btnSimpanDialogDiskon.setOnClickListener(v -> {
+            startActivity(new Intent(this, Dashboard.class));
+            this.finish();
+        });
+
+        dialog.show();
+    }
+
+    public void dialogMenuNama(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_nama, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(false);
+
+        ivCancelDialogNama = dialogView.findViewById(R.id.ivCancelDialogNama);
+        ivCancelDialogNama.setOnClickListener(v -> {
+            startActivity(new Intent(this, Dashboard.class));
+            this.finish();
+        });
+
+        btnSimpanDialogNama = dialogView.findViewById(R.id.btnDialogFormSimpanNama);
+        btnSimpanDialogNama.setOnClickListener(v -> {
+            startActivity(new Intent(this, Dashboard.class));
+        });
+
+        dialog.show();
     }
 
     @Override
@@ -152,22 +220,6 @@ public class Dashboard extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    public boolean onNavigationItemSelected1(MenuItem item){
-        int id = item.getItemId();
-
-        if (id == R.id.nav_diskon){
-
-        } else if (id == R.id.nav_nama){
-
-        } else if (id == R.id.nav_batalkanTransaksi){
-
-        }
-
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout_right_button);
-        drawerLayout.closeDrawer(Gravity.END);
         return true;
     }
 }
