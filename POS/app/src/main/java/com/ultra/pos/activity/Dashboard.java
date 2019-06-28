@@ -89,13 +89,10 @@ public class Dashboard extends AppCompatActivity
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
 
-<<<<<<< HEAD
         ivKeranjang.setOnClickListener(v -> {
             startActivity(new Intent(this,TransaksiTersimpanActivity.class));
         });
 
-=======
->>>>>>> master
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -208,7 +205,7 @@ public class Dashboard extends AppCompatActivity
             startActivity(new Intent(this, Dashboard.class));
             finish();
         } else if (id == R.id.nav_transhistory) {
-            startActivity(new Intent(this,RingkasanOrderActivity.class));
+            startActivity(new Intent(this,RiwayatTerakhirActivity.class));
             finish();
         } else if (id == R.id.nav_shiftkerja) {
             startActivity(new Intent(this, ShiftActivity.class));

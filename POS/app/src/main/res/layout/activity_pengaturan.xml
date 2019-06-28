@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pengaturan"
-                android:textColor="@color/colorWhiteffffff"
+                android:textColor="@color/colorBlueBasic"
                 android:textSize="@dimen/_20sdp" />
         </android.support.v7.widget.Toolbar>
 

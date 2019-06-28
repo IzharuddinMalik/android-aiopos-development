@@ -66,6 +66,17 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
             if (width >= 1920 && height >= 1200){
                 a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                view.setOnClickListener(v -> {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION){
+                        Intent intent = new Intent(view.getContext(), Dashboard.class);
+                        intent.putExtra("namaProduk", listProduk.get(position).getNamaProduk());
+                        intent.putExtra("hargaProduk", listProduk.get(position).getHargaProduk());
+                        intent.putExtra("gambarProduk", listProduk.get(position).getGambarProduk());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        view.getContext().startActivity(intent);
+                    }
+                });
             } else {
                 plus=view.findViewById(R.id.plus);
                 minus=view.findViewById(R.id.minus);
@@ -109,17 +120,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 //                llDashboardLihatPesanan.setVisibility(View.GONE);
 //            }
 
-            view.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
-                    Intent intent = new Intent(view.getContext(), Dashboard.class);
-                    intent.putExtra("namaProduk", listProduk.get(position).getNamaProduk());
-                    intent.putExtra("hargaProduk", listProduk.get(position).getHargaProduk());
-                    intent.putExtra("gambarProduk", listProduk.get(position).getGambarProduk());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    view.getContext().startActivity(intent);
-                }
-            });
+
 
             stylingUtils.robotoRegularTextview(mCtx, namaProduk);
             stylingUtils.robotoRegularTextview(mCtx, hargaProduk);
