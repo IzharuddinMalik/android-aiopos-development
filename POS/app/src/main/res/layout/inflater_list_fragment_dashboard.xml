@@ -48,7 +48,7 @@
                 android:layout_weight="1"
                 android:text="-"
                 android:visibility="invisible"
-                android:background="@color/colorRede53935"/>
+                android:background="@drawable/rounded_button" />
 
 
             <EditText
@@ -66,8 +66,9 @@
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+
                 android:text="+"
-                android:background="@color/colorGreen4caf50"/>
+                android:background="@drawable/rounded_button"/>
         </LinearLayout>
 
     </LinearLayout>

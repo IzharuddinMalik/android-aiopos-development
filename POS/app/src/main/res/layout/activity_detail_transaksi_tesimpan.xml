@@ -60,10 +60,10 @@
         android:id="@+id/textView15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="@dimen/_14sdp"
         android:background="@color/colorGraye6e6e6"
-        android:padding="@dimen/_10sdp"/>
+        android:padding="@dimen/_10sdp"
+        android:text="Informasi Transaksi"
+        android:textSize="@dimen/_14sdp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,8 +93,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
-                    android:paddingLeft="@dimen/_10sdp"/>
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Tempe Krezi" />
             </LinearLayout>
 
             <LinearLayout
@@ -112,8 +112,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
-                    android:paddingLeft="@dimen/_10sdp"/>
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Agung Wisnu Anggoro" />
             </LinearLayout>
         </LinearLayout>
 
@@ -136,12 +136,12 @@
                     android:src="@drawable/ic_access_time_blue_24dp" />
 
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/tvJamTransaksi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
-                    android:paddingLeft="@dimen/_10sdp"/>
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="14:20" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -152,18 +152,18 @@
         android:layout_height="wrap_content"
         android:background="@color/colorGraye6e6e6"
         android:padding="@dimen/_10sdp"
-        android:text="TextView"
+        android:text="Pesanan"
         android:textSize="@dimen/_14sdp" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTransaksiTersimpan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.6"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -177,11 +177,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text="Total"
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/tvTotalBayarTransaksi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -197,20 +197,20 @@
             android:padding="@dimen/_3sdp">
 
             <Button
-                android:id="@+id/button8"
+                android:id="@+id/btnCetakStrukTransaksi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="Cetak Struk" />
 
             <Button
-                android:id="@+id/button10"
+                android:id="@+id/btnLanjutOrderTransaksi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="Lanjutkan" />
         </LinearLayout>
     </LinearLayout>
 

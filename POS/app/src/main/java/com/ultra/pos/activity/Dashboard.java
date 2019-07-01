@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -31,6 +32,9 @@ import android.widget.Toast;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.TabAdapter;
+import com.ultra.pos.model.ProdukModel;
+
+import java.util.List;
 
 public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,10 +43,9 @@ public class Dashboard extends AppCompatActivity
     TabAdapter adapter;
     ViewPager viewPager;
     ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama;
-    LinearLayout llDashboardBukaPelanggan;
+    LinearLayout llDashboardBukaPelanggan,llDashboardLihatPesanan;
     SearchView svNamaProduk;
     int backpress;
-    Boolean status = false;
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
     View dialogView;
@@ -69,6 +72,7 @@ public class Dashboard extends AppCompatActivity
         viewPager = findViewById(R.id.frameLayout);
         tabLayout = findViewById(R.id.tabs);
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
+        llDashboardLihatPesanan=findViewById(R.id.llDashboardLihatPesanan);
 
         adapter = new TabAdapter(getSupportFragmentManager());
 
@@ -117,6 +121,9 @@ public class Dashboard extends AppCompatActivity
             startActivity(new Intent(this, PelangganActivity.class));
         });
 
+        llDashboardLihatPesanan.setOnClickListener(v -> {
+            startActivity(new Intent(this, RingkasanOrderActivity.class));
+        });
     }
 
     public void dialogFormOptionsMenu(){

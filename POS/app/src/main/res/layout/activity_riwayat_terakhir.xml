@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@android:color/white"
-                        android:queryHint="Cari Pelanggan"
+                        android:queryHint="Cari Riwayat Transaksi"
                         android:searchHintIcon="@drawable/ic_search_black_24dp"
                         android:searchIcon="@drawable/ic_search_black_24dp"
                         android:theme="@style/AppTheme" />
@@ -77,7 +77,7 @@
                         android:clickable="false"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/_15sdp"
-                        android:text="Tgl"
+                        android:text="Senin"
                         android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_15sdp" />
 
@@ -90,21 +90,16 @@
                         android:clickable="false"
                         android:gravity="right|center_vertical"
                         android:paddingLeft="@dimen/_15sdp"
-                        android:text="jumlah"
+                        android:text="3 Transaksi"
                         android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_15sdp" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvRiwayatTransaksi"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btnTes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
 
             </LinearLayout>
         </android.support.v7.widget.LinearLayoutCompat>
