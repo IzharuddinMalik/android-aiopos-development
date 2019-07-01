@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -28,13 +29,32 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.TabAdapter;
 import com.ultra.pos.model.ProdukModel;
+import com.ultra.pos.api.APIConnect;
+import com.ultra.pos.api.APIUrl;
+import com.ultra.pos.api.BaseApiInterface;
+import com.ultra.pos.api.SharedPrefManager;
+import com.ultra.pos.model.KategoriModel;
 
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Dashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,6 +72,12 @@ public class Dashboard extends AppCompatActivity
     CardView cvDiskon, cvNama, cvBatalTransaksi;
     EditText edtDialogDiskonNilai, edtDialogNamaNilai;
     Button btnSimpanDialogDiskon, btnSimpanDialogNama;
+    TextView tvDashboardNavNama;
+    SharedPrefManager pref;
+    BaseApiInterface mApiInterface;
+    APIConnect apiConnect;
+    List<KategoriModel> listing;
+    String idbusiness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +95,14 @@ public class Dashboard extends AppCompatActivity
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorGray4d4d4d));
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
+        tvDashboardNavNama = header.findViewById(R.id.tvDashboardNamaAkun);
+        pref = new SharedPrefManager(Dashboard.this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String nama = user.get(SharedPrefManager.NAMA_USER);
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama + "</b>"));
+
         viewPager = findViewById(R.id.frameLayout);
         tabLayout = findViewById(R.id.tabs);
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
@@ -76,9 +110,9 @@ public class Dashboard extends AppCompatActivity
 
         adapter = new TabAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new DashboardFragment(), "Favorit");
-        adapter.addFragment(new DashboardFragment(), "Makanan");
-        adapter.addFragment(new DashboardFragment(), "Minuman");
+//        adapter.addFragment(new DashboardFragment(), "Favorit");
+//        adapter.addFragment(new DashboardFragment(), "Makanan");
+//        adapter.addFragment(new DashboardFragment(), "Minuman");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -124,6 +158,9 @@ public class Dashboard extends AppCompatActivity
         llDashboardLihatPesanan.setOnClickListener(v -> {
             startActivity(new Intent(this, RingkasanOrderActivity.class));
         });
+        getAllListProduk();
+        idbusiness = idBusiness;
+
     }
 
     public void dialogFormOptionsMenu(){
@@ -189,6 +226,38 @@ public class Dashboard extends AppCompatActivity
         });
 
         dialog.show();
+    }
+
+    public void getAllListProduk(){
+
+        mApiInterface = APIUrl.getAPIService();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idbusiness",idbusiness);
+        mApiInterface.getKategori(params, idbusiness).enqueue(new Callback<List<KategoriModel>>() {
+            @Override
+            public void onResponse(Call<List<KategoriModel>> call, Response<List<KategoriModel>> response) {
+                if (response.isSuccessful()){
+                    apiConnect.showtoastsucces(getApplicationContext().getResources().getString(R.string.sukses));
+
+                    List<KategoriModel> kategoriModels = response.body();
+                    listing = new ArrayList<>();
+                    for (int i = 0; i<kategoriModels.size();i++){
+                        String idKategori = kategoriModels.get(i).getIdKategori();
+                        String idBusiness = kategoriModels.get(i).getIdBusiness();
+                        String namaKategori = kategoriModels.get(i).getNamaKategori();
+
+                        adapter.addFragment(new DashboardFragment(), namaKategori);
+
+                        Log.d("DATA KATEGORI" , "KATEGORI MENU ->" +namaKategori);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<KategoriModel>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
