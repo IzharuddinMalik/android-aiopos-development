@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultra.pos.R;
+import com.ultra.pos.adapter.DynamicAdapter;
 import com.ultra.pos.adapter.TabAdapter;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
@@ -39,6 +40,7 @@ import com.ultra.pos.api.BaseApiInterface;
 import com.ultra.pos.api.SharedPrefManager;
 import com.ultra.pos.model.KategoriModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,6 +77,11 @@ public class Dashboard extends AppCompatActivity
     APIConnect apiConnect;
     List<KategoriModel> listing;
     String idbusiness;
+    //Fragment List
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    //Title List
+    private final List<String> mFragmentTitleList = new ArrayList<>();
+    private DynamicAdapter adapterDynamic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,28 +104,28 @@ public class Dashboard extends AppCompatActivity
         pref = new SharedPrefManager(Dashboard.this);
         HashMap<String, String> user = pref.getUserDetails();
         String nama = user.get(SharedPrefManager.NAMA_USER);
-        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
-        tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama + "</b>"));
+        tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
+        idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
 
         viewPager = findViewById(R.id.frameLayout);
         tabLayout = findViewById(R.id.tabs);
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
 
-        adapter = new TabAdapter(getSupportFragmentManager());
+//        adapter = new TabAdapter(getSupportFragmentManager());
 
 //        adapter.addFragment(new DashboardFragment(), "Favorit");
 //        adapter.addFragment(new DashboardFragment(), "Makanan");
 //        adapter.addFragment(new DashboardFragment(), "Minuman");
 
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setOffscreenPageLimit(1);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        if (tabLayout.getTabCount() == 2){
-            tabLayout.setTabMode(tabLayout.MODE_FIXED);
-        }else{
-            tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
-        }
+//        viewPager.setAdapter(adapter);
+//        tabLayout.setupWithViewPager(viewPager);
+//        viewPager.setOffscreenPageLimit(1);
+//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+//        if (tabLayout.getTabCount() == 2){
+//            tabLayout.setTabMode(tabLayout.MODE_FIXED);
+//        }else{
+//            tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
+//        }
 
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
@@ -152,7 +159,7 @@ public class Dashboard extends AppCompatActivity
         });
 
         getAllListProduk();
-        idbusiness = idBusiness;
+
 
     }
 
@@ -223,31 +230,58 @@ public class Dashboard extends AppCompatActivity
 
     public void getAllListProduk(){
 
+        pref = new SharedPrefManager(Dashboard.this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        idbusiness = idBusiness;
+
         mApiInterface = APIUrl.getAPIService();
         HashMap<String, String> params = new HashMap<>();
         params.put("idbusiness",idbusiness);
-        mApiInterface.getKategori(params, idbusiness).enqueue(new Callback<List<KategoriModel>>() {
+        mApiInterface.getKategori(params, idbusiness).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<List<KategoriModel>> call, Response<List<KategoriModel>> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
-                    apiConnect.showtoastsucces(getApplicationContext().getResources().getString(R.string.sukses));
+                    try{
 
-                    List<KategoriModel> kategoriModels = response.body();
-                    listing = new ArrayList<>();
-                    for (int i = 0; i<kategoriModels.size();i++){
-                        String idKategori = kategoriModels.get(i).getIdKategori();
-                        String idBusiness = kategoriModels.get(i).getIdBusiness();
-                        String namaKategori = kategoriModels.get(i).getNamaKategori();
+                        String result = response.body().string();
+                        JSONObject jsonResult = new JSONObject(result);
+                        JSONArray array = jsonResult.getJSONArray("info");
+                        String[] namaKategori = new String[array.length()];
+                        for (int i = 0; i<array.length(); i++){
+                            JSONObject objKategori = array.getJSONObject(i);
+                            KategoriModel kategoriModel = new KategoriModel(
+                                    objKategori.getString("idkategori"),
+                                    objKategori.getString("idbusiness"),
+                                    namaKategori[i] = objKategori.getString("nama_kategori")
+                            );
 
-                        adapter.addFragment(new DashboardFragment(), namaKategori);
+                            adapter = new TabAdapter(getSupportFragmentManager());
 
-                        Log.d("DATA KATEGORI" , "KATEGORI MENU ->" +namaKategori);
+                            for (int k = 0; k < array.length();k++){
+                                adapter.addFragment(new DashboardFragment(), " " + namaKategori[k]);
+                            }
+
+                            viewPager.setAdapter(adapter);
+                            tabLayout.setupWithViewPager(viewPager);
+                            viewPager.setOffscreenPageLimit(1);
+                            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                            if (tabLayout.getTabCount() == 2){
+                                tabLayout.setTabMode(tabLayout.MODE_FIXED);
+                            }else{
+                                tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
+                            }
+                        }
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    } catch (IOException e){
+                        e.printStackTrace();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<KategoriModel>> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });

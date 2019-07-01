@@ -23,5 +23,5 @@ public interface BaseApiInterface {
 
     @FormUrlEncoded
     @POST("produk_get_kategori.php")
-    Call<List<KategoriModel>> getKategori(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness);
+    Call<ResponseBody> getKategori(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness);
 }
