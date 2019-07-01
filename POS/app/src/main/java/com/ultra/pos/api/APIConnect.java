@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ultra.pos.R;
+import com.ultra.pos.activity.LoginActivity;
 import com.ultra.pos.util.ResponseCodeToText;
 import com.ultra.pos.util.StylingUtils;
 import com.ultra.pos.util.ToastUtils;
@@ -24,6 +25,16 @@ public class APIConnect {
     StylingUtils stylingUtils;
     ToastUtils toastUtils;
     Boolean isdialogshow1 = false;
+
+    public APIConnect(Context context, View viewtoastsucces, View viewtoastfailed, View viewtoastinfo) {
+        this.context = context;
+        responseCodeToText = new ResponseCodeToText(context);
+        stylingUtils = new StylingUtils();
+        toastUtils = new ToastUtils(context);
+        this.viewtoastsucces = viewtoastsucces;
+        this.viewtoastinfo = viewtoastinfo;
+        this.viewtoastfailed = viewtoastfailed;
+    }
 
     public void showdialogloading(){
         dialogloading = new Dialog(context);
