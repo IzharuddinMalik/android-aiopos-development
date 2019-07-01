@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.Display;
@@ -34,11 +35,14 @@ import android.widget.Toast;
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.DynamicAdapter;
 import com.ultra.pos.adapter.TabAdapter;
+import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
 import com.ultra.pos.api.SharedPrefManager;
 import com.ultra.pos.model.KategoriModel;
+
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,10 +65,9 @@ public class Dashboard extends AppCompatActivity
     TabAdapter adapter;
     ViewPager viewPager;
     ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama;
-    LinearLayout llDashboardBukaPelanggan;
+    LinearLayout llDashboardBukaPelanggan,llDashboardLihatPesanan;
     SearchView svNamaProduk;
     int backpress;
-    Boolean status = false;
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
     View dialogView;
@@ -110,6 +113,7 @@ public class Dashboard extends AppCompatActivity
         viewPager = findViewById(R.id.frameLayout);
         tabLayout = findViewById(R.id.tabs);
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
+        llDashboardLihatPesanan=findViewById(R.id.llDashboardLihatPesanan);
 
 //        adapter = new TabAdapter(getSupportFragmentManager());
 
@@ -158,6 +162,9 @@ public class Dashboard extends AppCompatActivity
             startActivity(new Intent(this, PelangganActivity.class));
         });
 
+        llDashboardLihatPesanan.setOnClickListener(v -> {
+            startActivity(new Intent(this, RingkasanOrderActivity.class));
+        });
         getAllListProduk();
 
 

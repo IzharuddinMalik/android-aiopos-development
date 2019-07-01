@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.ultra.pos.R;
 import com.ultra.pos.activity.Dashboard;
-import com.ultra.pos.activity.DashboardFragment;
 import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.util.StylingUtils;
 
@@ -111,6 +110,8 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                     visible();
                     inputJumlahProduk.setText(""+counter);
                 });
+
+
                 a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
 

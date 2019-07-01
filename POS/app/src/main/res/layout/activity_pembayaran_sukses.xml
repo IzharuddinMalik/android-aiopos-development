@@ -74,17 +74,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="@dimen/_15sdp"
             android:gravity="center_horizontal"
-            android:text="TextView" />
+            android:text="Pembayaran dengan XXXX berhasil dilakukan"
+            android:textSize="@dimen/_14sdp" />
 
         <TextView
             android:id="@+id/textView26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="TextView"
-            android:textSize="@dimen/_20sdp"/>
+            android:text="Uang Kembali"
+            android:textSize="@dimen/_20sdp" />
 
         <TextView
             android:id="@+id/textView27"
@@ -92,8 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="TextView"
-            android:textSize="@dimen/_25sdp"/>
+            android:text="Rp. XXXXXXX"
+            android:textSize="@dimen/_25sdp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,21 +107,44 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_email_black_24dp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView42"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kirim struk ke email"
+                    android:textSize="@dimen/_15sdp" />
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email Pelanggan"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+
             <Switch
                 android:id="@+id/switch1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Switch"
-                android:textSize="@dimen/_15sdp"/>
+                android:textSize="@dimen/_15sdp" />
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/btnSelesaiPembayaran"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:text="Button" />
+        android:background="@color/colorBlueBasic"
+        android:text="Selesai"
+        android:textColor="@color/colorWhiteffffff" />
 </LinearLayout>

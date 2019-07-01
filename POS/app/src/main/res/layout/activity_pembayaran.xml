@@ -72,14 +72,14 @@
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Total"
                 android:textSize="@dimen/_15sdp" />
 
             <TextView
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Rp. XXXXXXX"
                 android:textSize="@dimen/_20sdp" />
         </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="TextView"
+                android:text="Metode Pembayaran"
                 android:textSize="@dimen/_15sdp" />
 
             <LinearLayout
@@ -111,21 +111,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Tunai" />
 
                 <Button
                     android:id="@+id/button11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="EDC" />
 
                 <Button
                     android:id="@+id/button12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Lainya" />
             </LinearLayout>
 
         </LinearLayout>
@@ -141,7 +141,7 @@
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Jumlah Dibayar"
                 android:textSize="@dimen/_15sdp" />
 
             <LinearLayout
@@ -154,15 +154,17 @@
                     android:id="@+id/button9"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Uang Pas" />
 
                 <Button
                     android:id="@+id/button12"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Rp. XXXXX" />
             </LinearLayout>
 
             <LinearLayout
@@ -175,15 +177,17 @@
                     android:id="@+id/button9"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Rp. XXXXXX" />
 
                 <Button
                     android:id="@+id/button12"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Rp. XXXXXX" />
             </LinearLayout>
 
         </LinearLayout>
@@ -196,7 +200,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="hint" />
+                android:hint="Jumlah Lain" />
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
@@ -205,5 +209,7 @@
         android:id="@+id/btnBayarPembayaran"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:text="Bayar" />
+        android:background="@color/colorBlueBasic"
+        android:text="Bayar"
+        android:textColor="@color/colorWhiteffffff" />
 </LinearLayout>

@@ -10,17 +10,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 
 import com.ultra.pos.R;
+import com.ultra.pos.adapter.AdapterRiwayatTransaksi;
+import com.ultra.pos.adapter.AdapterTransaksiTersimpan;
+import com.ultra.pos.model.TransaksiModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RiwayatTerakhirActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button tes;
+    private List<TransaksiModel> listTransaksi;
+    private AdapterRiwayatTransaksi adapter;
+    RecyclerView recTransaksi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +66,25 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorGray4d4d4d));
         navigationView.setNavigationItemSelectedListener(this);
 
-        tes=findViewById(R.id.btnTes);
+        recTransaksi = findViewById(R.id.rvRiwayatTransaksi);
+        listTransaksi = new ArrayList<>();
+        listTransaksi.clear();
 
-        tes.setOnClickListener(v -> {
-            startActivity(new Intent(this,DetailRiwayatTransaksiActivity.class));
-        });
+        listTransaksi.add(0, new TransaksiModel("15000", "2", "Selesai", "15.20"));
+        listTransaksi.add(1, new TransaksiModel("15000", "1", "Selesai", "10.00"));
+        listTransaksi.add(2, new TransaksiModel("15000", "3", "Selesai", "13.30"));
+
+        adapter = new AdapterRiwayatTransaksi(this,listTransaksi);
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        recTransaksi.setLayoutManager(mLayoutManager);
+        recTransaksi.setItemAnimator(new DefaultItemAnimator());
+        recTransaksi.setItemViewCacheSize(listTransaksi.size());
+        recTransaksi.setDrawingCacheEnabled(true);
+        recTransaksi.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        recTransaksi.setAdapter(adapter);
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.animation_slide_from_right);
+        recTransaksi.setLayoutAnimation(animation);
+        adapter.notifyDataSetChanged();
     }
 
 
