@@ -186,7 +186,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button4"
+                        android:id="@+id/btnLogout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_60sdp"
                         android:layout_margin="@dimen/_5sdp"

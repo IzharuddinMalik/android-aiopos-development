@@ -75,13 +75,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Kecamatan"
+                android:text="Nama Bisnis"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganNamaKecamatanMember2"
+                android:id="@+id/tvMenuProfilNamaBisnis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -96,13 +96,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="ID Member"
+                android:text="Email Akun"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganNoIDMember"
+                android:id="@+id/tvMenuProfilEmailAkun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -117,13 +117,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Provinsi"
+                android:text="Outlet"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganNamaProvinsiMember"
+                android:id="@+id/tvMenuProfilOutlet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -138,13 +138,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Kabupaten / Kota"
+                android:text="Tipe Akun"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganNamaKabKotMember"
+                android:id="@+id/tvMenuProfilTipeAkun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -159,13 +159,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Kecamatan"
+                android:text="Alamat Bisnis"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganNamaKecamatanMember"
+                android:id="@+id/tvMenuProfilAlamatBisnis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"

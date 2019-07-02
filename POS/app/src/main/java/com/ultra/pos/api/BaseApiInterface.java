@@ -24,4 +24,25 @@ public interface BaseApiInterface {
     @FormUrlEncoded
     @POST("produk_get_kategori.php")
     Call<ResponseBody> getKategori(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness);
+
+    @FormUrlEncoded
+    @POST("pelanggan_get_list.php")
+    Call<ResponseBody> listPelanggan(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness,
+                                     @Field("idoutlet") String idOutlet);
+
+    @FormUrlEncoded
+    @POST("pelanggan_get_detail.php")
+    Call<ResponseBody> detailPelanggan(@FieldMap HashMap<String, String> params, @Field("idctm") String idPelanggan);
+
+    @FormUrlEncoded
+    @POST("pelanggan_tambah.php")
+    Call<ResponseBody> insertPelanggan(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness,
+                                       @Field("idoutlet") String idOutlet, @Field("province_id") String province_id,
+                                       @Field("regencies_id") String regencies_id, @Field("district_id") String district_id,
+                                       @Field("nama_pelanggan") String nama_pelanggan, @Field("idoutlet") String email_pelanggan,
+                                       @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
+
+    @FormUrlEncoded
+    @POST("wilayah_get_provinsi.php")
+    Call<ResponseBody> getProvinsi();
 }

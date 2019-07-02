@@ -1,6 +1,7 @@
 package com.ultra.pos.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
@@ -15,14 +16,18 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ultra.pos.R;
+import com.ultra.pos.api.SharedPrefManager;
 
 public class PengaturanActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     LinearLayout llProfilAkun,llPrinter,llBantuan;
+    Button logout;
+    SharedPrefManager pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +61,13 @@ public class PengaturanActivity extends AppCompatActivity
         llProfilAkun=findViewById(R.id.llProfilAkun);
         llPrinter=findViewById(R.id.llPrinter);
         llBantuan=findViewById(R.id.llBantuan);
+        logout=findViewById(R.id.btnLogout);
+
+        pref=new SharedPrefManager(this);
+        logout.setOnClickListener(v -> {
+            pref.logout();
+            finish();
+        });
 
         llProfilAkun.setOnClickListener(v -> {
             startActivity(new Intent(this, ProfilActivity.class));

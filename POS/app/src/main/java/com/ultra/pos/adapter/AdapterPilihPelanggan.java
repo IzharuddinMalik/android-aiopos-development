@@ -42,12 +42,7 @@ public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPela
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION){
                     Intent intent = new Intent(view.getContext(), DetailPelangganActivity.class);
-                    intent.putExtra("namaPelanggan", listPelanggan.get(position).getNamaPelanggan());
-                    intent.putExtra("noHp", listPelanggan.get(position).getTelpPelanggan());
-                    intent.putExtra("emailPelanggan", listPelanggan.get(position).getEmailPelanggan());
-                    intent.putExtra("namaProvinsi", listPelanggan.get(position).getNamaProvinsi());
-                    intent.putExtra("namaKabKot", listPelanggan.get(position).getNamaKabKota());
-                    intent.putExtra("namaKecamatan", listPelanggan.get(position).getNamaKecamatan());
+                    intent.putExtra("idctm", listPelanggan.get(position).getIdPelanggan());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     view.getContext().startActivity(intent);
                 }

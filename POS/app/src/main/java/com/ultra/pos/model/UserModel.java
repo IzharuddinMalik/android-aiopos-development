@@ -43,8 +43,24 @@ public class UserModel implements Serializable {
     @Expose
     private String idTb;
 
+    @SerializedName("nama_business")
+    @Expose
+    private String namaBisnis;
+
+    @SerializedName("alamat_business")
+    @Expose
+    private String alamatBisnis;
+
+    @SerializedName("name_outlet")
+    @Expose
+    private String namaOutlet;
+
+    @SerializedName("alamat_outlet")
+    @Expose
+    private String alamatOutlet;
+
     public UserModel(String idUser, String namaUser, String telpUser, String emailUser, String roleUser, String idBusiness, String idOutlet,
-                     String statusUser, String idTb){
+                     String statusUser, String idTb,String namaBisnis, String alamatBisnis, String namaOutlet, String alamatOutlet){
         this.idUser = idUser;
         this.namaUser = namaUser;
         this.telpUser = telpUser;
@@ -54,6 +70,10 @@ public class UserModel implements Serializable {
         this.idOutlet = idOutlet;
         this.statusUser = statusUser;
         this.idTb = idTb;
+        this.namaBisnis = namaBisnis;
+        this.alamatBisnis = alamatBisnis;
+        this.namaOutlet = namaOutlet;
+        this.alamatOutlet = alamatOutlet;
     }
 
     public void setIdUser(String idUser) {
@@ -92,6 +112,22 @@ public class UserModel implements Serializable {
         this.idTb = idTb;
     }
 
+    public void setNamaBisnis(String namaBisnis) {
+        this.namaBisnis = namaBisnis;
+    }
+
+    public void setAlamatBisnis(String alamatBisnis) {
+        this.alamatBisnis = alamatBisnis;
+    }
+
+    public void setNamaOutlet(String namaOutlet) {
+        this.namaOutlet = namaOutlet;
+    }
+
+    public void setAlamatOutlet(String alamatOutlet) {
+        this.alamatOutlet = alamatOutlet;
+    }
+
     public String getIdUser() {
         return idUser;
     }
@@ -126,5 +162,21 @@ public class UserModel implements Serializable {
 
     public String getIdTb() {
         return idTb;
+    }
+
+    public String getNamaBisnis() {
+        return namaBisnis;
+    }
+
+    public String getAlamatBisnis() {
+        return alamatBisnis;
+    }
+
+    public String getNamaOutlet() {
+        return namaOutlet;
+    }
+
+    public String getAlamatOutlet() {
+        return alamatOutlet;
     }
 }

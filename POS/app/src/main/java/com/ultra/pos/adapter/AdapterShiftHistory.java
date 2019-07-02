@@ -1,6 +1,7 @@
 package com.ultra.pos.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ultra.pos.R;
+import com.ultra.pos.activity.DetailRiwayatTransaksiActivity;
+import com.ultra.pos.activity.DetailShiftActivity;
 import com.ultra.pos.model.HistoryModel;
 import com.ultra.pos.util.StylingUtils;
 
@@ -42,6 +45,18 @@ public class AdapterShiftHistory extends RecyclerView.Adapter<AdapterShiftHistor
             super(view);
 
             tanggal=view.findViewById(R.id.tvTanggalShiftHistory);
+
+            view.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION){
+                    Intent intent = new Intent(view.getContext(), DetailShiftActivity.class);
+                    intent.putExtra("data1", listHistory.get(position).getData1());
+                    intent.putExtra("data2", listHistory.get(position).getData2());
+                    intent.putExtra("tanggal", listHistory.get(position).getTanggal());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(intent);
+                }
+            });
 
             stylingUtils.robotoRegularTextview(mCtx, tanggal);
         }

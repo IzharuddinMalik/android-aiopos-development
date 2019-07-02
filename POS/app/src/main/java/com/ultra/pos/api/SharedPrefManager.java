@@ -22,6 +22,10 @@ public class SharedPrefManager {
     public static final String STATUS_USER = "keyStatusUser";
     public static final String ID_TB = "keyIdTb";
     private static final String IS_LOGIN = "isLogin";
+    public static final String NAMA_BISNIS = "keyNamaBisnis";
+    public static final String ALAMAT_BISNIS = "keyAlamatBisnis";
+    public static final String NAMA_OUTLET = "keyNamaOutlet";
+    public static final String ALAMAT_OUTLET = "keyAlamatOutlet";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -55,6 +59,10 @@ public class SharedPrefManager {
         editor.putString(ID_OUTLET, user.getIdOutlet());
         editor.putString(STATUS_USER, user.getStatusUser());
         editor.putString(ID_TB, user.getIdTb());
+        editor.putString(NAMA_BISNIS, user.getNamaBisnis());
+        editor.putString(ALAMAT_BISNIS, user.getAlamatBisnis());
+        editor.putString(NAMA_OUTLET, user.getNamaOutlet());
+        editor.putString(ALAMAT_OUTLET, user.getAlamatOutlet());
         editor.commit();
     }
 
@@ -80,6 +88,10 @@ public class SharedPrefManager {
         user.put(ID_OUTLET, pref.getString(ID_OUTLET, null));
         user.put(STATUS_USER, pref.getString(STATUS_USER, null));
         user.put(ID_TB, pref.getString(ID_TB, null));
+        user.put(NAMA_BISNIS, pref.getString(NAMA_BISNIS, null));
+        user.put(ALAMAT_BISNIS, pref.getString(ALAMAT_BISNIS, null));
+        user.put(NAMA_OUTLET, pref.getString(NAMA_OUTLET, null));
+        user.put(ALAMAT_OUTLET, pref.getString(ALAMAT_OUTLET, null));
         return user;
     }
 }
