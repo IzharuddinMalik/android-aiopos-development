@@ -80,11 +80,7 @@ public class Dashboard extends AppCompatActivity
     APIConnect apiConnect;
     List<KategoriModel> listing;
     String idbusiness;
-    //Fragment List
-    private final List<Fragment> mFragmentList = new ArrayList<>();
-    //Title List
-    private final List<String> mFragmentTitleList = new ArrayList<>();
-    private DynamicAdapter adapterDynamic;
+    DashboardFragment dashboardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +144,9 @@ public class Dashboard extends AppCompatActivity
 
         if (width == 720 && height == 1280){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            llDashboardLihatPesanan.setOnClickListener(v -> {
+                startActivity(new Intent(this, RingkasanOrderActivity.class));
+            });
         }else{
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -160,10 +159,6 @@ public class Dashboard extends AppCompatActivity
         llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
         llDashboardBukaPelanggan.setOnClickListener(v -> {
             startActivity(new Intent(this, PelangganActivity.class));
-        });
-
-        llDashboardLihatPesanan.setOnClickListener(v -> {
-            startActivity(new Intent(this, RingkasanOrderActivity.class));
         });
         getAllListProduk();
 
@@ -262,6 +257,9 @@ public class Dashboard extends AppCompatActivity
                                     objKategori.getString("idbusiness"),
                                     namaKategori[i] = objKategori.getString("nama_kategori")
                             );
+
+                            pref = new SharedPrefManager(Dashboard.this);
+                            pref.createSessionKategori(kategoriModel);
 
                             adapter = new TabAdapter(getSupportFragmentManager());
 
