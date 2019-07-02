@@ -40,11 +40,11 @@ public class ProfilActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        namaBisnis=findViewById(R.id.tvMenuProfilNamaBisnis);
-        emailBisnis=findViewById(R.id.tvMenuProfilEmailAkun);
-        Outlet=findViewById(R.id.tvMenuProfilOutlet);
-        tipeAkun=findViewById(R.id.tvMenuProfilTipeAkun);
-        alamatBisnis=findViewById(R.id.tvMenuProfilAlamatBisnis);
+        namaBisnis= findViewById(R.id.tvMenuProfilNamaBisnis);
+        emailBisnis= findViewById(R.id.tvMenuProfilEmailAkun);
+        Outlet= findViewById(R.id.tvMenuProfilOutlet);
+        tipeAkun= findViewById(R.id.tvMenuProfilTipeAkun);
+        alamatBisnis= findViewById(R.id.tvMenuProfilAlamatBisnis);
 
         pref = new SharedPrefManager(this);
         HashMap<String, String> user = pref.getUserDetails();

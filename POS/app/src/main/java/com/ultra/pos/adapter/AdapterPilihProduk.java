@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.ultra.pos.R;
 import com.ultra.pos.activity.Dashboard;
+import com.ultra.pos.activity.DashboardFragment;
 import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.util.StylingUtils;
 
@@ -153,10 +155,20 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
     public void onBindViewHolder(final ProdukViewHolder holder, final int position){
         final ProdukModel produkModel = listProduk.get(position);
-        holder.namaProduk.setText(produkModel.getNamaProduk());
+        if (produkModel.getNamaProduk() != null) {
+            if (produkModel.getNamaVariant() == null) {
+                holder.namaProduk.setText(produkModel.getNamaProduk());
+            } else {
+                holder.namaProduk.setText(produkModel.getNamaVariant());
+            }
+        }
         holder.hargaProduk.setText(produkModel.getHargaProduk());
 //        Picasso.with(mCtx).load("" + produkModel.getGambarProduk()).into(holder.gambarProduk);
     }
 
     public int getItemCount(){ return listProduk.size();}
+
+    public Fragment getItem(int position) {
+        return DashboardFragment.newInstance(position);
+    }
 }

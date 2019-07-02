@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.ultra.pos.activity.LoginActivity;
+import com.ultra.pos.model.KabupatenModel;
 import com.ultra.pos.model.KategoriModel;
+import com.ultra.pos.model.KecamatanModel;
 import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.model.UserModel;
+import com.ultra.pos.model.ProvinsiModel;
 
 import java.util.HashMap;
 
@@ -32,13 +35,21 @@ public class SharedPrefManager {
     public static final String ID_KATEGORI = "keyIDKategori";
     public static final String NAMA_KATEGORI = "keyNamaKategori";
     public static final String ID_PRODUK = "keyIDProduk";
-    public static final String NAMA_OUTLET = "keyNamaOutlet";
     public static final String NAMA_PRODUK = "keyNamaProduk";
     public static final String HARGA_PRODUK = "keyHargaProduk";
     public static final String GAMBAR_PRODUK = "keyGambarProduk";
     public static final String STATUS_PRODUK = "keyStatusProduk";
     public static final String VARIANT = "keyVariant";
     public static final String NAMA_VARIANT = "keyNamaVariant";
+
+    public static final String ID_WILAYAH = "keyIDWilayah";
+    public static final String NAMA_WILAYAH = "keyNamaWilayah";
+
+    public static final String ID_KABUPATEN = "keyIDKabupaten";
+    public static final String NAMA_KABUPATEN = "keyNamaKabupaten";
+
+    public static final String ID_KECAMATAN = "keyIDKecamatan";
+    public static final String NAMA_KECAMATAN = "keyNamaKecamatan";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -104,6 +115,30 @@ public class SharedPrefManager {
         editor.commit();
     }
 
+    public void createSessionWilayah(ProvinsiModel wilayah){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ID_WILAYAH, wilayah.getIdWilayah());
+        editor.putString(NAMA_WILAYAH, wilayah.getNamaWilayah());
+        editor.commit();
+    }
+
+    public void createSessionKabupaten(KabupatenModel kabupatenModel){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ID_KABUPATEN, kabupatenModel.getIdKabupaten());
+        editor.putString(NAMA_KABUPATEN, kabupatenModel.getNamaKabupaten());
+        editor.commit();
+    }
+
+    public void createSessionKecamatan(KecamatanModel kecamatanModel){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ID_KECAMATAN, kecamatanModel.getIdKecamatan());
+        editor.putString(NAMA_KECAMATAN, kecamatanModel.getNamaKecamatan());
+        editor.commit();
+    }
+
     public boolean isLoggedIn(){ return pref.getBoolean(IS_LOGIN, false);}
 
     public void logout(){
@@ -156,5 +191,27 @@ public class SharedPrefManager {
         produk.put(GAMBAR_PRODUK, pref.getString(GAMBAR_PRODUK, null));
         produk.put(HARGA_PRODUK, pref.getString(HARGA_PRODUK, null));
         return produk;
+    }
+
+    public HashMap<String, String> getWilayahDetails(){
+        HashMap<String, String> wilayah = new HashMap<>();
+        wilayah.put(SHARED_PREF_NAME, pref.getString(SHARED_PREF_NAME, null ));
+        wilayah.put(ID_WILAYAH, pref.getString(ID_WILAYAH, null));
+        wilayah.put(NAMA_WILAYAH, pref.getString(NAMA_WILAYAH, null));
+        return wilayah;
+    }
+    public HashMap<String, String> getWilayahKabupaten(){
+        HashMap<String, String> kabupaten = new HashMap<>();
+        kabupaten.put(SHARED_PREF_NAME, pref.getString(SHARED_PREF_NAME, null));
+        kabupaten.put(ID_KABUPATEN, pref.getString(ID_KABUPATEN, null));
+        kabupaten.put(NAMA_KABUPATEN, pref.getString(NAMA_KABUPATEN, null));
+        return kabupaten;
+    }
+    public HashMap<String, String> getWilayahKecamatan(){
+        HashMap<String, String> kecamatan = new HashMap<>();
+        kecamatan.put(SHARED_PREF_NAME, pref.getString(SHARED_PREF_NAME, null));
+        kecamatan.put(ID_KECAMATAN, pref.getString(ID_KECAMATAN, null));
+        kecamatan.put(NAMA_KECAMATAN, pref.getString(NAMA_KECAMATAN, null));
+        return kecamatan;
     }
 }

@@ -264,7 +264,7 @@ public class Dashboard extends AppCompatActivity
                             adapter = new TabAdapter(getSupportFragmentManager());
 
                             for (int k = 0; k < array.length();k++){
-                                adapter.addFragment(new DashboardFragment(), " " + namaKategori[k]);
+                                adapter.addFragment(new DashboardFragment(), "" + namaKategori[k]);
                             }
 
                             viewPager.setAdapter(adapter);

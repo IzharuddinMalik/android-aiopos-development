@@ -42,12 +42,16 @@ public interface BaseApiInterface {
                                        @Field("nama_pelanggan") String nama_pelanggan, @Field("idoutlet") String email_pelanggan,
                                        @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
 
-    @FormUrlEncoded
-    @POST("wilayah_get_provinsi.php")
+    @GET("wilayah_get_provinsi.php")
     Call<ResponseBody> getProvinsi();
 
     @FormUrlEncoded
     @POST("produk_get_list.php")
     Call<ResponseBody> getProdukList(@FieldMap HashMap<String, String> params, @Field("idkategori") String idKategori,
                                      @Field("idtb") String idTB, @Field("idoutlet") String idOutlet);
+
+    @FormUrlEncoded
+    @POST("wilayah_get_kab_kec.php")
+    Call<ResponseBody> getKecamatan(@FieldMap HashMap<String, String> params,
+                                    @Field("id") String id, @Field("pilih") String pilih);
 }

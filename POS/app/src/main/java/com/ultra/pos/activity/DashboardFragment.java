@@ -51,6 +51,12 @@ public class DashboardFragment extends Fragment {
     SharedPrefManager pref;
     ArrayList<ProdukModel> dataProduk;
 
+    public static DashboardFragment newInstance(int position){
+        DashboardFragment dashboardFragment = new DashboardFragment();
+
+        return dashboardFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         layout = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -80,111 +86,6 @@ public class DashboardFragment extends Fragment {
 
         getProdukList();
     }
-
-//    public void getProdukList(){
-//
-//        pref = new SharedPrefManager(getContext());
-//        HashMap<String, String> kategori = pref.getKategoriDetails();
-//        HashMap<String, String> user = pref.getUserDetails();
-//        String idKategoriProduk = kategori.get(SharedPrefManager.ID_KATEGORI);
-//        String idTB = user.get(SharedPrefManager.ID_TB);
-//        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
-//
-//        HashMap<String, String> params = new HashMap<>();
-//        params.put("idkategori", idKategoriProduk);
-//        params.put("idtb", idTB);
-//        params.put("idoutlet", idOutlet);
-//        mApiInterface = APIUrl.getAPIService();
-//        mApiInterface.getProdukList(params, idKategoriProduk, idTB, idOutlet).enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if (response.isSuccessful()){
-//                    try{
-//
-//                        String result = response.body().string();
-//
-//                        JSONObject jsonResult = new JSONObject(result);
-//                        jsonResult.getString("success");
-//                        jsonResult.getString("message");
-//
-//                        JSONArray array = jsonResult.getJSONArray("info");
-//                        String[] idProduk = new String[array.length()];
-//                        String[] idBusiness = new String[array.length()];
-//                        String[] idOutlet = new String[array.length()];
-//                        String[] namaOutlet = new String[array.length()];
-//                        String[] namaProduk = new String[array.length()];
-//                        String[] variant = new String[array.length()];
-//                        String[] idKategori = new String[array.length()];
-//                        String[] namaVariant = new String[array.length()];
-//                        String[] statusProduk = new String[array.length()];
-//                        String[] fotoProduk = new String[array.length()];
-//                        String[] harga = new String[array.length()];
-//                        dataProduk = new ArrayList<>();
-//                        dataProduk.clear();
-//                        for (int i = 0; i< array.length();i++){
-//                            JSONObject objProduk = array.getJSONObject(i);
-//                            ProdukModel produkModel = new ProdukModel(
-//                                    idProduk[i] = objProduk.getString("idproduk"),
-//                                    idBusiness[i] = objProduk.getString("idbusiness"),
-//                                    idOutlet[i] = objProduk.getString("idoutlet"),
-//                                    namaOutlet[i] = objProduk.getString("name_outlet"),
-//                                    namaProduk[i] = objProduk.getString("nama_produk"),
-//                                    variant[i] = objProduk.getString("variant"),
-//                                    idKategori[i] = objProduk.getString("idkategori"),
-//                                    namaVariant[i] = objProduk.getString("nama_variant"),
-//                                    statusProduk[i] = objProduk.getString("status_produk"),
-//                                    fotoProduk[i] = objProduk.getString("foto_produk"),
-//                                    harga[i] = objProduk.getString("harga")
-//                            );
-//
-//                            if (idKategori[i].equals(idKategoriProduk)){
-//                                for (int j = 0; j < array.length(); j++){
-//                                    produkModel.setIdProduk(idProduk[j]);
-//                                    produkModel.setIdBusiness(idBusiness[j]);
-//                                    produkModel.setIdOutlet(idOutlet[j]);
-//                                    produkModel.setNamaOutlet(namaOutlet[j]);
-//                                    produkModel.setNamaProduk(namaProduk[j]);
-//                                    produkModel.setVariant(variant[j]);
-//                                    produkModel.setIdKategori(idKategori[j]);
-//                                    produkModel.setNamaVariant(namaVariant[j]);
-//                                    produkModel.setStatusProduk(statusProduk[j]);
-//                                    produkModel.setGambarProduk(fotoProduk[j]);
-//                                    produkModel.setHargaProduk(harga[j]);
-//
-//                                    dataProduk.add(produkModel);
-//                                }
-//                            }
-//                        }
-//
-//                        for (int k =0; k < dataProduk.size();k++){
-//
-//                        }
-//
-//                        adapter = new AdapterPilihProduk(getContext(), dataProduk);
-//                        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-//                        recProduk.setLayoutManager(mLayoutManager);
-//                        recProduk.setItemAnimator(new DefaultItemAnimator());
-//                        recProduk.setItemViewCacheSize(dataProduk.size());
-//                        recProduk.setDrawingCacheEnabled(true);
-//                        recProduk.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-//                        recProduk.setAdapter(adapter);
-//                        adapter.notifyDataSetChanged();
-////                            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(DashboardFragment.this.getContext(), R.anim.animation_slide_from_right);
-////                            recProduk.setLayoutAnimation(animation);
-//                    } catch (JSONException e){
-//                        e.printStackTrace();
-//                    } catch (IOException e){
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//            }
-//        });
-//    }
 
     public void getProdukList(){
 
@@ -222,7 +123,7 @@ public class DashboardFragment extends Fragment {
                             }else{
                                 for(int i=0;i<jsonArray.length();i++){
                                     JSONObject objisinya = jsonArray.getJSONObject(i);
-                                    if (objisinya.getString("id ").equals(idKategori)){
+                                    if (objisinya.getString("idkategori").equals(idKategori)){
                                         dataProduk.add(i, new ProdukModel(
                                                 objisinya.getString("idproduk"),
                                                 objisinya.getString("idbusiness"),
