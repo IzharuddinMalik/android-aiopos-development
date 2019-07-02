@@ -155,7 +155,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
         final ProdukModel produkModel = listProduk.get(position);
         holder.namaProduk.setText(produkModel.getNamaProduk());
         holder.hargaProduk.setText(produkModel.getHargaProduk());
-        Picasso.with(mCtx).load("" + produkModel.getGambarProduk()).into(holder.gambarProduk);
+//        Picasso.with(mCtx).load("" + produkModel.getGambarProduk()).into(holder.gambarProduk);
     }
 
     public int getItemCount(){ return listProduk.size();}

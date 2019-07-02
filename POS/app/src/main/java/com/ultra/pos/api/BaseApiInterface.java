@@ -45,4 +45,9 @@ public interface BaseApiInterface {
     @FormUrlEncoded
     @POST("wilayah_get_provinsi.php")
     Call<ResponseBody> getProvinsi();
+
+    @FormUrlEncoded
+    @POST("produk_get_list.php")
+    Call<ResponseBody> getProdukList(@FieldMap HashMap<String, String> params, @Field("idkategori") String idKategori,
+                                     @Field("idtb") String idTB, @Field("idoutlet") String idOutlet);
 }

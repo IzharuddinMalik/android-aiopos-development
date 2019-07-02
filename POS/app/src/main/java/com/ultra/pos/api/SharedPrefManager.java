@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.ultra.pos.activity.LoginActivity;
+import com.ultra.pos.model.KategoriModel;
+import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.model.UserModel;
 
 import java.util.HashMap;
@@ -26,6 +28,17 @@ public class SharedPrefManager {
     public static final String ALAMAT_BISNIS = "keyAlamatBisnis";
     public static final String NAMA_OUTLET = "keyNamaOutlet";
     public static final String ALAMAT_OUTLET = "keyAlamatOutlet";
+
+    public static final String ID_KATEGORI = "keyIDKategori";
+    public static final String NAMA_KATEGORI = "keyNamaKategori";
+    public static final String ID_PRODUK = "keyIDProduk";
+    public static final String NAMA_OUTLET = "keyNamaOutlet";
+    public static final String NAMA_PRODUK = "keyNamaProduk";
+    public static final String HARGA_PRODUK = "keyHargaProduk";
+    public static final String GAMBAR_PRODUK = "keyGambarProduk";
+    public static final String STATUS_PRODUK = "keyStatusProduk";
+    public static final String VARIANT = "keyVariant";
+    public static final String NAMA_VARIANT = "keyNamaVariant";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -66,6 +79,31 @@ public class SharedPrefManager {
         editor.commit();
     }
 
+    public void createSessionKategori(KategoriModel kategori){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ID_KATEGORI, kategori.getIdKategori());
+        editor.putString(NAMA_KATEGORI, kategori.getNamaKategori());
+        editor.commit();
+    }
+
+    public void createSessionProduk(ProdukModel produk){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ID_PRODUK, produk.getIdProduk());
+        editor.putString(ID_BUSINESS, produk.getIdBusiness());
+        editor.putString(ID_OUTLET, produk.getIdOutlet());
+        editor.putString(NAMA_OUTLET, produk.getNamaOutlet());
+        editor.putString(NAMA_PRODUK, produk.getNamaProduk());
+        editor.putString(VARIANT, produk.getVariant());
+        editor.putString(ID_KATEGORI, produk.getIdKategori());
+        editor.putString(NAMA_VARIANT, produk.getNamaVariant());
+        editor.putString(STATUS_PRODUK, produk.getStatusProduk());
+        editor.putString(GAMBAR_PRODUK, produk.getGambarProduk());
+        editor.putString(HARGA_PRODUK, produk.getHargaProduk());
+        editor.commit();
+    }
+
     public boolean isLoggedIn(){ return pref.getBoolean(IS_LOGIN, false);}
 
     public void logout(){
@@ -93,5 +131,30 @@ public class SharedPrefManager {
         user.put(NAMA_OUTLET, pref.getString(NAMA_OUTLET, null));
         user.put(ALAMAT_OUTLET, pref.getString(ALAMAT_OUTLET, null));
         return user;
+    }
+
+    public HashMap<String, String> getKategoriDetails(){
+        HashMap<String, String> kategori = new HashMap<>();
+        kategori.put(SHARED_PREF_NAME, pref.getString(SHARED_PREF_NAME, null));
+        kategori.put(ID_KATEGORI, pref.getString(ID_KATEGORI, null));
+        kategori.put(NAMA_KATEGORI, pref.getString(NAMA_KATEGORI, null));
+        return kategori;
+    }
+
+    public HashMap<String, String> getProdukDetails(){
+        HashMap<String, String> produk = new HashMap<>();
+        produk.put(SHARED_PREF_NAME, pref.getString(SHARED_PREF_NAME, null));
+        produk.put(ID_PRODUK, pref.getString(ID_PRODUK, null));
+        produk.put(ID_BUSINESS, pref.getString(ID_BUSINESS, null));
+        produk.put(ID_OUTLET, pref.getString(ID_OUTLET, null));
+        produk.put(NAMA_OUTLET, pref.getString(NAMA_OUTLET, null));
+        produk.put(NAMA_PRODUK, pref.getString(NAMA_PRODUK, null));
+        produk.put(VARIANT, pref.getString(VARIANT, null));
+        produk.put(ID_KATEGORI, pref.getString(ID_KATEGORI, null));
+        produk.put(NAMA_VARIANT, pref.getString(NAMA_VARIANT, null));
+        produk.put(STATUS_PRODUK, pref.getString(STATUS_PRODUK, null));
+        produk.put(GAMBAR_PRODUK, pref.getString(GAMBAR_PRODUK, null));
+        produk.put(HARGA_PRODUK, pref.getString(HARGA_PRODUK, null));
+        return produk;
     }
 }
