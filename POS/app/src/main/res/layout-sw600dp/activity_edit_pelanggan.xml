@@ -31,19 +31,22 @@
                         android:layout_width="@dimen/_10sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:src="@drawable/ic_arrow_back_white_24dp"
-                        android:id="@+id/ivMenuEdtiPelangganArrowBack"/>
+                        android:id="@+id/ivMenuEdtiPelangganArrowBack"
+                        android:layout_marginTop="@dimen/_5sdp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <TextView
+                        android:id="@+id/tvMenuEditPelangganJudulMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tvMenuEditPelangganJudulMenu"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:text="Edit Pelanggan"
-                        android:textSize="@dimen/_8ssp"
                         android:textColor="@android:color/white"
-                        android:layout_marginLeft="@dimen/_5sdp"/>
+                        android:textSize="@dimen/_8ssp" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
@@ -55,10 +58,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:textColorHint="@android:color/darker_gray"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp">
@@ -115,48 +119,70 @@
                     android:textColor="@color/colorBlueBasic"
                     android:textSize="@dimen/_12ssp"/>
             </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+
+            <TextView
+                android:id="@+id/textView8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textColorHint="@android:color/darker_gray"
-                android:hint="Provinsi"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp">
-                <AutoCompleteTextView
-                    android:id="@+id/actvMenuEditPelangganProvinsiPelanggan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_12ssp"></AutoCompleteTextView>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:text="Provinsi"
+                android:textSize="@dimen/_12ssp" />
+
+            <Spinner
+                android:id="@+id/spEditProvinsi"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textColorHint="@android:color/darker_gray"
-                android:hint="Kabupaten"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp">
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/actvMenuEditPelangganKabupatenPelanggan"
-                    android:textSize="@dimen/_12ssp"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:spinnerMode="dialog" />
+
+            <TextView
+                android:id="@+id/textView12"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textColorHint="@android:color/darker_gray"
-                android:hint="Kecamatan"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp">
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/actvMenuEditPelangganKecamatanPelanggan"
-                    android:textSize="@dimen/_12ssp"/>
-            </android.support.design.widget.TextInputLayout>
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:text="Kabupaten"
+                android:textSize="@dimen/_12ssp" />
+
+            <Spinner
+                android:id="@+id/spEditKabupaten"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:spinnerMode="dialog" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:text="Kecamatan"
+                android:textSize="@dimen/_12ssp" />
+
+            <Spinner
+                android:id="@+id/spEditKecamatan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:spinnerMode="dialog" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

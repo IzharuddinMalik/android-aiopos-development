@@ -17,7 +17,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/shift_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/colorWhiteffffff"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -25,9 +25,9 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhiteffffff"
+                android:textColor="@color/colorBlueBasic"
                 android:text="Shift"
-                android:textSize="@dimen/_8ssp"/>
+                android:textSize="@dimen/_20sdp"/>
         </android.support.v7.widget.Toolbar>
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_riwayat_view"
+        android:id="@+id/nav_shift_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

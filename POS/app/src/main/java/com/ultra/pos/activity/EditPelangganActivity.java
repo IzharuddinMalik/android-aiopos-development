@@ -152,12 +152,6 @@ public class EditPelangganActivity extends AppCompatActivity {
 
     public void getAllDataKab(String idProv){
 
-        pref = new SharedPrefManager(EditPelangganActivity.this);
-        HashMap<String, String> wilayah = pref.getWilayahDetails();
-        String idProvinsi = wilayah.get(SharedPrefManager.ID_WILAYAH);
-
-        idProv = idProvinsi;
-
         Log.i("IDPROVINSI", "ID PROVINSI -> " + idProv);
 
         HashMap<String, String> params = new HashMap<>();
@@ -222,9 +216,6 @@ public class EditPelangganActivity extends AppCompatActivity {
     }
 
     public void getAllDataKec(String idKab){
-        pref = new SharedPrefManager(EditPelangganActivity.this);
-        HashMap<String, String> wilayah = pref.getWilayahDetails();
-        String idKabupaten = wilayah.get(SharedPrefManager.ID_KABUPATEN);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("id",idKab);

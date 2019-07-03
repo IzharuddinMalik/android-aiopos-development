@@ -104,22 +104,6 @@ public class Dashboard extends AppCompatActivity
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
         llDashboardLihatPesanan=findViewById(R.id.llDashboardLihatPesanan);
 
-//        adapter = new TabAdapter(getSupportFragmentManager());
-
-//        adapter.addFragment(new DashboardFragment(), "Favorit");
-//        adapter.addFragment(new DashboardFragment(), "Makanan");
-//        adapter.addFragment(new DashboardFragment(), "Minuman");
-
-//        viewPager.setAdapter(adapter);
-//        tabLayout.setupWithViewPager(viewPager);
-//        viewPager.setOffscreenPageLimit(1);
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        if (tabLayout.getTabCount() == 2){
-//            tabLayout.setTabMode(tabLayout.MODE_FIXED);
-//        }else{
-//            tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
-//        }
-
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
 
@@ -252,13 +236,15 @@ public class Dashboard extends AppCompatActivity
                         String[] idKategori = new String[array.length()];
                         for (int i = 0; i<array.length(); i++){
                             JSONObject objKategori = array.getJSONObject(i);
-                            ProdukModel kategoriModel = new ProdukModel(
-                                    objKategori.getString("idkategori"),
+                            ProdukModel produkModel = new ProdukModel(
+                                    idKategori[i] = objKategori.getString("idkategori"),
                                     namaKategori[i] = objKategori.getString("nama_kategori"),
                                     objKategori.getString("produk")
                             );
 
-                            Log.i("LISTPRODUK", "LISTNYA ->" + objKategori.getString("produk"));
+                            Log.i("LISTPRODUK", "LISTNYA ->" + objKategori.getString("idkategori"));
+
+                            pref = new SharedPrefManager(Dashboard.this );
 
                             adapter = new TabAdapter(getSupportFragmentManager());
 
