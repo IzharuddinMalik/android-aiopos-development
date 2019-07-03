@@ -156,6 +156,10 @@ public class EditPelangganActivity extends AppCompatActivity {
         HashMap<String, String> wilayah = pref.getWilayahDetails();
         String idProvinsi = wilayah.get(SharedPrefManager.ID_WILAYAH);
 
+        idProv = idProvinsi;
+
+        Log.i("IDPROVINSI", "ID PROVINSI -> " + idProv);
+
         HashMap<String, String> params = new HashMap<>();
         params.put("id",idProv);
         params.put("pilih", "1");

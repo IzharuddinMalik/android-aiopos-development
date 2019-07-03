@@ -1,6 +1,5 @@
 package com.ultra.pos.activity;
 
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +11,6 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 
 import com.ultra.pos.R;
@@ -22,6 +19,7 @@ import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
 import com.ultra.pos.api.SharedPrefManager;
+import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.ProdukModel;
 
 import org.json.JSONArray;
@@ -31,7 +29,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -43,13 +40,13 @@ public class DashboardFragment extends Fragment {
     View layout;
     RecyclerView recProduk;
     private AdapterPilihProduk adapter;
-    public static final String API_Produk = "http://pos.ultrapreneur.id/produk_get_kategori.php";
     boolean status = false;
     LinearLayout linearLihatPesanan;
     BaseApiInterface mApiInterface;
     APIConnect mApiConnect;
     SharedPrefManager pref;
     ArrayList<ProdukModel> dataProduk;
+    ArrayList<Produk> produk;
 
     public static DashboardFragment newInstance(int position){
         DashboardFragment dashboardFragment = new DashboardFragment();
@@ -87,26 +84,143 @@ public class DashboardFragment extends Fragment {
         getProdukList();
     }
 
+//    public void getProdukList(){
+//
+//        pref = new SharedPrefManager(getContext());
+//        HashMap<String, String> kategori = pref.getKategoriDetails();
+//        HashMap<String, String> user = pref.getUserDetails();
+//        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+//        String idTB = user.get(SharedPrefManager.ID_TB);
+//        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
+//        String idKategori = kategori.get(SharedPrefManager.ID_KATEGORI);
+//
+//        dataProduk = new ArrayList<ProdukModel>();
+//        dataProduk.clear();
+//
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("idbusiness", idBusiness);
+//        params.put("idtb", idTB);
+//        params.put("idoutlet", idOutlet);
+//        mApiInterface = APIUrl.getAPIService();
+//        mApiInterface.getProduk(params, idBusiness, idTB, idOutlet).enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                if (response.isSuccessful()){
+//
+//                    String result = null;
+//                    try {
+//                        result = response.body().string();
+//                        try {
+//                            JSONObject jsonRESULTS = new JSONObject(result);
+//
+//                            JSONArray jsonArray = jsonRESULTS.getJSONArray("info");
+//
+//                            int pos = 0;
+//                            if(jsonArray.toString().equals("[]")){
+//
+//                            }else{
+//                                String[] namaKategori = new String[jsonArray.length()];
+//                                String[] namaProduk = new String[jsonArray.length()];
+//                                for(int i=0;i<jsonArray.length();i++){
+//                                    JSONObject objisinya = jsonArray.getJSONObject(i);
+//                                    KategoriModel kategoriModel = new KategoriModel(
+//                                            objisinya.getString("idkategori"),
+//                                            namaKategori[i] = objisinya.getString("nama_kategori"),
+//                                            namaProduk[i] = objisinya.getString("produk")
+//                                    );
+//
+//                                    try {
+//
+//                                        JSONObject jsonObject = new JSONObject(namaProduk[i]);
+//                                        jsonObject.getString("produk");
+//
+//                                        JSONArray jsonArray1 = jsonObject.getJSONArray("produk");
+//
+//                                        int pos2 = 0;
+//                                        if (jsonArray1.toString().equals("[]")){
+//
+//                                        } else{
+//                                            for (int j = 0; j < jsonArray1.length(); j++){
+//                                                JSONObject objProduk = jsonArray1.getJSONObject(j);
+//                                                if (objisinya.getString("idkategori").equals(idKategori)){
+//                                                    dataProduk.add(j, new ProdukModel(
+//                                                            objProduk.getString("idproduk"),
+//                                                            objProduk.getString("idbusiness"),
+//                                                            objProduk.getString("idoutlet"),
+//                                                            objProduk.getString("name_outlet"),
+//                                                            objProduk.getString("nama_produk"),
+//                                                            objProduk.getString("variant"),
+//                                                            objProduk.getString("idkategori"),
+//                                                            objProduk.getString("nama_variant"),
+//                                                            objProduk.getString("status_produk"),
+//                                                            objProduk.getString("foto_produk"),
+//                                                            objProduk.getString("harga")));
+//                                                    pos2++;
+//                                                }
+//                                            }
+//                                        }
+//                                    } catch (JSONException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//
+//                        }
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//
+//
+//                    }
+//
+//                    adapter = new AdapterPilihProduk(getContext(), dataProduk);
+//                    final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+//                    recProduk.setLayoutManager(mLayoutManager);
+//                    recProduk.setItemAnimator(new DefaultItemAnimator());
+//                    recProduk.setItemViewCacheSize(dataProduk.size());
+//                    recProduk.setDrawingCacheEnabled(true);
+//                    recProduk.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+//                    recProduk.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//            }
+//        });
+//    }
+
     public void getProdukList(){
 
         pref = new SharedPrefManager(getContext());
         HashMap<String, String> kategori = pref.getKategoriDetails();
         HashMap<String, String> user = pref.getUserDetails();
-        String idKategori = kategori.get(SharedPrefManager.ID_KATEGORI);
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
         String idTB = user.get(SharedPrefManager.ID_TB);
         String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
+        String idKategori = kategori.get(SharedPrefManager.ID_KATEGORI);
 
         dataProduk = new ArrayList<ProdukModel>();
         dataProduk.clear();
 
+        produk = new ArrayList<Produk>();
+        produk.clear();
+
         HashMap<String, String> params = new HashMap<>();
-        params.put("idkategori", idKategori);
+        params.put("idbusiness", idBusiness);
         params.put("idtb", idTB);
         params.put("idoutlet", idOutlet);
 
         Log.i("Isi",idKategori+idTB+idOutlet);
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.getProdukList(params, idKategori, idTB, idOutlet).enqueue(new Callback<ResponseBody>() {
+        mApiInterface.getProduk(params, idBusiness, idTB, idOutlet).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
@@ -119,37 +233,23 @@ public class DashboardFragment extends Fragment {
                             Log.i("Isi",""+jsonArray);
 
                             int pos = 0;
+
                             if(jsonArray.toString().equals("[]")){
                             }else{
                                 for(int i=0;i<jsonArray.length();i++){
                                     JSONObject objisinya = jsonArray.getJSONObject(i);
-                                    dataProduk.add(i, new ProdukModel(
-                                            objisinya.getString("idproduk"),
-                                            objisinya.getString("idbusiness"),
-                                            objisinya.getString("idoutlet"),
-                                            objisinya.getString("name_outlet"),
-                                            objisinya.getString("nama_produk"),
-                                            objisinya.getString("variant"),
-                                            objisinya.getString("idkategori"),
-                                            objisinya.getString("nama_variant"),
-                                            objisinya.getString("status_produk"),
-                                            objisinya.getString("foto_produk"),
-                                            objisinya.getString("harga")));
-//                                    if (objisinya.getString("idkategori ").equals(idKategori)){
-//                                        dataProduk.add(i, new ProdukModel(
-//                                                objisinya.getString("idproduk"),
-//                                                objisinya.getString("idbusiness"),
-//                                                objisinya.getString("idoutlet"),
-//                                                objisinya.getString("name_outlet"),
-//                                                objisinya.getString("nama_produk"),
-//                                                objisinya.getString("variant"),
-//                                                objisinya.getString("idkategori"),
-//                                                objisinya.getString("nama_variant"),
-//                                                objisinya.getString("status_produk"),
-//                                                objisinya.getString("foto_produk"),
-//                                                objisinya.getString("harga")));
-//                                        pos++;
-//                                    }
+                                    JSONArray arrayProduk = objisinya.getJSONArray("produk");
+                                    if(arrayProduk.length()==0){
+                                        dataProduk.add(i, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                    }else{
+                                        for (int j=0;j<arrayProduk.length();j++){
+                                            JSONObject objprod = arrayProduk.getJSONObject(j);
+                                            produk.add(j, new Produk(objprod.getString("idproduk"), objprod.getString("nama_produk"), objprod.getString("foto_produk"), objprod.getString("harga_produk"), objprod.getString("idkategori")));
+                                        }
+                                        dataProduk.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                        pos++;
+                                    }
+
                                 }
                             }
 
@@ -165,7 +265,7 @@ public class DashboardFragment extends Fragment {
 
                     }
 
-                    adapter = new AdapterPilihProduk(getContext(), dataProduk);
+                    adapter = new AdapterPilihProduk(getContext(), produk);
                     final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
                     recProduk.setLayoutManager(mLayoutManager);
                     recProduk.setItemAnimator(new DefaultItemAnimator());

@@ -16,9 +16,7 @@ import android.widget.TextView;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterPesanan;
-import com.ultra.pos.adapter.AdapterPilihPelanggan;
-import com.ultra.pos.model.PelangganModel;
-import com.ultra.pos.model.ProdukModel;
+import com.ultra.pos.model.Produk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class DetailTransaksiTesimpanActivity extends AppCompatActivity {
     TextView total,jam;
     Button lanjut,cetak;
     RecyclerView recPesanan;
-    private List<ProdukModel> listPesanan;
+    private List<Produk> listPesanan;
     private AdapterPesanan adapter;
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
