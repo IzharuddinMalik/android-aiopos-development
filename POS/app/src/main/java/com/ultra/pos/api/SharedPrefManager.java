@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 import com.ultra.pos.activity.LoginActivity;
 import com.ultra.pos.model.KabupatenModel;
-import com.ultra.pos.model.KategoriModel;
 import com.ultra.pos.model.KecamatanModel;
 import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.model.UserModel;
@@ -87,31 +86,6 @@ public class SharedPrefManager {
         editor.putString(ALAMAT_BISNIS, user.getAlamatBisnis());
         editor.putString(NAMA_OUTLET, user.getNamaOutlet());
         editor.putString(ALAMAT_OUTLET, user.getAlamatOutlet());
-        editor.commit();
-    }
-
-    public void createSessionKategori(KategoriModel kategori){
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(ID_KATEGORI, kategori.getIdKategori());
-        editor.putString(NAMA_KATEGORI, kategori.getNamaKategori());
-        editor.commit();
-    }
-
-    public void createSessionProduk(ProdukModel produk){
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(ID_PRODUK, produk.getIdProduk());
-        editor.putString(ID_BUSINESS, produk.getIdBusiness());
-        editor.putString(ID_OUTLET, produk.getIdOutlet());
-        editor.putString(NAMA_OUTLET, produk.getNamaOutlet());
-        editor.putString(NAMA_PRODUK, produk.getNamaProduk());
-        editor.putString(VARIANT, produk.getVariant());
-        editor.putString(ID_KATEGORI, produk.getIdKategori());
-        editor.putString(NAMA_VARIANT, produk.getNamaVariant());
-        editor.putString(STATUS_PRODUK, produk.getStatusProduk());
-        editor.putString(GAMBAR_PRODUK, produk.getGambarProduk());
-        editor.putString(HARGA_PRODUK, produk.getHargaProduk());
         editor.commit();
     }
 

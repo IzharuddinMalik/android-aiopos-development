@@ -1,11 +1,8 @@
 package com.ultra.pos.activity;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,23 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterPilihPelanggan;
-import com.ultra.pos.adapter.TabAdapter;
 import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
 import com.ultra.pos.api.SharedPrefManager;
-import com.ultra.pos.model.KategoriModel;
 import com.ultra.pos.model.PelangganModel;
 
 import org.json.JSONArray;

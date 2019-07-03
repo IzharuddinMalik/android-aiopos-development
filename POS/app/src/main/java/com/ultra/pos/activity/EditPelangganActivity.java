@@ -89,7 +89,7 @@ public class EditPelangganActivity extends AppCompatActivity {
                             actvEditProvinsiPelanggan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                    getAllDataKab();
+                                    getAllDataKab(idProvinsi[i]);
                                 }
 
                                 @Override
@@ -113,19 +113,21 @@ public class EditPelangganActivity extends AppCompatActivity {
         });
     }
 
-    public void getAllDataKab(){
+    public void getAllDataKab(String idProv){
 
         pref = new SharedPrefManager(EditPelangganActivity.this);
         HashMap<String, String> wilayah = pref.getWilayahDetails();
         String idProvinsi = wilayah.get(SharedPrefManager.ID_WILAYAH);
 
-        Log.i("IDPROVINSI", "ID PROVINSI -> " + idProvinsi);
+        idProv = idProvinsi;
+
+        Log.i("IDPROVINSI", "ID PROVINSI -> " + idProv);
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("id",idProvinsi);
+        params.put("id", idProv);
         params.put("pilih", "1");
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.getKecamatan(params, idProvinsi, "1").enqueue(new Callback<ResponseBody>() {
+        mApiInterface.getKecamatan(params, idProv, "1").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){

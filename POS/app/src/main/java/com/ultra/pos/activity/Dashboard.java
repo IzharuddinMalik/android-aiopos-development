@@ -5,17 +5,14 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
@@ -33,14 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultra.pos.R;
-import com.ultra.pos.adapter.DynamicAdapter;
 import com.ultra.pos.adapter.TabAdapter;
-import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
 import com.ultra.pos.api.SharedPrefManager;
-import com.ultra.pos.model.KategoriModel;
+import com.ultra.pos.model.Produk;
+import com.ultra.pos.model.ProdukModel;
 
 import java.util.List;
 
@@ -49,9 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -78,8 +72,7 @@ public class Dashboard extends AppCompatActivity
     SharedPrefManager pref;
     BaseApiInterface mApiInterface;
     APIConnect apiConnect;
-    List<KategoriModel> listing;
-    String idbusiness;
+    String idbusiness, idtb, idoutlet;
     DashboardFragment dashboardFragment;
 
     @Override
@@ -235,12 +228,18 @@ public class Dashboard extends AppCompatActivity
         pref = new SharedPrefManager(Dashboard.this);
         HashMap<String, String> user = pref.getUserDetails();
         String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        String idTb = user.get(SharedPrefManager.ID_TB);
+        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
         idbusiness = idBusiness;
+        idtb = idTb;
+        idoutlet = idOutlet;
 
         mApiInterface = APIUrl.getAPIService();
         HashMap<String, String> params = new HashMap<>();
         params.put("idbusiness",idbusiness);
-        mApiInterface.getKategori(params, idbusiness).enqueue(new Callback<ResponseBody>() {
+        params.put("idtb", idtb);
+        params.put("idoutlet", idoutlet);
+        mApiInterface.getProduk(params, idbusiness, idtb, idoutlet).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
@@ -252,14 +251,13 @@ public class Dashboard extends AppCompatActivity
                         String[] namaKategori = new String[array.length()];
                         for (int i = 0; i<array.length(); i++){
                             JSONObject objKategori = array.getJSONObject(i);
-                            KategoriModel kategoriModel = new KategoriModel(
+                            ProdukModel kategoriModel = new ProdukModel(
                                     objKategori.getString("idkategori"),
-                                    objKategori.getString("idbusiness"),
-                                    namaKategori[i] = objKategori.getString("nama_kategori")
+                                    namaKategori[i] = objKategori.getString("nama_kategori"),
+                                    objKategori.getString("produk")
                             );
 
-                            pref = new SharedPrefManager(Dashboard.this);
-                            pref.createSessionKategori(kategoriModel);
+                            Log.i("LISTPRODUK", "LISTNYA ->" + objKategori.getString("produk"));
 
                             adapter = new TabAdapter(getSupportFragmentManager());
 

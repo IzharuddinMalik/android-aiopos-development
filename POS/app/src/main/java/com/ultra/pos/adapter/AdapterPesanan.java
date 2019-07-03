@@ -1,7 +1,6 @@
 package com.ultra.pos.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ultra.pos.R;
-import com.ultra.pos.model.ProdukModel;
+import com.ultra.pos.model.Produk;
 import com.ultra.pos.util.StylingUtils;
 
 import java.util.List;
 
 public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.PesananViewHolder>{
     private Context mCtx;
-    private List<ProdukModel> listPesanan;
+    private List<Produk> listPesanan;
     StylingUtils stylingUtils;
 
     @Override
@@ -28,7 +27,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.PesananV
 
     @Override
     public void onBindViewHolder(final PesananViewHolder holder, final int position) {
-        final ProdukModel produkModel = listPesanan.get(position);
+        final Produk produkModel = listPesanan.get(position);
         holder.namaorder.setText(produkModel.getNamaProduk());
         holder.hargaorder.setText(produkModel.getHargaProduk());
         holder.jumlahorder.setText("3");
@@ -54,7 +53,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.PesananV
         }
     }
 
-    public AdapterPesanan(Context context, List<ProdukModel> listPesanan){
+    public AdapterPesanan(Context context, List<Produk> listPesanan){
         this.mCtx = context;
         this.listPesanan = listPesanan;
 
