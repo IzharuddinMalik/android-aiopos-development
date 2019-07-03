@@ -39,7 +39,14 @@ public interface BaseApiInterface {
     Call<ResponseBody> insertPelanggan(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness,
                                        @Field("idoutlet") String idOutlet, @Field("province_id") String province_id,
                                        @Field("regencies_id") String regencies_id, @Field("district_id") String district_id,
-                                       @Field("nama_pelanggan") String nama_pelanggan, @Field("idoutlet") String email_pelanggan,
+                                       @Field("nama_pelanggan") String nama_pelanggan, @Field("email_pelanggan") String email_pelanggan,
+                                       @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
+    @FormUrlEncoded
+    @POST("pelanggan_update.php")
+    Call<ResponseBody> updatePelanggan(@FieldMap HashMap<String, String> params, @Field("idctm") String idPelanggan,
+                                       @Field("province_id") String province_id,
+                                       @Field("regencies_id") String regencies_id, @Field("district_id") String district_id,
+                                       @Field("nama_pelanggan") String nama_pelanggan, @Field("email_pelanggan") String email_pelanggan,
                                        @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
 
     @GET("wilayah_get_provinsi.php")

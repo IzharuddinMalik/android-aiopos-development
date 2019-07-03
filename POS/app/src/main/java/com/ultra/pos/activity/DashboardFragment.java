@@ -103,41 +103,53 @@ public class DashboardFragment extends Fragment {
         params.put("idkategori", idKategori);
         params.put("idtb", idTB);
         params.put("idoutlet", idOutlet);
+
+        Log.i("Isi",idKategori+idTB+idOutlet);
         mApiInterface = APIUrl.getAPIService();
         mApiInterface.getProdukList(params, idKategori, idTB, idOutlet).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
-
                     String result = null;
                     try {
                         result = response.body().string();
                         try {
                             JSONObject jsonRESULTS = new JSONObject(result);
-
                             JSONArray jsonArray = jsonRESULTS.getJSONArray("info");
+                            Log.i("Isi",""+jsonArray);
 
                             int pos = 0;
                             if(jsonArray.toString().equals("[]")){
-
                             }else{
                                 for(int i=0;i<jsonArray.length();i++){
                                     JSONObject objisinya = jsonArray.getJSONObject(i);
-                                    if (objisinya.getString("idkategori").equals(idKategori)){
-                                        dataProduk.add(i, new ProdukModel(
-                                                objisinya.getString("idproduk"),
-                                                objisinya.getString("idbusiness"),
-                                                objisinya.getString("idoutlet"),
-                                                objisinya.getString("name_outlet"),
-                                                objisinya.getString("nama_produk"),
-                                                objisinya.getString("variant"),
-                                                objisinya.getString("idkategori"),
-                                                objisinya.getString("nama_variant"),
-                                                objisinya.getString("status_produk"),
-                                                objisinya.getString("foto_produk"),
-                                                objisinya.getString("harga")));
-                                        pos++;
-                                    }
+                                    dataProduk.add(i, new ProdukModel(
+                                            objisinya.getString("idproduk"),
+                                            objisinya.getString("idbusiness"),
+                                            objisinya.getString("idoutlet"),
+                                            objisinya.getString("name_outlet"),
+                                            objisinya.getString("nama_produk"),
+                                            objisinya.getString("variant"),
+                                            objisinya.getString("idkategori"),
+                                            objisinya.getString("nama_variant"),
+                                            objisinya.getString("status_produk"),
+                                            objisinya.getString("foto_produk"),
+                                            objisinya.getString("harga")));
+//                                    if (objisinya.getString("idkategori ").equals(idKategori)){
+//                                        dataProduk.add(i, new ProdukModel(
+//                                                objisinya.getString("idproduk"),
+//                                                objisinya.getString("idbusiness"),
+//                                                objisinya.getString("idoutlet"),
+//                                                objisinya.getString("name_outlet"),
+//                                                objisinya.getString("nama_produk"),
+//                                                objisinya.getString("variant"),
+//                                                objisinya.getString("idkategori"),
+//                                                objisinya.getString("nama_variant"),
+//                                                objisinya.getString("status_produk"),
+//                                                objisinya.getString("foto_produk"),
+//                                                objisinya.getString("harga")));
+//                                        pos++;
+//                                    }
                                 }
                             }
 

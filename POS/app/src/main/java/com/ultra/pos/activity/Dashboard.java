@@ -250,10 +250,11 @@ public class Dashboard extends AppCompatActivity
                         JSONObject jsonResult = new JSONObject(result);
                         JSONArray array = jsonResult.getJSONArray("info");
                         String[] namaKategori = new String[array.length()];
+                        String[] idKategori = new String[array.length()];
                         for (int i = 0; i<array.length(); i++){
                             JSONObject objKategori = array.getJSONObject(i);
                             KategoriModel kategoriModel = new KategoriModel(
-                                    objKategori.getString("idkategori"),
+                                    idKategori[i]=objKategori.getString("idkategori"),
                                     objKategori.getString("idbusiness"),
                                     namaKategori[i] = objKategori.getString("nama_kategori")
                             );
@@ -264,7 +265,7 @@ public class Dashboard extends AppCompatActivity
                             adapter = new TabAdapter(getSupportFragmentManager());
 
                             for (int k = 0; k < array.length();k++){
-                                adapter.addFragment(new DashboardFragment(), "" + namaKategori[k]);
+                                adapter.addFragment(new DashboardFragment(), " " + namaKategori[k]);
                             }
 
                             viewPager.setAdapter(adapter);

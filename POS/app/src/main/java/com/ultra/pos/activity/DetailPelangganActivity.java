@@ -52,7 +52,15 @@ public class DetailPelangganActivity extends AppCompatActivity {
         getDetailPelanggan();
 
         ivDetailBtnEditPelanggan.setOnClickListener(v -> {
-            startActivity(new Intent(this, EditPelangganActivity.class));
+//            startActivity(new Intent(this, EditPelangganActivity.class));
+            pref = new SharedPrefManager(this);
+            HashMap<String, String> user = pref.getUserDetails();
+            String idctm = getIntent().getStringExtra("idctm");
+
+            Intent intent = new Intent(this, EditPelangganActivity.class);
+            intent.putExtra("idctm", idctm);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
         });
         ivDetailBtnKembali.setOnClickListener(v -> {
             startActivity(new Intent(this, PelangganActivity.class));
@@ -64,6 +72,7 @@ public class DetailPelangganActivity extends AppCompatActivity {
     }
 
     public void getDetailPelanggan(){
+
         pref = new SharedPrefManager(this);
         HashMap<String, String> user = pref.getUserDetails();
         String idctm = getIntent().getStringExtra("idctm");
