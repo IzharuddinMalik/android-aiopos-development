@@ -5,6 +5,9 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +26,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -38,6 +42,7 @@ import com.ultra.pos.api.SharedPrefManager;
 import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.ProdukModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -57,7 +62,6 @@ public class Dashboard extends AppCompatActivity
 
     TabLayout tabLayout;
     TabAdapter adapter;
-    ViewPager viewPager;
     ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama;
     LinearLayout llDashboardBukaPelanggan,llDashboardLihatPesanan;
     SearchView svNamaProduk;
@@ -74,6 +78,10 @@ public class Dashboard extends AppCompatActivity
     APIConnect apiConnect;
     String idbusiness, idtb, idoutlet;
     DashboardFragment dashboardFragment;
+    List<ProdukModel> produkModels;
+    List<Produk> produk;
+    int positiontab = 0;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +107,9 @@ public class Dashboard extends AppCompatActivity
         tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
         idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
 
-        viewPager = findViewById(R.id.frameLayout);
+
         tabLayout = findViewById(R.id.tabs);
+        frameLayout = findViewById(R.id.frame_layout);
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
         llDashboardLihatPesanan=findViewById(R.id.llDashboardLihatPesanan);
 
@@ -232,36 +241,66 @@ public class Dashboard extends AppCompatActivity
                         String result = response.body().string();
                         JSONObject jsonResult = new JSONObject(result);
                         JSONArray array = jsonResult.getJSONArray("info");
-                        String[] namaKategori = new String[array.length()];
-                        String[] idKategori = new String[array.length()];
-                        for (int i = 0; i<array.length(); i++){
-                            JSONObject objKategori = array.getJSONObject(i);
-                            ProdukModel produkModel = new ProdukModel(
-                                    idKategori[i] = objKategori.getString("idkategori"),
-                                    namaKategori[i] = objKategori.getString("nama_kategori"),
-                                    objKategori.getString("produk")
-                            );
 
-                            Log.i("LISTPRODUK", "LISTNYA ->" + objKategori.getString("idkategori"));
+                        produkModels = new ArrayList<ProdukModel>();
+                        produkModels.clear();
 
-                            pref = new SharedPrefManager(Dashboard.this );
+                        int pos = 0;
 
-                            adapter = new TabAdapter(getSupportFragmentManager());
+                        adapter = new TabAdapter(getSupportFragmentManager());
 
-                            for (int k = 0; k < array.length();k++){
-                                adapter.addFragment(new DashboardFragment(), " " + namaKategori[k]);
-                            }
+                        if(array.toString().equals("[]")){
+                        }else{
+                            for(int i=0;i<array.length();i++){
+                                JSONObject objisinya = array.getJSONObject(i);
+                                produk = new ArrayList<Produk>();
+                                produk.clear();
 
-                            viewPager.setAdapter(adapter);
-                            tabLayout.setupWithViewPager(viewPager);
-                            viewPager.setOffscreenPageLimit(1);
-                            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-                            if (tabLayout.getTabCount() == 2){
-                                tabLayout.setTabMode(tabLayout.MODE_FIXED);
-                            }else{
-                                tabLayout.setTabMode(tabLayout.MODE_SCROLLABLE);
+                                dashboardFragment = new DashboardFragment();
+
+                                replacementFragment(dashboardFragment);
+                                JSONArray arrayProduk = objisinya.getJSONArray("produk");
+                                if(arrayProduk.length()==0){
+                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                    pos++;
+
+//                                    adapter.addFragment(new DashboardFragment(), ""+objisinya.get("nama_kategori"));
+                                    tabLayout.addTab(tabLayout.newTab().setText(""+objisinya.getString("nama_kategori")));
+                                }else{
+                                    for (int j=0;j<arrayProduk.length();j++){
+                                        JSONObject objprod = arrayProduk.getJSONObject(j);
+                                        produk.add(j, new Produk(objprod.getString("idproduk"), objprod.getString("nama_produk"), objprod.getString("foto_produk"), objprod.getString("harga_produk"), objprod.getString("idkategori")));
+                                    }
+
+                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                    pos++;
+
+//                                    adapter.addFragment(new DashboardFragment(), ""+objisinya.get("nama_kategori"));
+                                    tabLayout.addTab(tabLayout.newTab().setText("" + objisinya.getString("nama_kategori")));
+                                }
                             }
                         }
+
+                        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                            @Override
+                            public void onTabSelected(TabLayout.Tab tab) {
+                                Log.e("TESLAGU", "--"+tab.getPosition());
+                                positiontab = tab.getPosition();
+                                getProdukModels(tab.getPosition());
+                                DashboardFragment dashboardFragment1 = new DashboardFragment();
+                                replacementFragment(dashboardFragment1);
+                            }
+
+                            @Override
+                            public void onTabUnselected(TabLayout.Tab tab) {
+                                getProdukModels(tab.getPosition());
+                            }
+
+                            @Override
+                            public void onTabReselected(TabLayout.Tab tab) {
+
+                            }
+                        });
                     }catch (JSONException e){
                         e.printStackTrace();
                     } catch (IOException e){
@@ -312,4 +351,46 @@ public class Dashboard extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    public List<ProdukModel> getProdukModels(int postabfrag){
+
+        List<ProdukModel> pro = new ArrayList<ProdukModel>();
+        pro.clear();
+
+        int a = 0;
+
+        if(produkModels.size()==0){
+
+        }else{
+            ProdukModel produkberdasarkantabfrag = produkModels.get(postabfrag);
+            String idkat = produkberdasarkantabfrag.getIdKategori();
+
+            Log.e("IDKATEGORI", " = "+idkat);
+
+            for(int i=0;i<produkModels.size();i++){
+                ProdukModel prods = produkModels.get(i);
+                if(prods.getIdKategori().equals(idkat)) {
+                    pro.add(a, new ProdukModel(prods.getIdKategori(), prods.getNamaKategori(), prods.getDataProduk()));
+                    a++;
+                }
+            }
+
+        }
+
+        return pro;
+    }
+
+    public void replacementFragment(Fragment fragment){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frame_layout, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
+
+    public String gettabpos (){
+        return String.valueOf(positiontab);
+    }
+
 }

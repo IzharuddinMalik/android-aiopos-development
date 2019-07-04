@@ -23,11 +23,12 @@
             app:tabIndicatorHeight="1dp"
             app:tabSelectedTextColor="@color/colorBlueBasic" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/frameLayout"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white" />
+            android:id="@+id/frame_layout"
+            android:background="@color/colorWhiteffffff"
+            android:layout_weight="1"></FrameLayout>
     </LinearLayout>
 
     <LinearLayout
