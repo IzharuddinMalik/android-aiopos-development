@@ -159,7 +159,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
             holder.hargaProduk.setText(produkModel.getHargaProduk());
         } else {
             holder.namaProduk.setText(produkModel.getNamaVariant());
-            holder.hargaProduk.setText(produkModel.getHargaVariant());
+            holder.hargaProduk.setText(produkModel.getHargaProduk());
         }
 //        Picasso.with(mCtx).load("" + produkModel.getGambarProduk()).into(holder.gambarProduk);
     }
