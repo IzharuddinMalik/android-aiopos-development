@@ -13,6 +13,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.Display;
@@ -34,11 +37,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultra.pos.R;
+import com.ultra.pos.adapter.AdapterDashboardListOrder;
+import com.ultra.pos.adapter.AdapterPilihProduk;
 import com.ultra.pos.adapter.TabAdapter;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
 import com.ultra.pos.api.SharedPrefManager;
+import com.ultra.pos.model.PesananModel;
 import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.ProdukModel;
 
@@ -80,8 +86,11 @@ public class Dashboard extends AppCompatActivity
     DashboardFragment dashboardFragment;
     List<ProdukModel> produkModels;
     List<Produk> produk;
+    List<PesananModel> pesananModels;
     int positiontab = 0;
     FrameLayout frameLayout;
+    AdapterDashboardListOrder adapterPesan;
+    RecyclerView recPesanan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +125,8 @@ public class Dashboard extends AppCompatActivity
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
 
+        recPesanan = findViewById(R.id.rvDashboardDaftarPesanan);
+
         ivKeranjang.setOnClickListener(v -> {
             startActivity(new Intent(this,TransaksiTersimpanActivity.class));
         });
@@ -148,6 +159,8 @@ public class Dashboard extends AppCompatActivity
         });
         getAllListProduk();
 
+        pesananModels = new ArrayList<PesananModel>();
+        pesananModels.clear();
 
     }
 
@@ -250,6 +263,7 @@ public class Dashboard extends AppCompatActivity
                         adapter = new TabAdapter(getSupportFragmentManager());
 
                         if(array.toString().equals("[]")){
+
                         }else{
                             for(int i=0;i<array.length();i++){
                                 JSONObject objisinya = array.getJSONObject(i);
@@ -269,7 +283,7 @@ public class Dashboard extends AppCompatActivity
                                 }else{
                                     for (int j=0;j<arrayProduk.length();j++){
                                         JSONObject objprod = arrayProduk.getJSONObject(j);
-                                        produk.add(j, new Produk(objprod.getString("idproduk"), objprod.getString("nama_produk"), objprod.getString("foto_produk"), objprod.getString("harga_produk"), objprod.getString("idkategori")));
+                                        produk.add(j, new Produk(objprod.getString("idproduk"), objprod.getString("nama_produk"), objprod.getString("idvariant"), objprod.getString("nama_variant"), objprod.getString("harga_variant"), objprod.getString("harga_produk"), objprod.getString("foto_produk"),objprod.getString("idkategori")));
                                     }
 
                                     produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
@@ -391,6 +405,24 @@ public class Dashboard extends AppCompatActivity
 
     public String gettabpos (){
         return String.valueOf(positiontab);
+    }
+
+    public void setPesanan(String idProduk, String idKategori, String namaPesanan, String hargaPesanan){
+        Log.e("contoh add"," = " + idProduk);
+
+        int pos = pesananModels.size();
+
+        pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, namaPesanan, hargaPesanan));
+
+        adapterPesan = new AdapterDashboardListOrder(Dashboard.this, pesananModels);
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Dashboard.this);
+        recPesanan.setLayoutManager(mLayoutManager);
+        recPesanan.setItemAnimator(new DefaultItemAnimator());
+        recPesanan.setItemViewCacheSize(pesananModels.size());
+        recPesanan.setDrawingCacheEnabled(true);
+        recPesanan.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        recPesanan.setAdapter(adapterPesan);
+        adapterPesan.notifyDataSetChanged();
     }
 
 }

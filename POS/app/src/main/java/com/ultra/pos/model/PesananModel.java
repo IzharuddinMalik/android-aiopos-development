@@ -4,8 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Produk implements Serializable {
+public class PesananModel implements Serializable {
+
+    private String idPesanan;
 
     @SerializedName("idproduk")
     @Expose
@@ -39,7 +43,9 @@ public class Produk implements Serializable {
     @Expose
     private String idKategori;
 
-    public Produk(String idProduk, String namaProduk, String idVariant, String namaVariant, String hargaVariant, String hargaProduk, String fotoProduk, String idKategori){
+
+    public PesananModel(String idPesanan, String idProduk, String namaProduk, String idVariant, String namaVariant, String hargaVariant, String hargaProduk, String fotoProduk, String idKategori){
+        this.idPesanan = idPesanan;
         this.idProduk = idProduk;
         this.namaProduk = namaProduk;
         this.idVariant = idVariant;
@@ -48,6 +54,18 @@ public class Produk implements Serializable {
         this.fotoProduk = fotoProduk;
         this.hargaProduk = hargaProduk;
         this.idKategori = idKategori;
+    }
+
+    public PesananModel(String idPesanan, String idProduk, String idKategori, String namaPesanan, String hargaPesanan) {
+        this.idPesanan = idPesanan;
+        this.idProduk = idProduk;
+        this.idKategori = idKategori;
+        this.namaProduk = namaPesanan;
+        this.hargaProduk = hargaPesanan;
+    }
+
+    public void setIdPesanan(String idPesanan) {
+        this.idPesanan = idPesanan;
     }
 
     public void setIdProduk(String idProduk) {
@@ -112,5 +130,9 @@ public class Produk implements Serializable {
 
     public String getNamaVariant() {
         return namaVariant;
+    }
+
+    public String getIdPesanan() {
+        return idPesanan;
     }
 }

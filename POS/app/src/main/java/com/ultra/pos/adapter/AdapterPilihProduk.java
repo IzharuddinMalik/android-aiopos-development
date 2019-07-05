@@ -76,6 +76,15 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
             if (width >= 1920 && height >= 1200){
                 a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+                view.setOnClickListener(v -> {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION){
+
+                        ((Dashboard)mCtx).setPesanan(listProduk.get(position).getIdProduk(), listProduk.get(position).getIdKategori(),
+                                listProduk.get(position).getNamaProduk(), listProduk.get(position).getHargaProduk());
+                    }
+                });
+
             } else {
                 plus=view.findViewById(R.id.plus);
                 minus=view.findViewById(R.id.minus);
@@ -145,14 +154,13 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
     public void onBindViewHolder(final ProdukViewHolder holder, final int position){
         final Produk produkModel = listProduk.get(position);
-        if (produkModel.getNamaProduk() != null) {
-            if (produkModel.getNamaProduk() == null) {
-                holder.namaProduk.setText(produkModel.getNamaProduk());
-            } else {
-                holder.namaProduk.setText(produkModel.getNamaProduk());
-            }
+        if (produkModel.getIdVariant().equals("0")) {
+            holder.namaProduk.setText(produkModel.getNamaProduk());
+            holder.hargaProduk.setText(produkModel.getHargaProduk());
+        } else {
+            holder.namaProduk.setText(produkModel.getNamaVariant());
+            holder.hargaProduk.setText(produkModel.getHargaVariant());
         }
-        holder.hargaProduk.setText(produkModel.getHargaProduk());
 //        Picasso.with(mCtx).load("" + produkModel.getGambarProduk()).into(holder.gambarProduk);
     }
 
