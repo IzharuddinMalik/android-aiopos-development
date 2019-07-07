@@ -56,10 +56,12 @@ public class PesananModel implements Serializable {
         this.idKategori = idKategori;
     }
 
-    public PesananModel(String idPesanan, String idProduk, String idKategori, String namaPesanan, String hargaPesanan) {
+    public PesananModel(String idPesanan, String idProduk, String idKategori, String idVariant, String namaVariant, String namaPesanan, String hargaPesanan) {
         this.idPesanan = idPesanan;
         this.idProduk = idProduk;
         this.idKategori = idKategori;
+        this.idVariant = idVariant;
+        this.namaVariant = namaVariant;
         this.namaProduk = namaPesanan;
         this.hargaProduk = hargaPesanan;
     }

@@ -407,12 +407,12 @@ public class Dashboard extends AppCompatActivity
         return String.valueOf(positiontab);
     }
 
-    public void setPesanan(String idProduk, String idKategori, String namaPesanan, String hargaPesanan){
+    public void setPesanan(String idProduk, String idKategori, String idVariant, String namaVariant, String namaPesanan, String hargaPesanan){
         Log.e("contoh add"," = " + idProduk);
 
         int pos = pesananModels.size();
 
-        pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, namaPesanan, hargaPesanan));
+        pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, idVariant, namaVariant, namaPesanan, hargaPesanan));
 
         adapterPesan = new AdapterDashboardListOrder(Dashboard.this, pesananModels);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Dashboard.this);
