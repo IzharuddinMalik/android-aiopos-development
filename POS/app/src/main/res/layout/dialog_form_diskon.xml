@@ -78,7 +78,8 @@
                 android:padding="@dimen/_5sdp"
                 android:text="SIMPAN"
                 android:textColor="@color/colorWhiteffffff"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                android:visibility="gone" />
 
         </LinearLayout>
 
