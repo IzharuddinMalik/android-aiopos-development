@@ -78,11 +78,11 @@ public class Dashboard extends AppCompatActivity
     CardView cvDiskon, cvNama, cvBatalTransaksi;
     EditText edtDialogDiskonNilai, edtDialogNamaNilai;
     Button btnSimpanDialogDiskon, btnSimpanDialogNama;
-    TextView tvDashboardNavNama;
+    TextView tvDashboardNavNama, tvDashboardDiskonSemua, tvDashboardNilaiDiskonSemua, tvDashboardCatatan, tvDashboardNilaiCatatanSemua, tvDashboardTotalHarga;
     SharedPrefManager pref;
     BaseApiInterface mApiInterface;
     APIConnect apiConnect;
-    String idbusiness, idtb, idoutlet;
+    String idbusiness, idtb, idoutlet, totalNilaiTransaksi;
     DashboardFragment dashboardFragment;
     List<ProdukModel> produkModels;
     List<Produk> produk;
@@ -126,6 +126,11 @@ public class Dashboard extends AppCompatActivity
         frameLayout = findViewById(R.id.frame_layout);
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
         llDashboardLihatPesanan=findViewById(R.id.llDashboardLihatPesanan);
+
+        tvDashboardNilaiDiskonSemua = findViewById(R.id.tvDashboardNilaiDiskonSemua);
+        tvDashboardNilaiCatatanSemua = findViewById(R.id.tvDashboardNilaiCatatanSemua);
+        tvDashboardCatatan = findViewById(R.id.tvDashboardCatatanSemua);
+        tvDashboardDiskonSemua = findViewById(R.id.tvDashboardDiskonSemua);
 
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
@@ -175,6 +180,10 @@ public class Dashboard extends AppCompatActivity
         pesananModels = new ArrayList<PesananModel>();
         pesananModels.clear();
 
+        tvDashboardTotalHarga = findViewById(R.id.tvDashboardTotalHargaPesanan);
+
+//        hitungTotal();
+
     }
 
     public void dialogFormOptionsMenu(){
@@ -212,10 +221,24 @@ public class Dashboard extends AppCompatActivity
             this.finish();
         });
 
+
         btnSimpanDialogDiskon = dialogView.findViewById(R.id.btnDialogFormSimpan);
-        btnSimpanDialogDiskon.setOnClickListener(v -> {
-            startActivity(new Intent(this, Dashboard.class));
-            this.finish();
+
+        edtDialogDiskonNilai = dialogView.findViewById(R.id.edtDialogFormNilaiDiskon);
+
+        dialog.setPositiveButton("SIMPAN", (dialogInterface, i) -> {
+            String nilaiDiskon = edtDialogDiskonNilai.getText().toString();
+
+            if (nilaiDiskon.isEmpty()){
+                tvDashboardNilaiDiskonSemua.setText("");
+                tvDashboardNilaiDiskonSemua.setVisibility(View.GONE);
+                tvDashboardDiskonSemua.setVisibility(View.GONE);
+            } else{
+                tvDashboardNilaiDiskonSemua.setText(nilaiDiskon);
+                tvDashboardNilaiDiskonSemua.setVisibility(View.VISIBLE);
+                tvDashboardDiskonSemua.setVisibility(View.VISIBLE);
+            }
+            dialogInterface.dismiss();
         });
 
         dialog.show();

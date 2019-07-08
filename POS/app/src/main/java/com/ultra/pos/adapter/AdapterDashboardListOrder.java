@@ -3,6 +3,7 @@ package com.ultra.pos.adapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +31,8 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
     View dialogView;
     EditText edtPopupNilaiJumlah, edtPopupNilaiDiskon, edtPopupNilaiCatatan;
     Button btnPopupKembali, btnPopupSimpan, btnPopupHapus;
-    TextView tvPopupNamaOrder;
+    TextView tvPopupNamaOrder, tvPopupNilaiDiskon, tvPopupNilaiCatatan, tvPopupCatatan, tvPopupDiskon, tvPopupHargaOrder;
+    int pos;
 
     public AdapterDashboardListOrder(Context context, List<PesananModel> listOrderProduk){
         this.mCtx = context;
@@ -49,16 +51,17 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
             ivGambarPesananProduk = view.findViewById(R.id.ivDashboardDaftarPesananGambarProduk);
             tvNamaPesananProduk = view.findViewById(R.id.tvDashboardDaftarPesananNamaProduk);
             tvHargaPesananProduk = view.findViewById(R.id.tvDashboardDaftarPesananHargaProduk);
+            tvPopupDiskon = view.findViewById(R.id.tvDashboardDaftarPesananDiskon);
+            tvPopupCatatan = view.findViewById(R.id.tvDashboardDaftarPesananCatatan);
+            tvPopupNilaiDiskon = view.findViewById(R.id.tvDashboardDaftarPesananNilaiDiskon);
+            tvPopupNilaiCatatan = view.findViewById(R.id.tvDashboardDaftarPesananNilaiCatatan);
 
-            int position = 0;
-            view.setOnClickListener(v -> {
-                Intent intent = new Intent(mCtx, AdapterDashboardListOrder.class);
-                intent.putExtra("namaProduk", listOrderProduk.get(position).getNamaProduk());
-                intent.putExtra("namaVariant", listOrderProduk.get(position).getNamaVariant());
-                intent.putExtra("idVariant", listOrderProduk.get(position).getIdVariant());
-                intent.putExtra("hargaProduk", listOrderProduk.get(position).getHargaProduk());
-                dialogOrder(view);
-            });
+//            view.setOnClickListener(v -> {
+//                int position = getAdapterPosition();
+//                if (position != RecyclerView.NO_POSITION){
+//                    dialogOrder(view);
+//                }
+//            });
 
             stylingUtils.robotoRegularTextview(mCtx, tvNamaPesananProduk);
             stylingUtils.robotoRegularTextview(mCtx, tvHargaPesananProduk);
@@ -71,31 +74,40 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
         dialog.setView(dialogView);
         dialog.setCancelable(true);
 
-        int pos = 0;
+        tvPopupNamaOrder = dialogView.findViewById(R.id.tvPopupNamaOrder);
+        edtPopupNilaiJumlah = dialogView.findViewById(R.id.edtPopupJumlahOrder);
+        edtPopupNilaiDiskon = dialogView.findViewById(R.id.edtPopupDiskonOrder);
+        edtPopupNilaiCatatan = dialogView.findViewById(R.id.edtPopupCatatanOrder);
+        btnPopupKembali = dialogView.findViewById(R.id.btnPopupKembali);
+        btnPopupSimpan = dialogView.findViewById(R.id.btnPopupSimpanOrder);
+        btnPopupHapus = dialogView.findViewById(R.id.btnPopupHapusOrder);
+        tvPopupHargaOrder = dialogView.findViewById(R.id.tvPopupNilaiHargaOrder);
 
-        tvPopupNamaOrder = view.findViewById(R.id.tvPopupNamaOrder);
-        edtPopupNilaiJumlah = view.findViewById(R.id.edtPopupJumlahOrder);
-        edtPopupNilaiDiskon = view.findViewById(R.id.edtPopupDiskonOrder);
-        edtPopupNilaiCatatan = view.findViewById(R.id.edtPopupCatatanOrder);
-        btnPopupKembali = view.findViewById(R.id.btnPopupKembali);
-        btnPopupSimpan = view.findViewById(R.id.btnPopupSimpanOrder);
-        btnPopupHapus = view.findViewById(R.id.btnPopupHapusOrder);
+        final PesananModel pesananModel = listOrderProduk.get(pos);
 
-        if (listOrderProduk.get(pos).getIdVariant().equals("0")){
-            tvPopupNamaOrder.setText(listOrderProduk.get(pos).getNamaProduk());
+        if (pesananModel.getIdVariant().equals("0")){
+            tvPopupNamaOrder.setText(pesananModel.getNamaProduk());
         } else{
-            tvPopupNamaOrder.setText(listOrderProduk.get(pos).getNamaVariant());
+            tvPopupNamaOrder.setText(pesananModel.getNamaVariant());
         }
 
+        tvPopupHargaOrder.setText(pesananModel.getHargaProduk());
 
+        String catatan = edtPopupNilaiCatatan.getText().toString();
+        String diskon = edtPopupNilaiDiskon.getText().toString();
 
-        btnPopupKembali.setOnClickListener(v -> {
-            dialog.setCancelable(true);
+        dialog.setPositiveButton("SIMPAN", (dialogInterface, i) -> {
+            tvPopupNilaiDiskon.setText(diskon);
+            tvPopupNilaiCatatan.setText(catatan);
+            tvPopupNilaiDiskon.setVisibility(View.VISIBLE);
+            tvPopupNilaiCatatan.setVisibility(View.VISIBLE);
+            tvPopupDiskon.setVisibility(View.VISIBLE);
+            tvPopupCatatan.setVisibility(View.VISIBLE);
+            dialogInterface.dismiss();
         });
 
-        btnPopupSimpan.setOnClickListener(v -> {
-            Intent intent = new Intent(mCtx, Dashboard.class);
-
+        dialog.setNegativeButton("BATAL", (dialogInterface, i) -> {
+            dialogInterface.cancel();
         });
 
         dialog.show();
