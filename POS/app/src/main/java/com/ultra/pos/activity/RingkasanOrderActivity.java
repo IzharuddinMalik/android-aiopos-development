@@ -26,17 +26,32 @@ import android.widget.TextView;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterPesanan;
+import com.ultra.pos.adapter.AdapterPilihPelanggan;
 import com.ultra.pos.adapter.AdapterRingkasanOrder;
 import com.ultra.pos.adapter.AdapterTipePenjualan;
+import com.ultra.pos.api.APIUrl;
+import com.ultra.pos.api.BaseApiInterface;
+import com.ultra.pos.api.SharedPrefManager;
 import com.ultra.pos.model.OrderModel;
+import com.ultra.pos.model.PelangganModel;
 import com.ultra.pos.model.PesananModel;
 import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.TipeModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RingkasanOrderActivity extends AppCompatActivity {
     RecyclerView recOrder,recTipe;
@@ -47,24 +62,27 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     TextView TOTAL,Subtotal,Diskon;
     EditText diskon,catatan;
     LinearLayout subtotal,diskonll;
-    ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama;
-    Button btnSimpanDialogDiskon, btnSimpanDiskonPopup;
     private List<Produk> listOrder;
     private List<TipeModel> listTipe;
     private AdapterPesanan adapter;
     private AdapterTipePenjualan adapter2;
-    List<String> data=new ArrayList<String>();
-    List<String> data2=new ArrayList<String>();
-    List<String> data3=new ArrayList<String>();
-    List<String> data4=new ArrayList<String>();
-    List<String> data5=new ArrayList<String>();
+    List<String> dataidProduk=new ArrayList<String>();
+    List<String> datanamaProduk=new ArrayList<String>();
+    List<String> dataidVariant=new ArrayList<String>();
+    List<String> datanamaVariant=new ArrayList<String>();
+    List<String> datahargaPesanan=new ArrayList<String>();
+    List<String> datajumlahPesanan=new ArrayList<String>();
 
-    List<String> databaru=new ArrayList<String>();
-    List<String> databaru2=new ArrayList<String>();
-    List<String> databaru3=new ArrayList<String>();
-    List<String> databaru4=new ArrayList<String>();
-    List<String> databaru5=new ArrayList<String>();
+    List<String> idProduk=new ArrayList<String>();
+    List<String> namaProduk=new ArrayList<String>();
+    List<String> idVariant=new ArrayList<String>();
+    List<String> namaVariant=new ArrayList<String>();
+    List<String> hargaPesanan=new ArrayList<String>();
+    List<String> jumlahPesanan=new ArrayList<String>();
     int total,disc=0;
+    private SharedPrefManager pref;
+    private String idbusiness,idoutlet;
+    private BaseApiInterface mApiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +92,12 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        data = bundle.getStringArrayList("array");
-        data2 = bundle.getStringArrayList("array2");
-        data3 = bundle.getStringArrayList("array3");
-        data4 = bundle.getStringArrayList("array4");
-        data5 = bundle.getStringArrayList("array5");
+        dataidProduk = bundle.getStringArrayList("idProduk");
+        datanamaProduk = bundle.getStringArrayList("namaProduk");
+        dataidVariant = bundle.getStringArrayList("idVariant");
+        datanamaVariant = bundle.getStringArrayList("namaVariant");
+        datahargaPesanan = bundle.getStringArrayList("hargaPesanan");
+        datajumlahPesanan = bundle.getStringArrayList("jumlahPesanan");
 
         selectionData();
 
@@ -88,10 +107,9 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         listOrder = new ArrayList<>();
         listOrder.clear();
 
-        for(int i=0;i<databaru.size();i++){
-            Log.i("ID",data.get(i));
-            listOrder.add(i, new Produk("", ""+databaru3.get(i), "",""+databaru.get(i),""+databaru4.get(i),""+databaru5.get(i),""));
-            total=total + Integer.parseInt(databaru4.get(i)) * Integer.parseInt(databaru5.get(i));
+        for(int i=0;i<idProduk.size();i++){
+            listOrder.add(i, new Produk(""+idProduk.get(i), ""+namaProduk.get(i), ""+idVariant.get(i),""+namaVariant.get(i),"@ Rp. "+hargaPesanan.get(i),""+jumlahPesanan.get(i),""));
+            total=total + Integer.parseInt(hargaPesanan.get(i)) * Integer.parseInt(jumlahPesanan.get(i));
        }
 
         diskonll=findViewById(R.id.llLinearDiskon);
@@ -100,15 +118,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         Subtotal=findViewById(R.id.tvSubtotal);
         Diskon=findViewById(R.id.tvDiskonOrderLast);
 
-        TOTAL.setText(""+total);
-
-
-//        listOrder.add(0, new Produk("", "", "",""+data,"","",""));
-
-//        listOrder.add(0, new Produk("Nasi Goreng", "2", "15.000"));
-//        listOrder.add(1, new Produk("Ayam Goreng", "1", "18.000"));
-//        listOrder.add(2, new Produk("Es Teh", "3", "2000"));
-//        setPesanan("1","Es Teh", "Ayam", "3");
+        TOTAL.setText("Rp. "+total);
 
         adapter = new AdapterPesanan(this, listOrder);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -123,24 +133,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
         recTipe = findViewById(R.id.rvTipePenjualan);
-        listTipe = new ArrayList<>();
-        listTipe.clear();
-
-        listTipe.add(0, new TipeModel("Go Food"));
-        listTipe.add(1, new TipeModel("Dine In"));
-        listTipe.add(2, new TipeModel("Take Away"));
-
-        adapter2 = new AdapterTipePenjualan(this, listTipe);
-        final RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(this);
-        recTipe.setLayoutManager(mLayoutManager2);
-        recTipe.setItemAnimator(new DefaultItemAnimator());
-        recTipe.setItemViewCacheSize(listTipe.size());
-        recTipe.setDrawingCacheEnabled(true);
-        recTipe.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        recTipe.setAdapter(adapter2);
-        LayoutAnimationController animation2 = AnimationUtils.loadLayoutAnimation(this, R.anim.animation_slide_from_right);
-        recTipe.setLayoutAnimation(animation2);
-        adapter2.notifyDataSetChanged();
+        getAlllistSalesType();
 
         simpan.setOnClickListener(v -> {
             startActivity(new Intent(this,TransaksiTersimpanActivity.class));
@@ -163,28 +156,24 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     }
 
     public void dialogMenuDiskon(){
-
         dialog = new AlertDialog.Builder(this);
         inflater = getLayoutInflater();
         dialogView = inflater.inflate(R.layout.dialog_form_diskon,null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
 
-        dialog.show();
         diskon=dialogView.findViewById(R.id.edtDialogFormNilaiDiskon);
-        btnSimpanDialogDiskon=dialogView.findViewById(R.id.btnDialogFormSimpan);
-        btnSimpanDialogDiskon.setOnClickListener(v -> {
+        dialog.setPositiveButton("Simpan",(dialog1, which) -> {
             diskonll.setVisibility(View.VISIBLE);
             subtotal.setVisibility(View.VISIBLE);
 
-
             disc=total*Integer.parseInt(diskon.getText().toString())/100;
             Subtotal.setText("Rp. "+total);
-//            Diskon.setText(""+(total-(total*(Integer.parseInt(diskon.getText().toString())))));
-            Diskon.setText("Rp. "+disc);
-//            TOTAL.setText(""+(total-(Integer.parseInt(Diskon.getText().toString()))));
+            Diskon.setText("- Rp. "+disc);
             TOTAL.setText("Rp. "+(total-disc));
+            dialog1.dismiss();
         });
+        dialog.show();
     }
 
     public void dialogMenuHapus(){
@@ -193,18 +182,6 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         dialogView = inflater.inflate(R.layout.dialog_form_hapus,null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
-
-//        btnSimpanDialogDiskon = findViewById(R.id.btnDialogFormSimpan);
-//        btnSimpanDialogDiskon.setOnClickListener(v -> {
-//            diskonll.setVisibility(View.VISIBLE);
-//            subtotal.setVisibility(View.VISIBLE);
-//
-//            Subtotal.setText(""+total);
-////            Diskon.setText(""+(total-(total*(Integer.parseInt(diskon.getText().toString())))));
-//            Diskon.setText(""+Integer.parseInt(diskon.getText().toString()));
-////            TOTAL.setText(""+(total-(Integer.parseInt(Diskon.getText().toString()))));
-//            TOTAL.setText(""+(total/100*Integer.parseInt(diskon.getText().toString())));
-//        });
 
         dialog.show();
 
@@ -225,38 +202,100 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     public void selectionData(){
         String tmp="";
         int jml=0;
-        if(data.size()==0){
-            databaru.add(data.get(0));
-            databaru2.add(data2.get(0));
-            databaru3.add(data3.get(0));
-            databaru4.add(data4.get(0));
-            databaru5.add(data5.get(0));
+        if(dataidProduk.size()==1){
+            idProduk.add(dataidProduk.get(0));
+            namaProduk.add(datanamaProduk.get(0));
+            idVariant.add(dataidVariant.get(0));
+            namaVariant.add(datanamaVariant.get(0));
+            hargaPesanan.add(datahargaPesanan.get(0));
+            jumlahPesanan.add(datajumlahPesanan.get(0));
         }else{
-            for(int i=0;i<data3.size();i++){
-                if(tmp.equals(data3.get(i))){
+            for(int i=0;i<datanamaVariant.size();i++){
+                if(tmp.equals(datanamaVariant.get(i))){
 //                    if(jml<Integer.parseInt(data5.get(i))){
 //                        jml=Integer.parseInt(data5.get(i));
 //                        databaru5.add(""+jml);
 //                    }
                 }else{
-                    databaru.add(data.get(i));
-                    databaru2.add(data2.get(i));
-                    databaru3.add(data3.get(i));
-                    databaru4.add(data4.get(i));
+                    idProduk.add(dataidProduk.get(i));
+                    namaProduk.add(datanamaProduk.get(i));
+                    idVariant.add(dataidVariant.get(i));
+                    namaVariant.add(datanamaVariant.get(i));
+                    hargaPesanan.add(datahargaPesanan.get(i));
 //                    databaru5.add(data5.get(i));
-                    tmp=data3.get(i);
+                    tmp=datanamaVariant.get(i);
 
-                    for(int k=0;k<data3.size();k++){
-                        if(tmp.equals(data3.get(k))){
-                            jml=Integer.parseInt(data5.get(k));
+                    for(int k=0;k<datanamaVariant.size();k++){
+                        if(tmp.equals(datanamaVariant.get(k))){
+                            jml=Integer.parseInt(datajumlahPesanan.get(k));
 //                            Log.i("Iterasi K",""+jml);
                         }
                     }
-                    databaru5.add(""+jml);
+                    jumlahPesanan.add(""+jml);
 //                    Log.i("JML akhir",""+jml);
                 }
             }
         }
-        Log.i("Data",""+databaru3.size());
+        Log.i("Data",""+datanamaVariant.size());
+    }
+
+    public void getAlllistSalesType(){
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
+        idbusiness = idBusiness;
+        idoutlet = idOutlet;
+
+        listTipe = new ArrayList<>();
+        listTipe.clear();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idbusiness",idbusiness);
+        params.put("idOulet",idoutlet);
+        mApiInterface = APIUrl.getAPIService();
+        mApiInterface.getSalesType(params,idbusiness,idoutlet).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try{
+
+                        String result = response.body().string();
+                        JSONObject jsonResult = new JSONObject(result);
+                        JSONArray array = jsonResult.getJSONArray("info");
+
+                        TipeModel tipeMOdel=new TipeModel("");
+                        for (int i = 0; i<array.length(); i++){
+                            JSONObject objKategori = array.getJSONObject(i);
+                            objKategori.getString("idsaltype");
+                            objKategori.getString("nama_saltype");
+
+                            listTipe.add(0, new TipeModel(objKategori.getString("nama_saltype")));
+                        }
+
+                        adapter2 = new AdapterTipePenjualan(RingkasanOrderActivity.this, listTipe);
+                        final RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(RingkasanOrderActivity.this);
+                        recTipe.setLayoutManager(mLayoutManager2);
+                        recTipe.setItemAnimator(new DefaultItemAnimator());
+                        recTipe.setItemViewCacheSize(listTipe.size());
+                        recTipe.setDrawingCacheEnabled(true);
+                        recTipe.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                        recTipe.setAdapter(adapter2);
+                        LayoutAnimationController animation2 = AnimationUtils.loadLayoutAnimation(RingkasanOrderActivity.this, R.anim.animation_slide_from_right);
+                        recTipe.setLayoutAnimation(animation2);
+                        adapter2.notifyDataSetChanged();
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

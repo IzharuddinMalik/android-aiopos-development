@@ -1,10 +1,13 @@
 package com.ultra.pos.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ultra.pos.R;
@@ -17,6 +20,7 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
 
     private Context mCtx;
     private List<TipeModel> listTipe;
+    LinearLayout itemRow;
     StylingUtils stylingUtils;
 
     public class TipeViewHolder extends RecyclerView.ViewHolder{
@@ -25,7 +29,7 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
             super(view);
 
             tipe=view.findViewById(R.id.tvTipePenjualan);
-
+            itemRow=view.findViewById(R.id.llTipePenjualan);
             stylingUtils.robotoRegularTextview(mCtx, tipe);
         }
     }

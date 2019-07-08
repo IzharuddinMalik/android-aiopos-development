@@ -88,11 +88,12 @@ public class Dashboard extends AppCompatActivity
     List<Produk> produk;
     List<PesananModel> pesananModels;
     int positiontab= 0;
-    ArrayList<String> array= new ArrayList<String>();
-    ArrayList<String> array2= new ArrayList<String>();
-    ArrayList<String> array3= new ArrayList<String>();
-    ArrayList<String> array4= new ArrayList<String>();
-    ArrayList<String> array5= new ArrayList<String>();
+    ArrayList<String> arridProduk= new ArrayList<String>();
+    ArrayList<String> arrnamaProduk= new ArrayList<String>();
+    ArrayList<String> arridVariant= new ArrayList<String>();
+    ArrayList<String> arrnamaVariant= new ArrayList<String>();
+    ArrayList<String> arrhargaPesanan= new ArrayList<String>();
+    ArrayList<String> arrjumlahPesanan= new ArrayList<String>();
     FrameLayout frameLayout;
     AdapterDashboardListOrder adapterPesan;
     RecyclerView recPesanan;
@@ -149,11 +150,12 @@ public class Dashboard extends AppCompatActivity
             llDashboardLihatPesanan.setOnClickListener(v -> {
 //                startActivity(new Intent(this, RingkasanOrderActivity.class));
                 Intent intent = new Intent(this, RingkasanOrderActivity.class);
-                intent.putExtra("array", array);
-                intent.putExtra("array2", array2);
-                intent.putExtra("array3", array3);
-                intent.putExtra("array4", array4);
-                intent.putExtra("array5", array5);
+                intent.putExtra("idProduk", arridProduk);
+                intent.putExtra("namaProduk", arrnamaProduk);
+                intent.putExtra("idVariant", arridVariant);
+                intent.putExtra("namaVariant", arrnamaVariant);
+                intent.putExtra("hargaPesanan", arrhargaPesanan);
+                intent.putExtra("jumlahPesanan", arrjumlahPesanan);
 
                 startActivity(intent);
             });
@@ -425,6 +427,8 @@ public class Dashboard extends AppCompatActivity
 
         int pos = pesananModels.size();
 
+
+
         pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, idVariant, namaVariant, namaPesanan, hargaPesanan));
 
         adapterPesan = new AdapterDashboardListOrder(Dashboard.this, pesananModels);
@@ -438,20 +442,22 @@ public class Dashboard extends AppCompatActivity
         adapterPesan.notifyDataSetChanged();
     }
 
-    public void setOrder(String idProduk, String idKategori, String namaPesanan, String hargaPesanan,String jumlahPesanan){
-        array.add(idProduk);
-        array2.add(idKategori);
-        array3.add(namaPesanan);
-        array4.add(hargaPesanan);
-        array5.add(jumlahPesanan);
+    public void setOrder(String idProduk,String namaProduk, String idVariant, String namaVariant, String hargaPesanan,String jumlahPesanan){
+        arridProduk.add(idProduk);
+        arrnamaProduk.add(namaProduk);
+        arridVariant.add(idVariant);
+        arrnamaVariant.add(namaVariant);
+        arrhargaPesanan.add(hargaPesanan);
+        arrjumlahPesanan.add(jumlahPesanan);
     }
 
     public void resetOrder(){
-        array.clear();
-        array2.clear();
-        array3.clear();
-        array4.clear();
-        array5.clear();
+        arridProduk.clear();
+        arrnamaProduk.clear();
+        arridVariant.clear();
+        arrnamaVariant.clear();
+        arrhargaPesanan.clear();
+        arrjumlahPesanan.clear();
     }
 
 }

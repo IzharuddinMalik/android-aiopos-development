@@ -53,4 +53,9 @@ public interface BaseApiInterface {
     @POST("get_produk.php")
     Call<ResponseBody> getProduk(@FieldMap HashMap<String, String> params,
                                  @Field("idbusiness") String idBusiness, @Field("idtb") String idTB, @Field("idoutlet") String idOutlet);
+
+    @FormUrlEncoded
+    @POST("sales_type_get_list.php")
+    Call<ResponseBody> getSalesType(@FieldMap HashMap<String, String> params,
+                                    @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
 }
