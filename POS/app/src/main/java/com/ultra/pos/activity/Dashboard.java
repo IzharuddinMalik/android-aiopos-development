@@ -78,22 +78,23 @@ public class Dashboard extends AppCompatActivity
     CardView cvDiskon, cvNama, cvBatalTransaksi;
     EditText edtDialogDiskonNilai, edtDialogNamaNilai;
     Button btnSimpanDialogDiskon, btnSimpanDialogNama;
-    TextView tvDashboardNavNama, tvDashboardDiskonSemua, tvDashboardNilaiDiskonSemua, tvDashboardCatatan, tvDashboardNilaiCatatanSemua, tvDashboardTotalHarga;
+    TextView tvDashboardNavNama, tvDashboardDiskonSemua, tvDashboardNilaiDiskonSemua, tvDashboardCatatan, tvDashboardNilaiCatatanSemua, tvDashboardTotalHarga,
+            tvDashboardSubTotalHarga, tvDashboardNilaiSubTotalHarga, tvDashboardNamaPelanggan;
     SharedPrefManager pref;
     BaseApiInterface mApiInterface;
     APIConnect apiConnect;
-    String idbusiness, idtb, idoutlet, totalNilaiTransaksi;
+    String idbusiness, idtb, idoutlet, totalNilaiTransaksi, diskon, diskonSemua;
     DashboardFragment dashboardFragment;
     List<ProdukModel> produkModels;
     List<Produk> produk;
     List<PesananModel> pesananModels;
     int positiontab= 0;
-    ArrayList<String> arridProduk= new ArrayList<String>();
-    ArrayList<String> arrnamaProduk= new ArrayList<String>();
-    ArrayList<String> arridVariant= new ArrayList<String>();
-    ArrayList<String> arrnamaVariant= new ArrayList<String>();
-    ArrayList<String> arrhargaPesanan= new ArrayList<String>();
-    ArrayList<String> arrjumlahPesanan= new ArrayList<String>();
+    ArrayList<String> array= new ArrayList<String>();
+    ArrayList<String> array2= new ArrayList<String>();
+    ArrayList<String> array3= new ArrayList<String>();
+    ArrayList<String> array4= new ArrayList<String>();
+    ArrayList<String> array5= new ArrayList<String>();
+    int totalHarga, subTotalHarga, totalHargaBaru, diskonan, hargaTotalBaru;
     FrameLayout frameLayout;
     AdapterDashboardListOrder adapterPesan;
     RecyclerView recPesanan;
@@ -133,6 +134,8 @@ public class Dashboard extends AppCompatActivity
         tvDashboardCatatan = findViewById(R.id.tvDashboardCatatanSemua);
         tvDashboardDiskonSemua = findViewById(R.id.tvDashboardDiskonSemua);
 
+        tvDashboardNamaPelanggan = findViewById(R.id.tvDashboardBukaPelanggan);
+
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
 
@@ -155,12 +158,11 @@ public class Dashboard extends AppCompatActivity
             llDashboardLihatPesanan.setOnClickListener(v -> {
 //                startActivity(new Intent(this, RingkasanOrderActivity.class));
                 Intent intent = new Intent(this, RingkasanOrderActivity.class);
-                intent.putExtra("idProduk", arridProduk);
-                intent.putExtra("namaProduk", arrnamaProduk);
-                intent.putExtra("idVariant", arridVariant);
-                intent.putExtra("namaVariant", arrnamaVariant);
-                intent.putExtra("hargaPesanan", arrhargaPesanan);
-                intent.putExtra("jumlahPesanan", arrjumlahPesanan);
+                intent.putExtra("array", array);
+                intent.putExtra("array2", array2);
+                intent.putExtra("array3", array3);
+                intent.putExtra("array4", array4);
+                intent.putExtra("array5", array5);
 
                 startActivity(intent);
             });
@@ -182,10 +184,9 @@ public class Dashboard extends AppCompatActivity
         pesananModels = new ArrayList<PesananModel>();
         pesananModels.clear();
 
-        tvDashboardTotalHarga = findViewById(R.id.tvDashboardTotalHargaPesanan);
-
-//        hitungTotal();
-
+        tvDashboardTotalHarga = findViewById(R.id.tvDashboardAngkaTotalHargaPesanan);
+        tvDashboardSubTotalHarga = findViewById(R.id.tvDashboardSubTotalHargaPesanan);
+        tvDashboardNilaiSubTotalHarga = findViewById(R.id.tvDashboardAngkaSubTotalHargaPesanan);
     }
 
     public void dialogFormOptionsMenu(){
@@ -207,6 +208,37 @@ public class Dashboard extends AppCompatActivity
             dialogMenuNama();
         });
 
+        cvBatalTransaksi.setOnClickListener(view -> {
+            cancelTransaksi();
+        });
+
+        dialog.show();
+    }
+
+    public void dialogMenuNama(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_nama, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(false);
+
+        ivCancelDialogNama = dialogView.findViewById(R.id.ivCancelDialogNama);
+
+        edtDialogNamaNilai = dialogView.findViewById(R.id.edtDialogFOrmNilaiNama);
+        ivCancelDialogNama.setOnClickListener(v -> {
+            cancelTransaksi();
+        });
+
+        dialog.setPositiveButton("SIMPAN", (dialogInterface, i) -> {
+            String nama = edtDialogNamaNilai.getText().toString();
+
+            if (nama.isEmpty()){
+
+            } else{
+                tvDashboardNamaPelanggan.setText(nama);
+            }
+        });
+
         dialog.show();
     }
 
@@ -223,9 +255,6 @@ public class Dashboard extends AppCompatActivity
             this.finish();
         });
 
-
-        btnSimpanDialogDiskon = dialogView.findViewById(R.id.btnDialogFormSimpan);
-
         edtDialogDiskonNilai = dialogView.findViewById(R.id.edtDialogFormNilaiDiskon);
 
         dialog.setPositiveButton("SIMPAN", (dialogInterface, i) -> {
@@ -236,32 +265,18 @@ public class Dashboard extends AppCompatActivity
                 tvDashboardNilaiDiskonSemua.setVisibility(View.GONE);
                 tvDashboardDiskonSemua.setVisibility(View.GONE);
             } else{
-                tvDashboardNilaiDiskonSemua.setText(nilaiDiskon);
+                tvDashboardNilaiDiskonSemua.setText(nilaiDiskon + "%");
+                tvDashboardTotalHarga.setText(String.valueOf(totalHargaBaru));
+                tvDashboardNilaiSubTotalHarga.setText(String.valueOf(subTotalHarga));
                 tvDashboardNilaiDiskonSemua.setVisibility(View.VISIBLE);
                 tvDashboardDiskonSemua.setVisibility(View.VISIBLE);
+                subTotalHarga();
+                totalHargaBaru(nilaiDiskon);
             }
+
+            diskon = nilaiDiskon;
+            Log.i("subtotal" , " == " +subTotalHarga);
             dialogInterface.dismiss();
-        });
-
-        dialog.show();
-    }
-
-    public void dialogMenuNama(){
-        dialog = new AlertDialog.Builder(this);
-        inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.dialog_form_nama, null);
-        dialog.setView(dialogView);
-        dialog.setCancelable(false);
-
-        ivCancelDialogNama = dialogView.findViewById(R.id.ivCancelDialogNama);
-        ivCancelDialogNama.setOnClickListener(v -> {
-            startActivity(new Intent(this, Dashboard.class));
-            this.finish();
-        });
-
-        btnSimpanDialogNama = dialogView.findViewById(R.id.btnDialogFormSimpanNama);
-        btnSimpanDialogNama.setOnClickListener(v -> {
-            startActivity(new Intent(this, Dashboard.class));
         });
 
         dialog.show();
@@ -450,8 +465,6 @@ public class Dashboard extends AppCompatActivity
 
         int pos = pesananModels.size();
 
-
-
         pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, idVariant, namaVariant, namaPesanan, hargaPesanan));
 
         adapterPesan = new AdapterDashboardListOrder(Dashboard.this, pesananModels);
@@ -463,24 +476,72 @@ public class Dashboard extends AppCompatActivity
         recPesanan.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recPesanan.setAdapter(adapterPesan);
         adapterPesan.notifyDataSetChanged();
+        totalHarga();
+        subTotalHarga();
     }
 
-    public void setOrder(String idProduk,String namaProduk, String idVariant, String namaVariant, String hargaPesanan,String jumlahPesanan){
-        arridProduk.add(idProduk);
-        arrnamaProduk.add(namaProduk);
-        arridVariant.add(idVariant);
-        arrnamaVariant.add(namaVariant);
-        arrhargaPesanan.add(hargaPesanan);
-        arrjumlahPesanan.add(jumlahPesanan);
+    public void setOrder(String idProduk, String idKategori, String namaPesanan, String hargaPesanan,String jumlahPesanan){
+        array.add(idProduk);
+        array2.add(idKategori);
+        array3.add(namaPesanan);
+        array4.add(hargaPesanan);
+        array5.add(jumlahPesanan);
     }
 
     public void resetOrder(){
-        arridProduk.clear();
-        arrnamaProduk.clear();
-        arridVariant.clear();
-        arrnamaVariant.clear();
-        arrhargaPesanan.clear();
-        arrjumlahPesanan.clear();
+        array.clear();
+        array2.clear();
+        array3.clear();
+        array4.clear();
+        array5.clear();
+    }
+
+    public void subTotalHarga(){
+        int hargaSubTotal = 0;
+        for (int i=0; i< pesananModels.size();i++){
+            PesananModel pes = pesananModels.get(i);
+
+            hargaSubTotal = hargaSubTotal + Integer.parseInt(pes.getHargaProduk());
+
+        }
+        Log.d("SUBTOTAL", " == " + hargaSubTotal);
+        tvDashboardNilaiSubTotalHarga.setText(String.valueOf(hargaSubTotal));
+        subTotalHarga = hargaSubTotal;
+    }
+
+    public void totalHarga(){
+        int hargaTotal = 0;
+        for (int i=0; i< pesananModels.size();i++){
+            PesananModel pes = pesananModels.get(i);
+
+//            hargaTotal = (hargaTotal + Integer.parseInt(pes.getHargaProduk())) - Integer.parseInt(diskon);
+            hargaTotal = hargaTotal + Integer.parseInt(pes.getHargaProduk());
+
+        }
+        Log.d("TOTALHARGA", " == " + hargaTotal);
+        Log.d("DISKON TOTAL" , " == " + diskon);
+        tvDashboardTotalHarga.setText(String.valueOf(hargaTotal));
+        totalHarga = hargaTotal;
+    }
+
+    public void totalHargaBaru(String diskonBaru){
+        diskonan = (Integer.parseInt(diskonBaru) * subTotalHarga)/100;
+
+        hargaTotalBaru = subTotalHarga - diskonan;
+
+        Log.d("SUBTOTAL BARU", " == " + subTotalHarga);
+        Log.d("hargaTotalBaru", " == " + hargaTotalBaru);
+        Log.d("DISKONAN" , " == " + diskonan);
+        tvDashboardTotalHarga.setText(String.valueOf(hargaTotalBaru));
+        totalHargaBaru = hargaTotalBaru;
+    }
+
+    public void cancelTransaksi(){
+        pesananModels = new ArrayList<PesananModel>();
+        pesananModels.clear();
+
+        startActivity(new Intent(this, Dashboard.class));
+        finish();
     }
 
 }
