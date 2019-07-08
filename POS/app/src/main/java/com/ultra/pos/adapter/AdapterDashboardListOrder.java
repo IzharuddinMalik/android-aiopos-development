@@ -56,13 +56,6 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
             tvPopupNilaiDiskon = view.findViewById(R.id.tvDashboardDaftarPesananNilaiDiskon);
             tvPopupNilaiCatatan = view.findViewById(R.id.tvDashboardDaftarPesananNilaiCatatan);
 
-//            view.setOnClickListener(v -> {
-//                int position = getAdapterPosition();
-//                if (position != RecyclerView.NO_POSITION){
-//                    dialogOrder(view);
-//                }
-//            });
-
             stylingUtils.robotoRegularTextview(mCtx, tvNamaPesananProduk);
             stylingUtils.robotoRegularTextview(mCtx, tvHargaPesananProduk);
         }
