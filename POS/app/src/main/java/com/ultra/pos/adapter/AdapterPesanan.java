@@ -30,7 +30,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.PesananV
         final Produk produkModel = listPesanan.get(position);
         holder.namaorder.setText(produkModel.getNamaProduk());
         holder.hargaorder.setText(produkModel.getHargaProduk());
-        holder.jumlahorder.setText("3");
+        holder.jumlahorder.setText(produkModel.getJumlahProduk());
     }
 
     @Override

@@ -24,10 +24,12 @@ import android.widget.TextView;
 import com.ultra.pos.R;
 import com.ultra.pos.activity.Dashboard;
 import com.ultra.pos.activity.DashboardFragment;
+import com.ultra.pos.activity.RingkasanOrderActivity;
 import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.util.StylingUtils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
         private int counter = 0;
         LinearLayout llDashboardLihatPesanan;
 
+
         public ProdukViewHolder(View view){
             super(view);
 
@@ -72,7 +75,6 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
             Log.d("height", "" + height);
 
             Activity a = new Activity();
-
             if (width >= 1920 && height >= 1200){
                 a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -100,6 +102,17 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                         if(s.length()!=0){
                             counter=Integer.parseInt(""+s);
                             visible();
+
+                            int position = getAdapterPosition();
+                            Log.i("Posisi",listProduk.get(position).getNamaVariant()+" "+inputJumlahProduk.getText()+position);
+                            if (position != RecyclerView.NO_POSITION){
+                                ((Dashboard)mCtx).setOrder(
+                                        listProduk.get(position).getIdProduk(),
+                                        listProduk.get(position).getIdKategori(),
+                                        listProduk.get(position).getNamaVariant(),
+                                        listProduk.get(position).getHargaProduk(),
+                                        inputJumlahProduk.getText().toString());
+                            }
                         }
                     }
 
@@ -112,25 +125,18 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                     counter++;
                     visible();
                     inputJumlahProduk.setText(""+counter);
+
                 });
 
                 minus.setOnClickListener(v -> {
-                    counter--;
+                    counter=0;
                     visible();
-                    inputJumlahProduk.setText(""+counter);
+                    ((Dashboard)mCtx).resetOrder();
+                    inputJumlahProduk.setText(null);
                 });
-
 
                 a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
-
-//            if(counter!=0 || inputJumlahProduk!=null){
-//                llDashboardLihatPesanan.setVisibility(View.VISIBLE);
-//            }else{
-//                llDashboardLihatPesanan.setVisibility(View.GONE);
-//            }
-
-
 
             stylingUtils.robotoRegularTextview(mCtx, namaProduk);
             stylingUtils.robotoRegularTextview(mCtx, hargaProduk);

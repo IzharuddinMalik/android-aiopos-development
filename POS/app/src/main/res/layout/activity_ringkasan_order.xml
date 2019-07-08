@@ -216,12 +216,13 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvTotalOrder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
-                        android:textStyle="bold"
                         android:text="Rp. 123123"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 

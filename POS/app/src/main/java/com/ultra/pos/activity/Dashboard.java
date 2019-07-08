@@ -87,7 +87,12 @@ public class Dashboard extends AppCompatActivity
     List<ProdukModel> produkModels;
     List<Produk> produk;
     List<PesananModel> pesananModels;
-    int positiontab = 0;
+    int positiontab= 0;
+    ArrayList<String> array= new ArrayList<String>();
+    ArrayList<String> array2= new ArrayList<String>();
+    ArrayList<String> array3= new ArrayList<String>();
+    ArrayList<String> array4= new ArrayList<String>();
+    ArrayList<String> array5= new ArrayList<String>();
     FrameLayout frameLayout;
     AdapterDashboardListOrder adapterPesan;
     RecyclerView recPesanan;
@@ -142,7 +147,15 @@ public class Dashboard extends AppCompatActivity
         if (width == 720 && height == 1280){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             llDashboardLihatPesanan.setOnClickListener(v -> {
-                startActivity(new Intent(this, RingkasanOrderActivity.class));
+//                startActivity(new Intent(this, RingkasanOrderActivity.class));
+                Intent intent = new Intent(this, RingkasanOrderActivity.class);
+                intent.putExtra("array", array);
+                intent.putExtra("array2", array2);
+                intent.putExtra("array3", array3);
+                intent.putExtra("array4", array4);
+                intent.putExtra("array5", array5);
+
+                startActivity(intent);
             });
         }else{
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -423,6 +436,22 @@ public class Dashboard extends AppCompatActivity
         recPesanan.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recPesanan.setAdapter(adapterPesan);
         adapterPesan.notifyDataSetChanged();
+    }
+
+    public void setOrder(String idProduk, String idKategori, String namaPesanan, String hargaPesanan,String jumlahPesanan){
+        array.add(idProduk);
+        array2.add(idKategori);
+        array3.add(namaPesanan);
+        array4.add(hargaPesanan);
+        array5.add(jumlahPesanan);
+    }
+
+    public void resetOrder(){
+        array.clear();
+        array2.clear();
+        array3.clear();
+        array4.clear();
+        array5.clear();
     }
 
 }
