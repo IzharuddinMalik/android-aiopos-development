@@ -18,7 +18,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,12 +44,13 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
     View dialogView;
-    TextView TOTAL;
+    TextView TOTAL,Subtotal,Diskon;
+    EditText diskon,catatan;
+    LinearLayout subtotal,diskonll;
     ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama;
-    Button btnSimpanDialogDiskon, btnSimpanDialogNama;
+    Button btnSimpanDialogDiskon, btnSimpanDiskonPopup;
     private List<Produk> listOrder;
     private List<TipeModel> listTipe;
-    List<PesananModel> pesananModels;
     private AdapterPesanan adapter;
     private AdapterTipePenjualan adapter2;
     List<String> data=new ArrayList<String>();
@@ -61,7 +64,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     List<String> databaru3=new ArrayList<String>();
     List<String> databaru4=new ArrayList<String>();
     List<String> databaru5=new ArrayList<String>();
-    int total=0;
+    int total,disc=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +94,14 @@ public class RingkasanOrderActivity extends AppCompatActivity {
             total=total + Integer.parseInt(databaru4.get(i)) * Integer.parseInt(databaru5.get(i));
        }
 
+        diskonll=findViewById(R.id.llLinearDiskon);
+        subtotal=findViewById(R.id.llLinearSubtotal);
         TOTAL=findViewById(R.id.tvTotalOrder);
+        Subtotal=findViewById(R.id.tvSubtotal);
+        Diskon=findViewById(R.id.tvDiskonOrderLast);
+
         TOTAL.setText(""+total);
+
 
 //        listOrder.add(0, new Produk("", "", "",""+data,"","",""));
 
@@ -154,23 +163,28 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     }
 
     public void dialogMenuDiskon(){
+
         dialog = new AlertDialog.Builder(this);
         inflater = getLayoutInflater();
         dialogView = inflater.inflate(R.layout.dialog_form_diskon,null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
 
-        ivCancelDialogDiskon = dialogView.findViewById(R.id.ivCancelDialogDiskon);
-        ivCancelDialogDiskon.setOnClickListener(v -> {
-
-        });
-
-        btnSimpanDialogDiskon = dialogView.findViewById(R.id.btnDialogFormSimpan);
-        btnSimpanDialogDiskon.setOnClickListener(v -> {
-
-        });
-
         dialog.show();
+        diskon=dialogView.findViewById(R.id.edtDialogFormNilaiDiskon);
+        btnSimpanDialogDiskon=dialogView.findViewById(R.id.btnDialogFormSimpan);
+        btnSimpanDialogDiskon.setOnClickListener(v -> {
+            diskonll.setVisibility(View.VISIBLE);
+            subtotal.setVisibility(View.VISIBLE);
+
+
+            disc=total*Integer.parseInt(diskon.getText().toString())/100;
+            Subtotal.setText("Rp. "+total);
+//            Diskon.setText(""+(total-(total*(Integer.parseInt(diskon.getText().toString())))));
+            Diskon.setText("Rp. "+disc);
+//            TOTAL.setText(""+(total-(Integer.parseInt(Diskon.getText().toString()))));
+            TOTAL.setText("Rp. "+(total-disc));
+        });
     }
 
     public void dialogMenuHapus(){
@@ -180,7 +194,20 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         dialog.setView(dialogView);
         dialog.setCancelable(true);
 
+//        btnSimpanDialogDiskon = findViewById(R.id.btnDialogFormSimpan);
+//        btnSimpanDialogDiskon.setOnClickListener(v -> {
+//            diskonll.setVisibility(View.VISIBLE);
+//            subtotal.setVisibility(View.VISIBLE);
+//
+//            Subtotal.setText(""+total);
+////            Diskon.setText(""+(total-(total*(Integer.parseInt(diskon.getText().toString())))));
+//            Diskon.setText(""+Integer.parseInt(diskon.getText().toString()));
+////            TOTAL.setText(""+(total-(Integer.parseInt(Diskon.getText().toString()))));
+//            TOTAL.setText(""+(total/100*Integer.parseInt(diskon.getText().toString())));
+//        });
+
         dialog.show();
+
     }
 
     @Override
@@ -198,22 +225,38 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     public void selectionData(){
         String tmp="";
         int jml=0;
-        for(int i=0;i<data3.size();i++){
-            if(tmp.equals(data3.get(i))){
-
-            }else{
-                if(jml<Integer.parseInt(data5.get(i))){
+        if(data.size()==0){
+            databaru.add(data.get(0));
+            databaru2.add(data2.get(0));
+            databaru3.add(data3.get(0));
+            databaru4.add(data4.get(0));
+            databaru5.add(data5.get(0));
+        }else{
+            for(int i=0;i<data3.size();i++){
+                if(tmp.equals(data3.get(i))){
+//                    if(jml<Integer.parseInt(data5.get(i))){
+//                        jml=Integer.parseInt(data5.get(i));
+//                        databaru5.add(""+jml);
+//                    }
+                }else{
                     databaru.add(data.get(i));
                     databaru2.add(data2.get(i));
                     databaru3.add(data3.get(i));
                     databaru4.add(data4.get(i));
-                    databaru5.add(data5.get(i));
+//                    databaru5.add(data5.get(i));
                     tmp=data3.get(i);
-                    jml=Integer.parseInt(data5.get(i));
+
+                    for(int k=0;k<data3.size();k++){
+                        if(tmp.equals(data3.get(k))){
+                            jml=Integer.parseInt(data5.get(k));
+//                            Log.i("Iterasi K",""+jml);
+                        }
+                    }
+                    databaru5.add(""+jml);
+//                    Log.i("JML akhir",""+jml);
                 }
             }
         }
-
         Log.i("Data",""+databaru3.size());
     }
 }

@@ -109,6 +109,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/llLinearSubtotal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -137,7 +138,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/tvSubtotal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -147,14 +148,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llLinearDiskon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -176,7 +177,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/tvDiskonOrderLast"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
