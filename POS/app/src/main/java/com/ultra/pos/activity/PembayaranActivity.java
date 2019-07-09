@@ -22,13 +22,32 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ultra.pos.R;
+import com.ultra.pos.adapter.AdapterEDC;
+import com.ultra.pos.adapter.AdapterPesanan;
 import com.ultra.pos.adapter.AdapterRingkasanOrder;
+import com.ultra.pos.adapter.AdapterTipePenjualan;
 import com.ultra.pos.adapter.AdapterTransaksiTersimpan;
+import com.ultra.pos.api.APIUrl;
+import com.ultra.pos.api.BaseApiInterface;
+import com.ultra.pos.api.SharedPrefManager;
+import com.ultra.pos.model.EDCModel;
 import com.ultra.pos.model.OrderModel;
+import com.ultra.pos.model.TipeModel;
 import com.ultra.pos.model.TransaksiModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PembayaranActivity extends AppCompatActivity {
 
@@ -39,8 +58,14 @@ public class PembayaranActivity extends AppCompatActivity {
     TextView total;
     int totalKembalian=0;
     TextInputEditText jumlahLain;
+    RecyclerView recEDC;
     String totalbayar;
-    Button konfirmasibayar,pas,limapuluh,seratus,duaratus;
+    private AdapterEDC adapter;
+    private List<EDCModel> listEDC;
+    private SharedPrefManager pref;
+    private String idbusiness,idoutlet;
+    private BaseApiInterface mApiInterface;
+    Button konfirmasibayar,pas,limapuluh,seratus,duaratus,tunai,edc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +80,10 @@ public class PembayaranActivity extends AppCompatActivity {
         duaratus=findViewById(R.id.btnUang200K);
         total=findViewById(R.id.tvTotalPembayaranAct);
         jumlahLain=findViewById(R.id.tietJumlahLain);
+        tunai=findViewById(R.id.btnTunai);
+        edc=findViewById(R.id.btnEDC);
 
         totalbayar = getIntent().getStringExtra("totalbyr");
-
         total.setText("Rp. "+totalbayar);
 
         konfirmasibayar.setOnClickListener(v -> {
@@ -94,6 +120,13 @@ public class PembayaranActivity extends AppCompatActivity {
             Log.i("Sisa 200",""+totalKembalian);
         });
 
+        tunai.setOnClickListener(v -> {
+
+        });
+
+        edc.setOnClickListener(v -> {
+            edc_list();
+        });
 
     }
 
@@ -120,5 +153,74 @@ public class PembayaranActivity extends AppCompatActivity {
         dialog.setCancelable(true);
 
         dialog.show();
+    }
+
+    public void edc_list(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_edc, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        recEDC = dialogView.findViewById(R.id.rvEDC);
+
+        getListEDC();
+
+        dialog.show();
+    }
+    public void getListEDC(){
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
+        idbusiness = idBusiness;
+        idoutlet = idOutlet;
+
+        listEDC = new ArrayList<>();
+        listEDC.clear();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idbusiness",idbusiness);
+        params.put("idOulet",idoutlet);
+
+        mApiInterface = APIUrl.getAPIService();
+        mApiInterface.getEDC(params,idbusiness,idoutlet).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try{
+                        String result = response.body().string();
+                        JSONObject jsonResult = new JSONObject(result);
+                        JSONArray array = jsonResult.getJSONArray("info");
+
+                        for (int i = 0; i<array.length(); i++){
+                            JSONObject objKategori = array.getJSONObject(i);
+                            listEDC.add(i, new EDCModel(""+objKategori.getString("idpay"),""+objKategori.getString("nama_pay")));
+                        }
+
+                        adapter = new AdapterEDC(PembayaranActivity.this, listEDC);
+                        final RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(PembayaranActivity.this);
+                        recEDC.setLayoutManager(mLayoutManager2);
+                        recEDC.setItemAnimator(new DefaultItemAnimator());
+                        recEDC.setItemViewCacheSize(listEDC.size());
+                        recEDC.setDrawingCacheEnabled(true);
+                        recEDC.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                        recEDC.setAdapter(adapter);
+                        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(PembayaranActivity.this, R.anim.animation_slide_from_right);
+                        recEDC.setLayoutAnimation(animation);
+                        adapter.notifyDataSetChanged();
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -69,7 +69,6 @@
             android:padding="@dimen/_10sdp">
 
             <TextView
-                android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Total"
@@ -108,13 +107,14 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btnTunai"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Tunai" />
 
                 <Button
-                    android:id="@+id/button11"
+                    android:id="@+id/btnEDC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
