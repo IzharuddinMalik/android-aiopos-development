@@ -81,7 +81,6 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                 view.setOnClickListener(v -> {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION){
-
                         ((Dashboard)mCtx).setPesanan(listProduk.get(position).getIdProduk(), listProduk.get(position).getIdKategori(),
                                 listProduk.get(position).getIdVariant(), listProduk.get(position).getNamaVariant(),
                                 listProduk.get(position).getNamaProduk(), listProduk.get(position).getHargaProduk());

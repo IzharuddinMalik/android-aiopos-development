@@ -125,26 +125,163 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tvDashboardTotalHargaPesanan"
-                            android:text="TOTAL"
+                            android:id="@+id/tvDashboardSubTotalHargaPesanan"
+                            android:text="SUB TOTAL"
                             android:textColor="@android:color/black"
                             android:textStyle="bold"
                             android:textSize="@dimen/_10ssp"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="1"/>
+                            android:layout_margin="@dimen/_5sdp"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tvDashboardAngkaTotalHargaPesanan"
-                            android:text="Rp xxxxx"
+                            android:id="@+id/tvDashboardAngkaSubTotalHargaPesanan"
+                            android:text="Rp 0"
                             android:textColor="@android:color/black"
                             android:textStyle="bold"
                             android:textSize="@dimen/_10ssp"
                             android:layout_margin="@dimen/_5ssp"
                             android:layout_weight="1"
                             android:textAlignment="textEnd"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardDiskonSemua"
+                            android:text="Diskon"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_5ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardNilaiDiskonSemua"
+                            android:text="xxx"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_5ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardCatatanSemua"
+                            android:text="Catatan"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_5ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardNilaiCatatanSemua"
+                            android:text="Catatan"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_5ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardTipePenjualanPesanan"
+                            android:text="Tipe Penjualan"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_5ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardNilaiTipePenjualanPesanan"
+                            android:text="xxxx"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_5ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardTotalHargaPesanan"
+                            android:text="TOTAL"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_10ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardAngkaTotalHargaPesanan"
+                            android:text="Rp 0"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_10ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardDiskonSemua"
+                            android:text="Diskon"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_10ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvDashboardNilaiDiskonSemua"
+                            android:text="xxx"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_10ssp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:visibility="gone"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"

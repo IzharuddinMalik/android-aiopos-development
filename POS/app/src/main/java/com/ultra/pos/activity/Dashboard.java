@@ -27,6 +27,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -39,6 +41,7 @@ import android.widget.Toast;
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterDashboardListOrder;
 import com.ultra.pos.adapter.AdapterPilihProduk;
+import com.ultra.pos.adapter.AdapterTipePenjualan;
 import com.ultra.pos.adapter.TabAdapter;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
@@ -47,6 +50,7 @@ import com.ultra.pos.api.SharedPrefManager;
 import com.ultra.pos.model.PesananModel;
 import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.ProdukModel;
+import com.ultra.pos.model.TipeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,14 +79,14 @@ public class Dashboard extends AppCompatActivity
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
     View dialogView;
-    CardView cvDiskon, cvNama, cvBatalTransaksi;
-    EditText edtDialogDiskonNilai, edtDialogNamaNilai;
-    Button btnSimpanDialogDiskon, btnSimpanDialogNama;
-    TextView tvDashboardNavNama;
+    CardView cvDiskon, cvNama, cvBatalTransaksi, cvTipePenjualan, cvCatatanPesanan;
+    EditText edtDialogDiskonNilai, edtDialogNamaNilai, edtDialogCatatan;
+    TextView tvDashboardNavNama, tvDashboardDiskonSemua, tvDashboardNilaiDiskonSemua, tvDashboardCatatan, tvDashboardNilaiCatatanSemua, tvDashboardTotalHarga,
+            tvDashboardSubTotalHarga, tvDashboardNilaiSubTotalHarga, tvDashboardNamaPelanggan;
     SharedPrefManager pref;
     BaseApiInterface mApiInterface;
     APIConnect apiConnect;
-    String idbusiness, idtb, idoutlet;
+    String idbusiness, idtb, idoutlet, totalNilaiTransaksi, diskon, diskonSemua;
     DashboardFragment dashboardFragment;
     List<ProdukModel> produkModels;
     List<Produk> produk;
@@ -94,9 +98,13 @@ public class Dashboard extends AppCompatActivity
     ArrayList<String> arrnamaVariant= new ArrayList<String>();
     ArrayList<String> arrhargaPesanan= new ArrayList<String>();
     ArrayList<String> arrjumlahPesanan= new ArrayList<String>();
+    int totalHarga, subTotalHarga, totalHargaBaru, diskonan, hargaTotalBaru;
     FrameLayout frameLayout;
     AdapterDashboardListOrder adapterPesan;
-    RecyclerView recPesanan;
+    RecyclerView recPesanan, recTipePenjualan;
+    AdapterTipePenjualan adapterTipePenjualan;
+    List<TipeModel> listTipe;
+    TextView tvOKDialogCatatan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +135,13 @@ public class Dashboard extends AppCompatActivity
         frameLayout = findViewById(R.id.frame_layout);
         ivKeranjang = findViewById(R.id.ivDashboardKeranjang);
         llDashboardLihatPesanan=findViewById(R.id.llDashboardLihatPesanan);
+
+        tvDashboardNilaiDiskonSemua = findViewById(R.id.tvDashboardNilaiDiskonSemua);
+        tvDashboardNilaiCatatanSemua = findViewById(R.id.tvDashboardNilaiCatatanSemua);
+        tvDashboardCatatan = findViewById(R.id.tvDashboardCatatanSemua);
+        tvDashboardDiskonSemua = findViewById(R.id.tvDashboardDiskonSemua);
+
+        tvDashboardNamaPelanggan = findViewById(R.id.tvDashboardBukaPelanggan);
 
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
@@ -177,6 +192,9 @@ public class Dashboard extends AppCompatActivity
         pesananModels = new ArrayList<PesananModel>();
         pesananModels.clear();
 
+        tvDashboardTotalHarga = findViewById(R.id.tvDashboardAngkaTotalHargaPesanan);
+        tvDashboardSubTotalHarga = findViewById(R.id.tvDashboardSubTotalHargaPesanan);
+        tvDashboardNilaiSubTotalHarga = findViewById(R.id.tvDashboardAngkaSubTotalHargaPesanan);
     }
 
     public void dialogFormOptionsMenu(){
@@ -189,6 +207,8 @@ public class Dashboard extends AppCompatActivity
         cvDiskon = dialogView.findViewById(R.id.cvDashboardDiskon);
         cvNama = dialogView.findViewById(R.id.cvDashboardNama);
         cvBatalTransaksi = dialogView.findViewById(R.id.cvDashboardBatalTransaksi);
+        cvTipePenjualan = dialogView.findViewById(R.id.cvDashboardTipePenjualan);
+        cvCatatanPesanan = dialogView.findViewById(R.id.cvDashboardCatatanTransaksi);
 
         cvDiskon.setOnClickListener(v -> {
             dialogMenuDiskon();
@@ -196,6 +216,45 @@ public class Dashboard extends AppCompatActivity
 
         cvNama.setOnClickListener(v -> {
             dialogMenuNama();
+        });
+
+        cvBatalTransaksi.setOnClickListener(view -> {
+            cancelTransaksi();
+        });
+
+        cvTipePenjualan.setOnClickListener(view -> {
+            dialogTipePenjualan();
+        });
+
+        cvCatatanPesanan.setOnClickListener(view -> {
+            dialogCatatan();
+        });
+
+        dialog.show();
+    }
+
+    public void dialogMenuNama(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_nama, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(false);
+
+        ivCancelDialogNama = dialogView.findViewById(R.id.ivCancelDialogNama);
+
+        edtDialogNamaNilai = dialogView.findViewById(R.id.edtDialogFOrmNilaiNama);
+        ivCancelDialogNama.setOnClickListener(v -> {
+            cancelTransaksi();
+        });
+
+        dialog.setPositiveButton("SIMPAN", (dialogInterface, i) -> {
+            String nama = edtDialogNamaNilai.getText().toString();
+
+            if (nama.isEmpty()){
+
+            } else{
+                tvDashboardNamaPelanggan.setText(nama);
+            }
         });
 
         dialog.show();
@@ -214,31 +273,129 @@ public class Dashboard extends AppCompatActivity
             this.finish();
         });
 
-        btnSimpanDialogDiskon = dialogView.findViewById(R.id.btnDialogFormSimpan);
-        btnSimpanDialogDiskon.setOnClickListener(v -> {
-            startActivity(new Intent(this, Dashboard.class));
-            this.finish();
+        edtDialogDiskonNilai = dialogView.findViewById(R.id.edtDialogFormNilaiDiskon);
+
+        dialog.setPositiveButton("SIMPAN", (dialogInterface, i) -> {
+            String nilaiDiskon = edtDialogDiskonNilai.getText().toString();
+
+            if (nilaiDiskon.isEmpty()){
+                tvDashboardNilaiDiskonSemua.setText("");
+                tvDashboardNilaiDiskonSemua.setVisibility(View.GONE);
+                tvDashboardDiskonSemua.setVisibility(View.GONE);
+            } else{
+                tvDashboardNilaiDiskonSemua.setText(nilaiDiskon + "%");
+                tvDashboardTotalHarga.setText(String.valueOf(totalHargaBaru));
+                tvDashboardNilaiSubTotalHarga.setText(String.valueOf(subTotalHarga));
+                tvDashboardNilaiDiskonSemua.setVisibility(View.VISIBLE);
+                tvDashboardDiskonSemua.setVisibility(View.VISIBLE);
+                subTotalHarga();
+                totalHargaBaru(nilaiDiskon);
+            }
+
+            diskon = nilaiDiskon;
+            Log.i("subtotal" , " == " +subTotalHarga);
+            dialogInterface.dismiss();
         });
 
         dialog.show();
     }
 
-    public void dialogMenuNama(){
+    public void dialogTipePenjualan(){
         dialog = new AlertDialog.Builder(this);
         inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.dialog_form_nama, null);
+        dialogView = inflater.inflate(R.layout.dialog_tipe_penjualan, null);
         dialog.setView(dialogView);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
 
-        ivCancelDialogNama = dialogView.findViewById(R.id.ivCancelDialogNama);
-        ivCancelDialogNama.setOnClickListener(v -> {
-            startActivity(new Intent(this, Dashboard.class));
-            this.finish();
+        recTipePenjualan = dialogView.findViewById(R.id.rvDashboardTipePenjualan);
+
+        getSalesType();
+
+        dialog.show();
+    }
+
+    public void getSalesType(){
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
+        idbusiness = idBusiness;
+        idoutlet = idOutlet;
+
+        listTipe = new ArrayList<>();
+        listTipe.clear();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idbusiness",idbusiness);
+        params.put("idOulet",idoutlet);
+        mApiInterface = APIUrl.getAPIService();
+        mApiInterface.getSalesType(params,idbusiness,idoutlet).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try{
+
+                        String result = response.body().string();
+                        JSONObject jsonResult = new JSONObject(result);
+                        JSONArray array = jsonResult.getJSONArray("info");
+
+                        TipeModel tipeMOdel=new TipeModel("");
+                        for (int i = 0; i<array.length(); i++){
+                            JSONObject objKategori = array.getJSONObject(i);
+                            objKategori.getString("idsaltype");
+                            objKategori.getString("nama_saltype");
+
+                            listTipe.add(0, new TipeModel(objKategori.getString("nama_saltype")));
+                        }
+
+                        adapterTipePenjualan = new AdapterTipePenjualan(Dashboard.this, listTipe);
+                        final RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(Dashboard.this);
+                        recTipePenjualan.setLayoutManager(mLayoutManager2);
+                        recTipePenjualan.setItemAnimator(new DefaultItemAnimator());
+                        recTipePenjualan.setItemViewCacheSize(listTipe.size());
+                        recTipePenjualan.setDrawingCacheEnabled(true);
+                        recTipePenjualan.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                        recTipePenjualan.setAdapter(adapterTipePenjualan);
+                        LayoutAnimationController animation2 = AnimationUtils.loadLayoutAnimation(Dashboard.this, R.anim.animation_slide_from_right);
+                        recTipePenjualan.setLayoutAnimation(animation2);
+                        adapterTipePenjualan.notifyDataSetChanged();
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
         });
+    }
 
-        btnSimpanDialogNama = dialogView.findViewById(R.id.btnDialogFormSimpanNama);
-        btnSimpanDialogNama.setOnClickListener(v -> {
-            startActivity(new Intent(this, Dashboard.class));
+    public void dialogCatatan(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_catatan, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        edtDialogCatatan = dialogView.findViewById(R.id.editText);
+
+        tvOKDialogCatatan = dialogView.findViewById(R.id.textView41);
+        dialog.setPositiveButton("OK", (dialogInterface, i) -> {
+            String catatan = edtDialogCatatan.getText().toString();
+
+            if (catatan.isEmpty()){
+
+            } else{
+                tvDashboardNilaiCatatanSemua.setText(catatan);
+                tvDashboardCatatan.setVisibility(View.VISIBLE);
+                tvDashboardNilaiCatatanSemua.setVisibility(View.VISIBLE);
+            }
+
+            dialogInterface.dismiss();
         });
 
         dialog.show();
@@ -427,8 +584,6 @@ public class Dashboard extends AppCompatActivity
 
         int pos = pesananModels.size();
 
-
-
         pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, idVariant, namaVariant, namaPesanan, hargaPesanan));
 
         adapterPesan = new AdapterDashboardListOrder(Dashboard.this, pesananModels);
@@ -440,6 +595,8 @@ public class Dashboard extends AppCompatActivity
         recPesanan.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recPesanan.setAdapter(adapterPesan);
         adapterPesan.notifyDataSetChanged();
+        totalHarga();
+        subTotalHarga();
     }
 
     public void setOrder(String idProduk,String namaProduk, String idVariant, String namaVariant, String hargaPesanan,String jumlahPesanan){
@@ -451,6 +608,7 @@ public class Dashboard extends AppCompatActivity
         arrjumlahPesanan.add(jumlahPesanan);
     }
 
+
     public void resetOrder(){
         arridProduk.clear();
         arrnamaProduk.clear();
@@ -458,6 +616,54 @@ public class Dashboard extends AppCompatActivity
         arrnamaVariant.clear();
         arrhargaPesanan.clear();
         arrjumlahPesanan.clear();
+    }
+
+    public void subTotalHarga(){
+        int hargaSubTotal = 0;
+        for (int i=0; i< pesananModels.size();i++){
+            PesananModel pes = pesananModels.get(i);
+
+            hargaSubTotal = hargaSubTotal + Integer.parseInt(pes.getHargaProduk());
+
+        }
+        Log.d("SUBTOTAL", " == " + hargaSubTotal);
+        tvDashboardNilaiSubTotalHarga.setText(String.valueOf(hargaSubTotal));
+        subTotalHarga = hargaSubTotal;
+    }
+
+    public void totalHarga(){
+        int hargaTotal = 0;
+        for (int i=0; i< pesananModels.size();i++){
+            PesananModel pes = pesananModels.get(i);
+
+//            hargaTotal = (hargaTotal + Integer.parseInt(pes.getHargaProduk())) - Integer.parseInt(diskon);
+            hargaTotal = hargaTotal + Integer.parseInt(pes.getHargaProduk());
+
+        }
+        Log.d("TOTALHARGA", " == " + hargaTotal);
+        Log.d("DISKON TOTAL" , " == " + diskon);
+        tvDashboardTotalHarga.setText(String.valueOf(hargaTotal));
+        totalHarga = hargaTotal;
+    }
+
+    public void totalHargaBaru(String diskonBaru){
+        diskonan = (Integer.parseInt(diskonBaru) * subTotalHarga)/100;
+
+        hargaTotalBaru = subTotalHarga - diskonan;
+
+        Log.d("SUBTOTAL BARU", " == " + subTotalHarga);
+        Log.d("hargaTotalBaru", " == " + hargaTotalBaru);
+        Log.d("DISKONAN" , " == " + diskonan);
+        tvDashboardTotalHarga.setText(String.valueOf(hargaTotalBaru));
+        totalHargaBaru = hargaTotalBaru;
+    }
+
+    public void cancelTransaksi(){
+        pesananModels = new ArrayList<PesananModel>();
+        pesananModels.clear();
+
+        startActivity(new Intent(this, Dashboard.class));
+        finish();
     }
 
 }

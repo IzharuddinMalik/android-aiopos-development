@@ -82,7 +82,8 @@
             android:textSize="@dimen/_8ssp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/colorblack"/>
+            android:textColor="@color/colorblack"
+            android:inputType="number"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -107,7 +108,8 @@
             android:textSize="@dimen/_8ssp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/colorblack"/>
+            android:textColor="@color/colorblack"
+            android:inputType="number"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
