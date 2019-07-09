@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.ultra.pos.R;
 import com.ultra.pos.activity.Dashboard;
 import com.ultra.pos.activity.DashboardFragment;
@@ -168,7 +169,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
             holder.namaProduk.setText(produkModel.getNamaVariant());
             holder.hargaProduk.setText(produkModel.getHargaProduk());
         }
-//        Picasso.with(mCtx).load("" + produkModel.getGambarProduk()).into(holder.gambarProduk);
+        Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + produkModel.getFotoProduk()).into(holder.gambarProduk);
     }
 
     public int getItemCount(){ return listProduk.size();}

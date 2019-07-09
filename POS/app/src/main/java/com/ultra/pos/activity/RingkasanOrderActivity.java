@@ -111,7 +111,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         listOrder.clear();
 
         for(int i=0;i<idProduk.size();i++){
-            listOrder.add(i, new Produk(""+idProduk.get(i), ""+namaProduk.get(i), ""+idVariant.get(i),""+namaVariant.get(i),"@ Rp. "+hargaPesanan.get(i),""+jumlahPesanan.get(i),""));
+            listOrder.add(i, new Produk(""+idProduk.get(i), ""+namaProduk.get(i), ""+idVariant.get(i),""+namaVariant.get(i),"@ Rp. "+hargaPesanan.get(i), "",""+jumlahPesanan.get(i),""));
             total=total + Integer.parseInt(hargaPesanan.get(i)) * Integer.parseInt(jumlahPesanan.get(i));
        }
 

@@ -73,8 +73,19 @@ public class PostTransaksiModel implements Serializable {
     @Expose
     private String totalTransHD;
 
+    @SerializedName("idtax")
+    @Expose
+    private String idTax;
+
+    @SerializedName("pay_transHD")
+    @Expose
+    private String payTransHD;
+
+    @SerializedName("cashback_transHD")
+    @Expose String cashBackTransHD;
+
     public PostTransaksiModel(String idTb, String idBusiness, String idCop, String idOutlet, String idCtm, String noInvTransHD, String diskonTransaksi, String statusTransHD, List<PostTransaksiListModel> postTransaksiListModels,
-                              String idUser, String idPay, String idSaltype, String idRefund, String typeTrans, String ketRefund, String totalTransHD){
+                              String idUser, String idPay, String idSaltype, String idRefund, String typeTrans, String ketRefund, String totalTransHD, String idTax, String payTransHD, String cashBackTransHD){
         this.idTb = idTb;
         this.idBusiness = idBusiness;
         this.idCop = idCop;
@@ -91,6 +102,9 @@ public class PostTransaksiModel implements Serializable {
         this.typeTrans = typeTrans;
         this.ketRefund = ketRefund;
         this.totalTransHD = totalTransHD;
+        this.idTax = idTax;
+        this.payTransHD = payTransHD;
+        this.cashBackTransHD = cashBackTransHD;
     }
 
     public void setIdTb(String idTb) {
@@ -157,6 +171,18 @@ public class PostTransaksiModel implements Serializable {
         this.totalTransHD = totalTransHD;
     }
 
+    public void setIdTax(String idTax) {
+        this.idTax = idTax;
+    }
+
+    public void setPayTransHD(String payTransHD) {
+        this.payTransHD = payTransHD;
+    }
+
+    public void setCashBackTransHD(String cashBackTransHD) {
+        this.cashBackTransHD = cashBackTransHD;
+    }
+
     public String getIdTb() {
         return idTb;
     }
@@ -219,5 +245,17 @@ public class PostTransaksiModel implements Serializable {
 
     public String getTotalTransHD() {
         return totalTransHD;
+    }
+
+    public String getIdTax() {
+        return idTax;
+    }
+
+    public String getPayTransHD() {
+        return payTransHD;
+    }
+
+    public String getCashBackTransHD() {
+        return cashBackTransHD;
     }
 }
