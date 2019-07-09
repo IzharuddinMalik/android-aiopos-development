@@ -134,7 +134,10 @@ public class LoginActivity extends AppCompatActivity {
                                     objUser.getString("nama_business"),
                                     objUser.getString("alamat_business"),
                                     objUser.getString("name_outlet"),
-                                    objUser.getString("alamat_outlet")
+                                    objUser.getString("alamat_outlet"),
+                                    objUser.getString("idtax"),
+                                    objUser.getString("nama_tax"),
+                                    objUser.getString("besaran_tax")
                             );
 
                             Intent intent = new Intent(LoginActivity.this, Dashboard.class);

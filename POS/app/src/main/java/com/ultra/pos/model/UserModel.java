@@ -1,5 +1,7 @@
 package com.ultra.pos.model;
 
+import androidx.browser.browseractions.BrowserActionsIntent;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -59,8 +61,20 @@ public class UserModel implements Serializable {
     @Expose
     private String alamatOutlet;
 
+    @SerializedName("idtax")
+    @Expose
+    private String idTax;
+
+    @SerializedName("nama_tax")
+    @Expose
+    private String namaTax;
+
+    @SerializedName("besaran_tax")
+    @Expose
+    private String besaranTax;
+
     public UserModel(String idUser, String namaUser, String telpUser, String emailUser, String roleUser, String idBusiness, String idOutlet,
-                     String statusUser, String idTb,String namaBisnis, String alamatBisnis, String namaOutlet, String alamatOutlet){
+                     String statusUser, String idTb,String namaBisnis, String alamatBisnis, String namaOutlet, String alamatOutlet, String idTax, String namaTax, String besaranTax){
         this.idUser = idUser;
         this.namaUser = namaUser;
         this.telpUser = telpUser;
@@ -74,6 +88,9 @@ public class UserModel implements Serializable {
         this.alamatBisnis = alamatBisnis;
         this.namaOutlet = namaOutlet;
         this.alamatOutlet = alamatOutlet;
+        this.idTax = idTax;
+        this.namaTax = namaTax;
+        this.besaranTax = besaranTax;
     }
 
     public void setIdUser(String idUser) {
@@ -128,6 +145,18 @@ public class UserModel implements Serializable {
         this.alamatOutlet = alamatOutlet;
     }
 
+    public void setIdTax(String idTax) {
+        this.idTax = idTax;
+    }
+
+    public void setNamaTax(String namaTax) {
+        this.namaTax = namaTax;
+    }
+
+    public void setBesaranTax(String besaranTax) {
+        this.besaranTax = besaranTax;
+    }
+
     public String getIdUser() {
         return idUser;
     }
@@ -178,5 +207,17 @@ public class UserModel implements Serializable {
 
     public String getAlamatOutlet() {
         return alamatOutlet;
+    }
+
+    public String getIdTax() {
+        return idTax;
+    }
+
+    public String getNamaTax() {
+        return namaTax;
+    }
+
+    public String getBesaranTax() {
+        return besaranTax;
     }
 }

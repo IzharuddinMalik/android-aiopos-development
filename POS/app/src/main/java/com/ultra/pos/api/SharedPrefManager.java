@@ -30,6 +30,9 @@ public class SharedPrefManager {
     public static final String ALAMAT_BISNIS = "keyAlamatBisnis";
     public static final String NAMA_OUTLET = "keyNamaOutlet";
     public static final String ALAMAT_OUTLET = "keyAlamatOutlet";
+    public static final String ID_TAX = "keyIdTax";
+    public static final String NAMA_TAX = "keyNamaTax";
+    public static final String BESARAN_TAX = "keyBesaranTax";
 
     public static final String ID_KATEGORI = "keyIDKategori";
     public static final String NAMA_KATEGORI = "keyNamaKategori";
@@ -86,6 +89,9 @@ public class SharedPrefManager {
         editor.putString(ALAMAT_BISNIS, user.getAlamatBisnis());
         editor.putString(NAMA_OUTLET, user.getNamaOutlet());
         editor.putString(ALAMAT_OUTLET, user.getAlamatOutlet());
+        editor.putString(ID_TAX, user.getIdTax());
+        editor.putString(NAMA_TAX, user.getNamaTax());
+        editor.putString(BESARAN_TAX, user.getBesaranTax());
         editor.commit();
     }
 
@@ -139,6 +145,9 @@ public class SharedPrefManager {
         user.put(ALAMAT_BISNIS, pref.getString(ALAMAT_BISNIS, null));
         user.put(NAMA_OUTLET, pref.getString(NAMA_OUTLET, null));
         user.put(ALAMAT_OUTLET, pref.getString(ALAMAT_OUTLET, null));
+        user.put(ID_TAX, pref.getString(ID_TAX, null));
+        user.put(NAMA_TAX, pref.getString(NAMA_TAX, null));
+        user.put(BESARAN_TAX, pref.getString(BESARAN_TAX, null));
         return user;
     }
 

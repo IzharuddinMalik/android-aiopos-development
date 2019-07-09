@@ -82,7 +82,7 @@ public class Dashboard extends AppCompatActivity
     CardView cvDiskon, cvNama, cvBatalTransaksi, cvTipePenjualan, cvCatatanPesanan;
     EditText edtDialogDiskonNilai, edtDialogNamaNilai, edtDialogCatatan;
     TextView tvDashboardNavNama, tvDashboardDiskonSemua, tvDashboardNilaiDiskonSemua, tvDashboardCatatan, tvDashboardNilaiCatatanSemua, tvDashboardTotalHarga,
-            tvDashboardSubTotalHarga, tvDashboardNilaiSubTotalHarga, tvDashboardNamaPelanggan;
+            tvDashboardSubTotalHarga, tvDashboardNilaiSubTotalHarga, tvDashboardNamaPelanggan, tvDashboardTipePenjualan, tvDashboardNilaiTipePenjualan;
     SharedPrefManager pref;
     BaseApiInterface mApiInterface;
     APIConnect apiConnect;
@@ -195,6 +195,9 @@ public class Dashboard extends AppCompatActivity
         tvDashboardTotalHarga = findViewById(R.id.tvDashboardAngkaTotalHargaPesanan);
         tvDashboardSubTotalHarga = findViewById(R.id.tvDashboardSubTotalHargaPesanan);
         tvDashboardNilaiSubTotalHarga = findViewById(R.id.tvDashboardAngkaSubTotalHargaPesanan);
+        tvDashboardTipePenjualan = findViewById(R.id.tvDashboardTipePenjualanPesanan);
+        tvDashboardNilaiTipePenjualan = findViewById(R.id.tvDashboardNilaiTipePenjualanPesanan);
+
     }
 
     public void dialogFormOptionsMenu(){
@@ -450,7 +453,6 @@ public class Dashboard extends AppCompatActivity
                                     produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
                                     pos++;
 
-//                                    adapter.addFragment(new DashboardFragment(), ""+objisinya.get("nama_kategori"));
                                     tabLayout.addTab(tabLayout.newTab().setText(""+objisinya.getString("nama_kategori")));
                                 }else{
                                     for (int j=0;j<arrayProduk.length();j++){
@@ -461,7 +463,6 @@ public class Dashboard extends AppCompatActivity
                                     produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
                                     pos++;
 
-//                                    adapter.addFragment(new DashboardFragment(), ""+objisinya.get("nama_kategori"));
                                     tabLayout.addTab(tabLayout.newTab().setText("" + objisinya.getString("nama_kategori")));
                                 }
                             }
@@ -608,7 +609,6 @@ public class Dashboard extends AppCompatActivity
         arrjumlahPesanan.add(jumlahPesanan);
     }
 
-
     public void resetOrder(){
         arridProduk.clear();
         arrnamaProduk.clear();
@@ -636,7 +636,6 @@ public class Dashboard extends AppCompatActivity
         for (int i=0; i< pesananModels.size();i++){
             PesananModel pes = pesananModels.get(i);
 
-//            hargaTotal = (hargaTotal + Integer.parseInt(pes.getHargaProduk())) - Integer.parseInt(diskon);
             hargaTotal = hargaTotal + Integer.parseInt(pes.getHargaProduk());
 
         }
@@ -664,6 +663,13 @@ public class Dashboard extends AppCompatActivity
 
         startActivity(new Intent(this, Dashboard.class));
         finish();
+    }
+
+    public void onTipePenjualan(String namaTipePenjualan){
+
+        tvDashboardNilaiTipePenjualan.setText(namaTipePenjualan);
+        tvDashboardNilaiTipePenjualan.setVisibility(View.VISIBLE);
+        tvDashboardTipePenjualan.setVisibility(View.VISIBLE);
     }
 
 }

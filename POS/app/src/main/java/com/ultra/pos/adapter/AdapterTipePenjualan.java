@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ultra.pos.R;
+import com.ultra.pos.activity.Dashboard;
 import com.ultra.pos.model.TipeModel;
 import com.ultra.pos.util.StylingUtils;
 
@@ -49,7 +50,7 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
                 view.setOnClickListener(v -> {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
-
+                        ((Dashboard)mCtx).onTipePenjualan(listTipe.get(pos).getTipe());
                     }
                 });
             } else{
