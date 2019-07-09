@@ -10,7 +10,12 @@ public class TipeModel implements Serializable {
     @Expose
     private String tipe;
 
-    public TipeModel(String tipe){
+    @SerializedName("")
+    @Expose
+    private String idsaltipe;
+
+    public TipeModel(String idsaltipe,String tipe){
+        this.idsaltipe=idsaltipe;
         this.tipe = tipe;
     }
 
@@ -18,7 +23,15 @@ public class TipeModel implements Serializable {
         return tipe;
     }
 
+    public String getIdsaltipe() {
+        return idsaltipe;
+    }
+
     public void setTipe(String tipe) {
         this.tipe = tipe;
+    }
+
+    public void setIdsaltipe(String idsaltipe) {
+        this.idsaltipe = idsaltipe;
     }
 }

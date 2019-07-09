@@ -352,13 +352,12 @@ public class Dashboard extends AppCompatActivity
                         JSONObject jsonResult = new JSONObject(result);
                         JSONArray array = jsonResult.getJSONArray("info");
 
-                        TipeModel tipeMOdel=new TipeModel("");
                         for (int i = 0; i<array.length(); i++){
                             JSONObject objKategori = array.getJSONObject(i);
                             objKategori.getString("idsaltype");
                             objKategori.getString("nama_saltype");
 
-                            listTipe.add(0, new TipeModel(objKategori.getString("nama_saltype")));
+                            listTipe.add(i, new TipeModel(objKategori.getString("idsaltype"),objKategori.getString("nama_saltype")));
                         }
 
                         adapterTipePenjualan = new AdapterTipePenjualan(Dashboard.this, listTipe);

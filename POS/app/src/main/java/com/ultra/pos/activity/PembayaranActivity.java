@@ -56,10 +56,10 @@ public class PembayaranActivity extends AppCompatActivity {
     LayoutInflater inflater;
     View dialogView;
     TextView total;
-    int totalKembalian=0;
+    int totalKembalian,cash=0;
     TextInputEditText jumlahLain;
     RecyclerView recEDC;
-    String totalbayar;
+    String totalbayar,typeTrans;
     private AdapterEDC adapter;
     private List<EDCModel> listEDC;
     private SharedPrefManager pref;
@@ -102,26 +102,31 @@ public class PembayaranActivity extends AppCompatActivity {
 
         pas.setOnClickListener(v -> {
             totalKembalian=0;
+            cash=Integer.parseInt(jumlahLain.getText().toString());
             Log.i("Pas",""+totalKembalian);
+            Log.i("Cash",""+cash);
         });
 
         limapuluh.setOnClickListener(v -> {
             totalKembalian=50000-Integer.parseInt(totalbayar);
+            cash=50000;
             Log.i("Sisa 50",""+totalKembalian);
         });
 
         seratus.setOnClickListener(v -> {
             totalKembalian=100000-Integer.parseInt(totalbayar);
+            cash=100000;
             Log.i("Sisa 100",""+totalKembalian);
         });
 
         duaratus.setOnClickListener(v -> {
             totalKembalian=200000-Integer.parseInt(totalbayar);
+            cash=200000;
             Log.i("Sisa 200",""+totalKembalian);
         });
 
         tunai.setOnClickListener(v -> {
-
+            typeTrans="Tunai";
         });
 
         edc.setOnClickListener(v -> {
@@ -166,6 +171,15 @@ public class PembayaranActivity extends AppCompatActivity {
 
         getListEDC();
 
+        dialog.setPositiveButton("Submit",(dialog1, which) -> {
+            dialog1.dismiss();
+//            edc.setBackgroundColor(Color.parseColor("#BFEBFF"));
+        });
+
+        dialog.setNegativeButton("Batal",(dialog1, which) -> {
+            typeTrans="";
+            dialog1.dismiss();
+        });
         dialog.show();
     }
     public void getListEDC(){
@@ -192,6 +206,7 @@ public class PembayaranActivity extends AppCompatActivity {
                         String result = response.body().string();
                         JSONObject jsonResult = new JSONObject(result);
                         JSONArray array = jsonResult.getJSONArray("info");
+                        Log.i("Result",""+array);
 
                         for (int i = 0; i<array.length(); i++){
                             JSONObject objKategori = array.getJSONObject(i);
@@ -222,5 +237,10 @@ public class PembayaranActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void settype_pembayaran(String type){
+        typeTrans=type;
+        Log.i("Nama",""+typeTrans);
     }
 }

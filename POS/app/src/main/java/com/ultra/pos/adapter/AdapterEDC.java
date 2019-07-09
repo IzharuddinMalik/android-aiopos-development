@@ -1,13 +1,16 @@
 package com.ultra.pos.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ultra.pos.R;
+import com.ultra.pos.activity.PembayaranActivity;
 import com.ultra.pos.model.EDCModel;
 import com.ultra.pos.util.StylingUtils;
 
@@ -18,6 +21,7 @@ public class AdapterEDC extends RecyclerView.Adapter<AdapterEDC.EDCViewHolder> {
     private Context mCtx;
     private List<EDCModel> listEDC;
     StylingUtils stylingUtils;
+    int index=-1;
 
     @Override
     public EDCViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,6 +41,20 @@ public class AdapterEDC extends RecyclerView.Adapter<AdapterEDC.EDCViewHolder> {
     public void onBindViewHolder(EDCViewHolder holder, final int position) {
         final EDCModel edcModel = listEDC.get(position);
         holder.nama.setText(edcModel.getNama_Pay());
+        holder.EDC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                index = position;
+                ((PembayaranActivity)mCtx).settype_pembayaran(edcModel.getNama_Pay());
+                notifyDataSetChanged();
+            }
+        });
+
+        if(index==position){
+            holder.EDC.setBackgroundColor(Color.parseColor("#BFEBFF"));
+        }else{
+            holder.EDC.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     @Override
@@ -46,10 +64,12 @@ public class AdapterEDC extends RecyclerView.Adapter<AdapterEDC.EDCViewHolder> {
 
     public class EDCViewHolder extends RecyclerView.ViewHolder {
         TextView nama;
+        LinearLayout EDC;
         public EDCViewHolder(View view) {
             super(view);
 
             nama=view.findViewById(R.id.tvNamaEDC);
+            EDC=view.findViewById(R.id.llEDC);
             stylingUtils.robotoRegularTextview(mCtx,  nama);
         }
     }

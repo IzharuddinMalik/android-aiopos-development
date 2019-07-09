@@ -60,7 +60,7 @@ public interface BaseApiInterface {
                                     @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
 
     @FormUrlEncoded
-    @POST("payment_setup_list.php")
+    @POST("api_pos/payment_setup_list.php")
     Call<ResponseBody> getEDC(@FieldMap HashMap<String, String> params,
                                     @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
 }
