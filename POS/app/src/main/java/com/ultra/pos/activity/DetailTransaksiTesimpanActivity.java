@@ -48,10 +48,10 @@ public class DetailTransaksiTesimpanActivity extends AppCompatActivity {
         listPesanan = new ArrayList<>();
         listPesanan.clear();
 
-        listPesanan.add(0, new Produk("1", "Nasi", "1", "Aceh","3000","3","1"));
-        listPesanan.add(1, new Produk("2", "Teh", "1", "Aceh","2000","3","1"));
-        listPesanan.add(2, new Produk("3", "Ayam", "1", "Aceh","6000","3","1"));
-        listPesanan.add(3, new Produk("4", "Gorengan", "1", "Aceh","1000","7","1"));
+        listPesanan.add(0, new Produk("1", "Nasi", "1", "Aceh","3000", "","3","1"));
+        listPesanan.add(1, new Produk("2", "Teh", "1", "Aceh","2000","","3","1"));
+        listPesanan.add(2, new Produk("3", "Ayam", "1", "Aceh","6000","","3","1"));
+        listPesanan.add(3, new Produk("4", "Gorengan", "1", "Aceh","1000","","7","1"));
 
         adapter = new AdapterPesanan(this, listPesanan);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);

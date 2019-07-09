@@ -77,21 +77,36 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
 
     @Override
     public void onBindViewHolder(TipeViewHolder holder, final int position) {
-        final TipeModel tipeModel = listTipe.get(position);
-        holder.tipe.setText(tipeModel.getTipe());
-        holder.itemRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                index = position;
-                ((RingkasanOrderActivity)mCtx).saleslistener(tipeModel.getTipe());
-                notifyDataSetChanged();
-            }
-        });
+        WindowManager manager = (WindowManager) mCtx.getSystemService(Context.WINDOW_SERVICE);
 
-        if(index==position){
-            holder.itemRow.setBackgroundColor(Color.parseColor("#BFEBFF"));
-        }else{
-            holder.itemRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        Display display = manager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        Log.d("Width", "" + width);
+        Log.d("height", "" + height);
+
+        if (width >= 1920 && height >= 1200){
+            final TipeModel tipeModel = listTipe.get(position);
+            holder.tipe.setText(tipeModel.getTipe());
+        } else{
+            final TipeModel tipeModel = listTipe.get(position);
+            holder.tipe.setText(tipeModel.getTipe());
+            holder.itemRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    index = position;
+                    ((RingkasanOrderActivity)mCtx).saleslistener(tipeModel.getTipe());
+                    notifyDataSetChanged();
+                }
+            });
+
+            if(index==position){
+                holder.itemRow.setBackgroundColor(Color.parseColor("#BFEBFF"));
+            }else{
+                holder.itemRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
         }
     }
 

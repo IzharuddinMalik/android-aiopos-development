@@ -105,6 +105,7 @@ public class Dashboard extends AppCompatActivity
     AdapterTipePenjualan adapterTipePenjualan;
     List<TipeModel> listTipe;
     TextView tvOKDialogCatatan;
+    Button btnDashboardSimpanPesanan, btnDashboardBayarPesanan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,8 @@ public class Dashboard extends AppCompatActivity
 
         tvDashboardNamaPelanggan = findViewById(R.id.tvDashboardBukaPelanggan);
 
+        tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("idctm"));
+
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
 
@@ -180,6 +183,13 @@ public class Dashboard extends AppCompatActivity
             ivOptionMenu = findViewById(R.id.ivDashboardMenuOptions);
             ivOptionMenu.setOnClickListener(v -> {
                 dialogFormOptionsMenu();
+            });
+
+            btnDashboardBayarPesanan = findViewById(R.id.btnDashboardBayarPesanan);
+            btnDashboardSimpanPesanan = findViewById(R.id.btnDashboardSimpanPesanan);
+
+            btnDashboardBayarPesanan.setOnClickListener(view -> {
+                bayar();
             });
         }
 
@@ -670,6 +680,16 @@ public class Dashboard extends AppCompatActivity
         tvDashboardNilaiTipePenjualan.setText(namaTipePenjualan);
         tvDashboardNilaiTipePenjualan.setVisibility(View.VISIBLE);
         tvDashboardTipePenjualan.setVisibility(View.VISIBLE);
+    }
+
+    public void bayar(){
+
+        Intent intent = new Intent(this, PembayaranActivity.class);
+        intent.putExtra("idtb", idtb);
+        intent.putExtra("idbusiness", idbusiness);
+        intent.putExtra("idcop", "0");
+        intent.putExtra("idoutlet", idoutlet);
+        intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
     }
 
 }

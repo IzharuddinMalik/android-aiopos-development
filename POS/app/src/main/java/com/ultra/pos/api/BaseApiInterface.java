@@ -13,49 +13,49 @@ import retrofit2.http.POST;
 public interface BaseApiInterface {
 
     @FormUrlEncoded
-    @POST("login.php")
+    @POST("api_pos/login.php")
     Call<ResponseBody> postLogin(@FieldMap HashMap<String, String> params, @Field("email_user") String emailUser,
                                  @Field("password_user") String passwordUser);
 
     @FormUrlEncoded
-    @POST("pelanggan_get_list.php")
+    @POST("api_pos/pelanggan_get_list.php")
     Call<ResponseBody> listPelanggan(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness,
                                      @Field("idoutlet") String idOutlet);
 
     @FormUrlEncoded
-    @POST("pelanggan_get_detail.php")
+    @POST("api_pos/pelanggan_get_detail.php")
     Call<ResponseBody> detailPelanggan(@FieldMap HashMap<String, String> params, @Field("idctm") String idPelanggan);
 
     @FormUrlEncoded
-    @POST("pelanggan_tambah.php")
+    @POST("api_pos/pelanggan_tambah.php")
     Call<ResponseBody> insertPelanggan(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness,
                                        @Field("idoutlet") String idOutlet, @Field("province_id") String province_id,
                                        @Field("regencies_id") String regencies_id, @Field("district_id") String district_id,
                                        @Field("nama_pelanggan") String nama_pelanggan, @Field("email_pelanggan") String email_pelanggan,
                                        @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
     @FormUrlEncoded
-    @POST("pelanggan_update.php")
+    @POST("api_pos/pelanggan_update.php")
     Call<ResponseBody> updatePelanggan(@FieldMap HashMap<String, String> params, @Field("idctm") String idPelanggan,
                                        @Field("province_id") String province_id,
                                        @Field("regencies_id") String regencies_id, @Field("district_id") String district_id,
                                        @Field("nama_pelanggan") String nama_pelanggan, @Field("email_pelanggan") String email_pelanggan,
                                        @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
 
-    @GET("wilayah_get_provinsi.php")
+    @GET("api_pos/wilayah_get_provinsi.php")
     Call<ResponseBody> getProvinsi();
 
     @FormUrlEncoded
-    @POST("wilayah_get_kab_kec.php")
+    @POST("api_pos/wilayah_get_kab_kec.php")
     Call<ResponseBody> getKecamatan(@FieldMap HashMap<String, String> params,
                                     @Field("id") String id, @Field("pilih") String pilih);
 
     @FormUrlEncoded
-    @POST("get_produk.php")
+    @POST("api_pos/get_produk.php")
     Call<ResponseBody> getProduk(@FieldMap HashMap<String, String> params,
                                  @Field("idbusiness") String idBusiness, @Field("idtb") String idTB, @Field("idoutlet") String idOutlet);
 
     @FormUrlEncoded
-    @POST("sales_type_get_list.php")
+    @POST("api_pos/sales_type_get_list.php")
     Call<ResponseBody> getSalesType(@FieldMap HashMap<String, String> params,
                                     @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
 }

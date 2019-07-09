@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class DetailPelangganActivity extends AppCompatActivity {
     private SharedPrefManager pref;
     private BaseApiInterface mApiInterface;
     String idPelanggan ,idOutlet ,namaPelanggan ,telpPelanggan ,emailPelangan ,provinsiPelanggan ,kabupatenPelanggan ,kecamatanPelanggan,telpPelanggan2 = "";
+    Button btnPilihPelanggan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,14 @@ public class DetailPelangganActivity extends AppCompatActivity {
         ivDetailBtnKembali = findViewById(R.id.ivMenuDetailPelangganArrowBack);
 
         getDetailPelanggan();
+
+        btnPilihPelanggan = findViewById(R.id.btnMenuDetailPelangganPilihPelanggan);
+        btnPilihPelanggan.setOnClickListener(view -> {
+            Intent intent = new Intent(this, Dashboard.class);
+            intent.putExtra("namaPelanggan", tvDetailNamaPelanggan.getText());
+            intent.putExtra("idctm", tvDetailIDPelanggan.getText());
+            startActivity(intent);
+        });
 
         ivDetailBtnEditPelanggan.setOnClickListener(v -> {
 //            startActivity(new Intent(this, EditPelangganActivity.class));

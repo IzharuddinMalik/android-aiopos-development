@@ -27,6 +27,10 @@ public class Produk implements Serializable {
     @Expose
     private String hargaProduk;
 
+    @SerializedName("foto_produk")
+    @Expose
+    private String fotoProduk;
+
     @SerializedName("jumlah_produk")
     @Expose
     private String jumlahProduk;
@@ -35,13 +39,24 @@ public class Produk implements Serializable {
     @Expose
     private String idKategori;
 
-    public Produk(String idProduk, String namaProduk, String idVariant, String namaVariant, String hargaProduk, String jumlahProduk, String idKategori){
+    public Produk(String idProduk, String namaProduk, String idVariant, String namaVariant, String hargaProduk, String fotoProduk, String jumlahProduk, String idKategori){
         this.idProduk = idProduk;
         this.namaProduk = namaProduk;
         this.idVariant = idVariant;
         this.namaVariant = namaVariant;
+        this.fotoProduk = fotoProduk;
         this.jumlahProduk = jumlahProduk;
         this.hargaProduk = hargaProduk;
+        this.idKategori = idKategori;
+    }
+
+    public Produk(String idProduk, String namaProduk, String idVariant, String namaVariant, String hargaProduk, String fotoProduk, String idKategori){
+        this.idProduk = idProduk;
+        this.namaProduk = namaProduk;
+        this.idVariant = idVariant;
+        this.namaVariant = namaVariant;
+        this.hargaProduk = hargaProduk;
+        this.fotoProduk = fotoProduk;
         this.idKategori = idKategori;
     }
 
@@ -73,6 +88,10 @@ public class Produk implements Serializable {
         this.namaVariant = namaVariant;
     }
 
+    public void setFotoProduk(String fotoProduk) {
+        this.fotoProduk = fotoProduk;
+    }
+
     public String getIdProduk() {
         return idProduk;
     }
@@ -99,5 +118,9 @@ public class Produk implements Serializable {
 
     public String getNamaVariant() {
         return namaVariant;
+    }
+
+    public String getFotoProduk() {
+        return fotoProduk;
     }
 }
