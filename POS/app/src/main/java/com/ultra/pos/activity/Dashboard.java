@@ -52,6 +52,8 @@ import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.ProdukModel;
 import com.ultra.pos.model.TipeModel;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +88,7 @@ public class Dashboard extends AppCompatActivity
     SharedPrefManager pref;
     BaseApiInterface mApiInterface;
     APIConnect apiConnect;
-    String idbusiness, idtb, idoutlet, totalNilaiTransaksi, diskon, diskonSemua;
+    String idbusiness, idtb, idoutlet, diskon, idUser, idSaltype, idSaltype2;
     DashboardFragment dashboardFragment;
     List<ProdukModel> produkModels;
     List<Produk> produk;
@@ -130,7 +132,7 @@ public class Dashboard extends AppCompatActivity
         String nama = user.get(SharedPrefManager.NAMA_USER);
         tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
         idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
-
+        idUser = user.get(SharedPrefManager.ID_USER);
 
         tabLayout = findViewById(R.id.tabs);
         frameLayout = findViewById(R.id.frame_layout);
@@ -144,7 +146,11 @@ public class Dashboard extends AppCompatActivity
 
         tvDashboardNamaPelanggan = findViewById(R.id.tvDashboardBukaPelanggan);
 
-        tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("idctm"));
+        if (!tvDashboardNamaPelanggan.equals(null)){
+            tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("namaPelanggan"));
+        } else {
+            tvDashboardNamaPelanggan.setText("Nama Pelanggan");
+        }
 
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
@@ -352,14 +358,16 @@ public class Dashboard extends AppCompatActivity
                         JSONObject jsonResult = new JSONObject(result);
                         JSONArray array = jsonResult.getJSONArray("info");
 
-                        TipeModel tipeMOdel=new TipeModel("");
+                        TipeModel tipeMOdel=new TipeModel();
                         for (int i = 0; i<array.length(); i++){
                             JSONObject objKategori = array.getJSONObject(i);
-                            objKategori.getString("idsaltype");
+                            idSaltype = objKategori.getString("idsaltype");
                             objKategori.getString("nama_saltype");
 
-                            listTipe.add(0, new TipeModel(objKategori.getString("nama_saltype")));
+                            listTipe.add(0, new TipeModel(idSaltype,objKategori.getString("nama_saltype")));
                         }
+
+                        idSaltype2 = idSaltype;
 
                         adapterTipePenjualan = new AdapterTipePenjualan(Dashboard.this, listTipe);
                         final RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(Dashboard.this);
@@ -619,6 +627,14 @@ public class Dashboard extends AppCompatActivity
         arrjumlahPesanan.add(jumlahPesanan);
     }
 
+    public void setOrder(String idProduk,String namaProduk, String idVariant, String namaVariant, String hargaPesanan){
+        arridProduk.add(idProduk);
+        arrnamaProduk.add(namaProduk);
+        arridVariant.add(idVariant);
+        arrnamaVariant.add(namaVariant);
+        arrhargaPesanan.add(hargaPesanan);
+    }
+
     public void resetOrder(){
         arridProduk.clear();
         arrnamaProduk.clear();
@@ -690,6 +706,19 @@ public class Dashboard extends AppCompatActivity
         intent.putExtra("idcop", "0");
         intent.putExtra("idoutlet", idoutlet);
         intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+        intent.putExtra("noinv_transHD", "0");
+        intent.putExtra("diskon", diskon);
+        intent.putExtra("status_transHD", "1");
+        intent.putExtra("idProduk", arridProduk);
+        intent.putExtra("namaProduk", arrnamaProduk);
+        intent.putExtra("idVariant", arridVariant);
+        intent.putExtra("namaVariant", arrnamaVariant);
+        intent.putExtra("hargaPesanan", arrhargaPesanan);
+        intent.putExtra("jumlahPesanan", arrjumlahPesanan);
+        intent.putExtra("iduser", idUser);
+        intent.putExtra("idsaltype", idSaltype2);
+        intent.putExtra("total_transHD", tvDashboardTotalHarga.getText().toString());
+        startActivity(intent);
     }
 
 }

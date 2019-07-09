@@ -85,6 +85,12 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                         ((Dashboard)mCtx).setPesanan(listProduk.get(position).getIdProduk(), listProduk.get(position).getIdKategori(),
                                 listProduk.get(position).getIdVariant(), listProduk.get(position).getNamaVariant(),
                                 listProduk.get(position).getNamaProduk(), listProduk.get(position).getHargaProduk());
+                        ((Dashboard)mCtx).setOrder(
+                                listProduk.get(position).getIdProduk(),
+                                listProduk.get(position).getNamaProduk(),
+                                listProduk.get(position).getIdVariant(),
+                                listProduk.get(position).getNamaVariant(),
+                                listProduk.get(position).getHargaProduk());
                     }
                 });
 
