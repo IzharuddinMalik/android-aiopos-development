@@ -87,7 +87,7 @@
             android:textSize="@dimen/_20sdp" />
 
         <TextView
-            android:id="@+id/textView27"
+            android:id="@+id/tvKembalianPembayaran"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

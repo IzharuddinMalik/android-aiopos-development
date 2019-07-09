@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.ultra.pos.R;
 import com.ultra.pos.activity.Dashboard;
+import com.ultra.pos.activity.RingkasanOrderActivity;
 import com.ultra.pos.model.TipeModel;
 import com.ultra.pos.util.StylingUtils;
 
@@ -24,11 +25,12 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
 
     private Context mCtx;
     private List<TipeModel> listTipe;
-    LinearLayout itemRow;
     StylingUtils stylingUtils;
+    int index=-1;
 
     public class TipeViewHolder extends RecyclerView.ViewHolder{
         TextView tipe;
+        LinearLayout itemRow;
         public TipeViewHolder(View view){
             super(view);
 
@@ -74,9 +76,23 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
     }
 
     @Override
-    public void onBindViewHolder(final TipeViewHolder holder, final int position) {
+    public void onBindViewHolder(TipeViewHolder holder, final int position) {
         final TipeModel tipeModel = listTipe.get(position);
         holder.tipe.setText(tipeModel.getTipe());
+        holder.itemRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                index = position;
+                ((RingkasanOrderActivity)mCtx).saleslistener(tipeModel.getTipe());
+                notifyDataSetChanged();
+            }
+        });
+
+        if(index==position){
+            holder.itemRow.setBackgroundColor(Color.parseColor("#BFEBFF"));
+        }else{
+            holder.itemRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     @Override
