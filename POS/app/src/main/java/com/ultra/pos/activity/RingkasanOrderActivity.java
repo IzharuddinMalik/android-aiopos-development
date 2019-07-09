@@ -1,5 +1,6 @@
 package com.ultra.pos.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -60,7 +61,8 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     LayoutInflater inflater;
     View dialogView;
     TextView TOTAL,Subtotal,Diskon;
-    EditText diskon,catatan;
+    EditText diskon;
+    private Context mCtx;
     LinearLayout subtotal,diskonll;
     private List<Produk> listOrder;
     private List<TipeModel> listTipe;
@@ -79,10 +81,11 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     List<String> namaVariant=new ArrayList<String>();
     List<String> hargaPesanan=new ArrayList<String>();
     List<String> jumlahPesanan=new ArrayList<String>();
-    int total,disc=0;
+    int total,disc,sub=0;
     private SharedPrefManager pref;
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
+    public String SalesType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,15 +144,20 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         });
 
         bayar.setOnClickListener(v -> {
-            startActivity(new Intent(this,PembayaranActivity.class));
+            Intent intent = new Intent(this, PembayaranActivity.class);
+            intent.putExtra("totalbyr", String.valueOf(total));
+
+            Log.i("Hasil",""+total);
+
+            startActivity(intent);
         });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.diskon){
+        if (item.getItemId()==R.id.diskon && dataidProduk.size()!=0){
             dialogMenuDiskon();
-        } else if (item.getItemId() == R.id.hapus_pesanan) {
+        } else if (item.getItemId() == R.id.hapus_pesanan && dataidProduk.size()!=0) {
             dialogMenuHapus();
         }
         return true;
@@ -168,9 +176,11 @@ public class RingkasanOrderActivity extends AppCompatActivity {
             subtotal.setVisibility(View.VISIBLE);
 
             disc=total*Integer.parseInt(diskon.getText().toString())/100;
-            Subtotal.setText("Rp. "+total);
+            sub=total;
+            total=sub-disc;
+            Subtotal.setText("Rp. "+sub);
             Diskon.setText("- Rp. "+disc);
-            TOTAL.setText("Rp. "+(total-disc));
+            TOTAL.setText("Rp. "+(total));
             dialog1.dismiss();
         });
         dialog.show();
@@ -182,6 +192,16 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         dialogView = inflater.inflate(R.layout.dialog_form_hapus,null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
+
+        dialog.setPositiveButton("Hapus",(dialog1, which) -> {
+            resetOrder();
+            startActivity(new Intent(this, Dashboard.class));
+            finish();
+        });
+
+        dialog.setNegativeButton("Batalkan",(dialog1, which) -> {
+            dialog1.dismiss();
+        });
 
         dialog.show();
 
@@ -297,5 +317,20 @@ public class RingkasanOrderActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void resetOrder(){
+        idProduk.clear();
+        namaProduk.clear();
+        idVariant.clear();
+        namaVariant.clear();
+        hargaPesanan.clear();
+        jumlahPesanan.clear();
+    }
+
+    public void saleslistener(String salesType){
+        SalesType=salesType;
+
+        Log.i("Sales",""+SalesType);
     }
 }
