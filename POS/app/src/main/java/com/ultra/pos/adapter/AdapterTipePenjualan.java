@@ -2,11 +2,14 @@ package com.ultra.pos.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +34,27 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
             tipe=view.findViewById(R.id.tvTipePenjualan);
             itemRow=view.findViewById(R.id.llTipePenjualan);
             stylingUtils.robotoRegularTextview(mCtx, tipe);
+
+
+            WindowManager manager = (WindowManager) mCtx.getSystemService(Context.WINDOW_SERVICE);
+
+            Display display = manager.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int height = size.y;
+            Log.d("Width", "" + width);
+            Log.d("height", "" + height);
+            if (width >= 1920 && height >= 1200){
+                view.setOnClickListener(v -> {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION){
+
+                    }
+                });
+            } else{
+
+            }
         }
     }
 

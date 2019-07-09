@@ -27,6 +27,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -39,6 +41,7 @@ import android.widget.Toast;
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterDashboardListOrder;
 import com.ultra.pos.adapter.AdapterPilihProduk;
+import com.ultra.pos.adapter.AdapterTipePenjualan;
 import com.ultra.pos.adapter.TabAdapter;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
@@ -47,6 +50,7 @@ import com.ultra.pos.api.SharedPrefManager;
 import com.ultra.pos.model.PesananModel;
 import com.ultra.pos.model.Produk;
 import com.ultra.pos.model.ProdukModel;
+import com.ultra.pos.model.TipeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +79,8 @@ public class Dashboard extends AppCompatActivity
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
     View dialogView;
-    CardView cvDiskon, cvNama, cvBatalTransaksi;
-    EditText edtDialogDiskonNilai, edtDialogNamaNilai;
-    Button btnSimpanDialogDiskon, btnSimpanDialogNama;
+    CardView cvDiskon, cvNama, cvBatalTransaksi, cvTipePenjualan, cvCatatanPesanan;
+    EditText edtDialogDiskonNilai, edtDialogNamaNilai, edtDialogCatatan;
     TextView tvDashboardNavNama, tvDashboardDiskonSemua, tvDashboardNilaiDiskonSemua, tvDashboardCatatan, tvDashboardNilaiCatatanSemua, tvDashboardTotalHarga,
             tvDashboardSubTotalHarga, tvDashboardNilaiSubTotalHarga, tvDashboardNamaPelanggan;
     SharedPrefManager pref;
@@ -98,7 +101,10 @@ public class Dashboard extends AppCompatActivity
     int totalHarga, subTotalHarga, totalHargaBaru, diskonan, hargaTotalBaru;
     FrameLayout frameLayout;
     AdapterDashboardListOrder adapterPesan;
-    RecyclerView recPesanan;
+    RecyclerView recPesanan, recTipePenjualan;
+    AdapterTipePenjualan adapterTipePenjualan;
+    List<TipeModel> listTipe;
+    TextView tvOKDialogCatatan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +207,8 @@ public class Dashboard extends AppCompatActivity
         cvDiskon = dialogView.findViewById(R.id.cvDashboardDiskon);
         cvNama = dialogView.findViewById(R.id.cvDashboardNama);
         cvBatalTransaksi = dialogView.findViewById(R.id.cvDashboardBatalTransaksi);
+        cvTipePenjualan = dialogView.findViewById(R.id.cvDashboardTipePenjualan);
+        cvCatatanPesanan = dialogView.findViewById(R.id.cvDashboardCatatanTransaksi);
 
         cvDiskon.setOnClickListener(v -> {
             dialogMenuDiskon();
@@ -212,6 +220,14 @@ public class Dashboard extends AppCompatActivity
 
         cvBatalTransaksi.setOnClickListener(view -> {
             cancelTransaksi();
+        });
+
+        cvTipePenjualan.setOnClickListener(view -> {
+            dialogTipePenjualan();
+        });
+
+        cvCatatanPesanan.setOnClickListener(view -> {
+            dialogCatatan();
         });
 
         dialog.show();
@@ -278,6 +294,107 @@ public class Dashboard extends AppCompatActivity
 
             diskon = nilaiDiskon;
             Log.i("subtotal" , " == " +subTotalHarga);
+            dialogInterface.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    public void dialogTipePenjualan(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_tipe_penjualan, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        recTipePenjualan = dialogView.findViewById(R.id.rvDashboardTipePenjualan);
+
+        getSalesType();
+
+        dialog.show();
+    }
+
+    public void getSalesType(){
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
+        idbusiness = idBusiness;
+        idoutlet = idOutlet;
+
+        listTipe = new ArrayList<>();
+        listTipe.clear();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idbusiness",idbusiness);
+        params.put("idOulet",idoutlet);
+        mApiInterface = APIUrl.getAPIService();
+        mApiInterface.getSalesType(params,idbusiness,idoutlet).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try{
+
+                        String result = response.body().string();
+                        JSONObject jsonResult = new JSONObject(result);
+                        JSONArray array = jsonResult.getJSONArray("info");
+
+                        TipeModel tipeMOdel=new TipeModel("");
+                        for (int i = 0; i<array.length(); i++){
+                            JSONObject objKategori = array.getJSONObject(i);
+                            objKategori.getString("idsaltype");
+                            objKategori.getString("nama_saltype");
+
+                            listTipe.add(0, new TipeModel(objKategori.getString("nama_saltype")));
+                        }
+
+                        adapterTipePenjualan = new AdapterTipePenjualan(Dashboard.this, listTipe);
+                        final RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(Dashboard.this);
+                        recTipePenjualan.setLayoutManager(mLayoutManager2);
+                        recTipePenjualan.setItemAnimator(new DefaultItemAnimator());
+                        recTipePenjualan.setItemViewCacheSize(listTipe.size());
+                        recTipePenjualan.setDrawingCacheEnabled(true);
+                        recTipePenjualan.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                        recTipePenjualan.setAdapter(adapterTipePenjualan);
+                        LayoutAnimationController animation2 = AnimationUtils.loadLayoutAnimation(Dashboard.this, R.anim.animation_slide_from_right);
+                        recTipePenjualan.setLayoutAnimation(animation2);
+                        adapterTipePenjualan.notifyDataSetChanged();
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void dialogCatatan(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_catatan, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        edtDialogCatatan = dialogView.findViewById(R.id.editText);
+
+        tvOKDialogCatatan = dialogView.findViewById(R.id.textView41);
+        dialog.setPositiveButton("OK", (dialogInterface, i) -> {
+            String catatan = edtDialogCatatan.getText().toString();
+
+            if (catatan.isEmpty()){
+
+            } else{
+                tvDashboardNilaiCatatanSemua.setText(catatan);
+                tvDashboardCatatan.setVisibility(View.VISIBLE);
+                tvDashboardNilaiCatatanSemua.setVisibility(View.VISIBLE);
+            }
+
             dialogInterface.dismiss();
         });
 
