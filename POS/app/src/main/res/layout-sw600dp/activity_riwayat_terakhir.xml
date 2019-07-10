@@ -82,7 +82,7 @@
                         android:textSize="@dimen/_15sdp" />
 
                     <TextView
-                        android:id="@+id/textView28"
+                        android:id="@+id/tvJumlahRiwayatTransaksi"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_weight="1"

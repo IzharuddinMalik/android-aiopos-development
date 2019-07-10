@@ -32,9 +32,9 @@ public class TransaksiTersimpanActivity extends AppCompatActivity {
         listTransaksi = new ArrayList<>();
         listTransaksi.clear();
 
-        listTransaksi.add(0, new TransaksiModel("15000", "2", "", "14.20"));
-        listTransaksi.add(1, new TransaksiModel("15000", "1", "", "10.00"));
-        listTransaksi.add(2, new TransaksiModel("15000", "3", "", "13.30"));
+        listTransaksi.add(0, new TransaksiModel("15000", "2", "", "14.20","",""));
+        listTransaksi.add(1, new TransaksiModel("15000", "1", "", "10.00","",""));
+        listTransaksi.add(2, new TransaksiModel("15000", "3", "", "13.30","",""));
 
         adapter = new AdapterTransaksiTersimpan(this,listTransaksi);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);

@@ -8,6 +8,10 @@ import java.io.Serializable;
 public class TipeModel implements Serializable {
     @SerializedName("")
     @Expose
+    private String idTipe;
+
+    @SerializedName("")
+    @Expose
     private String tipe;
 
     @SerializedName("")
@@ -17,6 +21,10 @@ public class TipeModel implements Serializable {
     public TipeModel(String idsaltipe,String tipe){
         this.idsaltipe=idsaltipe;
         this.tipe = tipe;
+    }
+
+    public TipeModel() {
+
     }
 
     public String getTipe() {
