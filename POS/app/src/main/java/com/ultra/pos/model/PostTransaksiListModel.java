@@ -49,6 +49,10 @@ public class PostTransaksiListModel implements Serializable {
 
     }
 
+    public PostTransaksiListModel(String s, String s1, String s2, String s3, String s4, List<String> dataIdTax) {
+
+    }
+
     public void setIdProduk(String idProduk) {
         this.idProduk = idProduk;
     }

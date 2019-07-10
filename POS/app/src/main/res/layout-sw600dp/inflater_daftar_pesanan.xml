@@ -47,48 +47,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvDashboardDaftarPesananDiskon"
-                android:text="Diskon  "
+                android:id="@+id/tvDashboardDaftarPesananJumlah"
+                android:text="Jumlah:"
                 android:textSize="@dimen/_8ssp"
                 android:textColor="@color/colorblack"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:visibility="gone"/>
+                android:layout_marginTop="@dimen/_10sdp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvDashboardDaftarPesananNilaiDiskon"
+                android:id="@+id/tvDashboardDaftarPesananNilaiJumlah"
                 android:text="xxx"
                 android:textSize="@dimen/_8ssp"
                 android:textColor="@color/colorblack"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_weight="1"
-                android:visibility="gone"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvDashboardDaftarPesananCatatan"
-                android:text="Catatan"
-                android:textSize="@dimen/_8ssp"
-                android:textColor="@color/colorblack"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:visibility="gone"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvDashboardDaftarPesananNilaiCatatan"
-                android:text="Catatan"
-                android:textSize="@dimen/_8ssp"
-                android:textColor="@color/colorblack"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_weight="1"
-                android:visibility="gone"/>
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

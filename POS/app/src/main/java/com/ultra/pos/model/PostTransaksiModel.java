@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.security.acl.NotOwnerException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostTransaksiModel implements Serializable {
@@ -43,7 +44,7 @@ public class PostTransaksiModel implements Serializable {
 
     @SerializedName("produklist")
     @Expose
-    private List<PostTransaksiListModel> postTransaksiListModels;
+    private ArrayList<PostTransaksiListModel> postTransaksiListModels;
 
     @SerializedName("iduser")
     @Expose
@@ -82,9 +83,10 @@ public class PostTransaksiModel implements Serializable {
     private String payTransHD;
 
     @SerializedName("cashback_transHD")
-    @Expose String cashBackTransHD;
+    @Expose
+    private String cashBackTransHD;
 
-    public PostTransaksiModel(String idTb, String idBusiness, String idCop, String idOutlet, String idCtm, String noInvTransHD, String diskonTransaksi, String statusTransHD, List<PostTransaksiListModel> postTransaksiListModels,
+    public PostTransaksiModel(String idTb, String idBusiness, String idCop, String idOutlet, String idCtm, String noInvTransHD, String diskonTransaksi, String statusTransHD, ArrayList<PostTransaksiListModel> postTransaksiListModels,
                               String idUser, String idPay, String idSaltype, String idRefund, String typeTrans, String ketRefund, String totalTransHD, String idTax, String payTransHD, String cashBackTransHD){
         this.idTb = idTb;
         this.idBusiness = idBusiness;
@@ -143,7 +145,7 @@ public class PostTransaksiModel implements Serializable {
         this.statusTransHD = statusTransHD;
     }
 
-    public void setPostTransaksiListModels(List<PostTransaksiListModel> postTransaksiListModels) {
+    public void setPostTransaksiListModels(ArrayList<PostTransaksiListModel> postTransaksiListModels) {
         this.postTransaksiListModels = postTransaksiListModels;
     }
 
@@ -219,7 +221,7 @@ public class PostTransaksiModel implements Serializable {
         return statusTransHD;
     }
 
-    public List<PostTransaksiListModel> getPostTransaksiListModels() {
+    public ArrayList<PostTransaksiListModel> getPostTransaksiListModels() {
         return postTransaksiListModels;
     }
 

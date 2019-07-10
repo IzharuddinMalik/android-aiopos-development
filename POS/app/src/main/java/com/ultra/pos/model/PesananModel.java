@@ -45,6 +45,8 @@ public class PesananModel implements Serializable {
     @Expose
     private String idKategori;
 
+    private String jumlahPesanan;
+
 
     public PesananModel(String idPesanan, String idProduk, String namaProduk, String idVariant, String namaVariant, String hargaVariant, String hargaProduk, String fotoProduk, String idKategori){
         this.idPesanan = idPesanan;
@@ -70,6 +72,17 @@ public class PesananModel implements Serializable {
 
     public PesananModel() {
 
+    }
+
+    public PesananModel(String idPesanan, String idProduk, String idKategori, String idVariant, String namaVariant, String namaPesanan, String hargaPesanan, String jumlahPesanan) {
+        this.idPesanan = idPesanan;
+        this.idProduk = idProduk;
+        this.idKategori = idKategori;
+        this.idVariant = idVariant;
+        this.namaVariant = namaVariant;
+        this.namaProduk = namaPesanan;
+        this.hargaProduk = hargaPesanan;
+        this.jumlahPesanan = jumlahPesanan;
     }
 
     public void setIdPesanan(String idPesanan) {
@@ -108,6 +121,10 @@ public class PesananModel implements Serializable {
         this.hargaVariant = hargaVariant;
     }
 
+    public void setJumlahPesanan(String jumlahPesanan) {
+        this.jumlahPesanan = jumlahPesanan;
+    }
+
     public String getIdProduk() {
         return idProduk;
     }
@@ -142,5 +159,9 @@ public class PesananModel implements Serializable {
 
     public String getIdPesanan() {
         return idPesanan;
+    }
+
+    public String getJumlahPesanan() {
+        return jumlahPesanan;
     }
 }

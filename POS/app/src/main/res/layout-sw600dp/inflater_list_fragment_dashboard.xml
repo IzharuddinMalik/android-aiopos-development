@@ -35,5 +35,15 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_weight="1"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtDashboardJumlahProdukPesanan"
+            android:hint="Jumlah"
+            android:textSize="@dimen/_8ssp"
+            android:textColor="@color/colorblack"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_weight="1"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

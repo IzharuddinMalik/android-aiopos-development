@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.ultra.pos.R;
 import com.ultra.pos.activity.Dashboard;
 import com.ultra.pos.model.PesananModel;
@@ -43,7 +44,7 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
 
     public class ListOrderViewHolder extends RecyclerView.ViewHolder{
         ImageView ivGambarPesananProduk;
-        TextView tvNamaPesananProduk, tvHargaPesananProduk;
+        TextView tvNamaPesananProduk, tvHargaPesananProduk, jumlahPesananProduk;
 
         public ListOrderViewHolder(View view){
             super(view);
@@ -51,10 +52,8 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
             ivGambarPesananProduk = view.findViewById(R.id.ivDashboardDaftarPesananGambarProduk);
             tvNamaPesananProduk = view.findViewById(R.id.tvDashboardDaftarPesananNamaProduk);
             tvHargaPesananProduk = view.findViewById(R.id.tvDashboardDaftarPesananHargaProduk);
-            tvPopupDiskon = view.findViewById(R.id.tvDashboardDaftarPesananDiskon);
-            tvPopupCatatan = view.findViewById(R.id.tvDashboardDaftarPesananCatatan);
-            tvPopupNilaiDiskon = view.findViewById(R.id.tvDashboardDaftarPesananNilaiDiskon);
-            tvPopupNilaiCatatan = view.findViewById(R.id.tvDashboardDaftarPesananNilaiCatatan);
+            jumlahPesananProduk = view.findViewById(R.id.tvDashboardDaftarPesananNilaiJumlah);
+
 
             stylingUtils.robotoRegularTextview(mCtx, tvNamaPesananProduk);
             stylingUtils.robotoRegularTextview(mCtx, tvHargaPesananProduk);
@@ -121,6 +120,8 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
             holder.tvNamaPesananProduk.setText(produk.getNamaVariant());
             holder.tvHargaPesananProduk.setText(produk.getHargaProduk());
         }
+        Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + produk.getFotoProduk()).into(holder.ivGambarPesananProduk);
+        holder.jumlahPesananProduk.setText(produk.getJumlahPesanan());
     }
 
     public int getItemCount(){ return listOrderProduk.size();}

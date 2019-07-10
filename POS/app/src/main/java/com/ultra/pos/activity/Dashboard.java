@@ -88,7 +88,7 @@ public class Dashboard extends AppCompatActivity
     SharedPrefManager pref;
     BaseApiInterface mApiInterface;
     APIConnect apiConnect;
-    String idbusiness, idtb, idoutlet, diskon, idUser, idSaltype, idSaltype2;
+    String idbusiness, idtb, idoutlet, diskon, idUser, idSaltype, idSaltype2, idTax;
     DashboardFragment dashboardFragment;
     List<ProdukModel> produkModels;
     List<Produk> produk;
@@ -133,6 +133,7 @@ public class Dashboard extends AppCompatActivity
         tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
         idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
         idUser = user.get(SharedPrefManager.ID_USER);
+        idTax = user.get(SharedPrefManager.ID_TAX);
 
         tabLayout = findViewById(R.id.tabs);
         frameLayout = findViewById(R.id.frame_layout);
@@ -598,12 +599,12 @@ public class Dashboard extends AppCompatActivity
         return String.valueOf(positiontab);
     }
 
-    public void setPesanan(String idProduk, String idKategori, String idVariant, String namaVariant, String namaPesanan, String hargaPesanan){
+    public void setPesanan(String idProduk, String idKategori, String idVariant, String namaVariant, String namaPesanan, String hargaPesanan, String jumlahPesanan){
         Log.e("contoh add"," = " + idProduk);
 
         int pos = pesananModels.size();
 
-        pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, idVariant, namaVariant, namaPesanan, hargaPesanan));
+        pesananModels.add(pos, new PesananModel(String.valueOf(pos), idProduk, idKategori, idVariant, namaVariant, namaPesanan, hargaPesanan, jumlahPesanan));
 
         adapterPesan = new AdapterDashboardListOrder(Dashboard.this, pesananModels);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Dashboard.this);
@@ -649,7 +650,7 @@ public class Dashboard extends AppCompatActivity
         for (int i=0; i< pesananModels.size();i++){
             PesananModel pes = pesananModels.get(i);
 
-            hargaSubTotal = hargaSubTotal + Integer.parseInt(pes.getHargaProduk());
+            hargaSubTotal = hargaSubTotal + (Integer.parseInt(pes.getHargaProduk())* Integer.parseInt(pes.getJumlahPesanan()));
 
         }
         Log.d("SUBTOTAL", " == " + hargaSubTotal);
@@ -662,7 +663,7 @@ public class Dashboard extends AppCompatActivity
         for (int i=0; i< pesananModels.size();i++){
             PesananModel pes = pesananModels.get(i);
 
-            hargaTotal = hargaTotal + Integer.parseInt(pes.getHargaProduk());
+            hargaTotal = hargaTotal + (Integer.parseInt(pes.getHargaProduk()) * Integer.parseInt(pes.getJumlahPesanan()));
 
         }
         Log.d("TOTALHARGA", " == " + hargaTotal);
@@ -718,6 +719,7 @@ public class Dashboard extends AppCompatActivity
         intent.putExtra("iduser", idUser);
         intent.putExtra("idsaltype", idSaltype2);
         intent.putExtra("total_transHD", tvDashboardTotalHarga.getText().toString());
+        intent.putExtra("idtax", idTax);
         startActivity(intent);
     }
 
