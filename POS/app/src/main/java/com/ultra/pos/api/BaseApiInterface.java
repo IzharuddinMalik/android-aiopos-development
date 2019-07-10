@@ -1,9 +1,12 @@
 package com.ultra.pos.api;
 
+import com.ultra.pos.model.PostTransaksiModel;
+
 import java.util.HashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -58,4 +61,8 @@ public interface BaseApiInterface {
     @POST("api_pos/sales_type_get_list.php")
     Call<ResponseBody> getSalesType(@FieldMap HashMap<String, String> params,
                                     @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
+
+
+    @POST("api_pos/transaksi.php")
+    Call<ResponseBody> sendTransaksi(@Body PostTransaksiModel postTransaksiModel);
 }

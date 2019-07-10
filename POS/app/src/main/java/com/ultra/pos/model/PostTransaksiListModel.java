@@ -1,51 +1,99 @@
 package com.ultra.pos.model;
 
+import android.support.design.internal.Experimental;
+
+import androidx.browser.browseractions.BrowserActionsIntent;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class PostTransaksiListModel implements Serializable {
 
-    @SerializedName("")
+    @SerializedName("idproduk")
     @Expose
-    private String idvarpro;
+    private String idProduk;
 
-    @SerializedName("")
+    @SerializedName("idvariant")
     @Expose
-    private String qty;
+    private String idVariant;
 
-    @SerializedName("")
+    @SerializedName("idpaket")
     @Expose
-    private String hargasatuan;
+    private String idPaket;
 
-    public PostTransaksiListModel(String idvarpro,String qty,String hargasatuan){
-        this.idvarpro=idvarpro;
-        this.qty=qty;
-        this.hargasatuan=hargasatuan;
+    @SerializedName("qty")
+    @Expose
+    private String quantity;
+
+    @SerializedName("harga_satuan")
+    @Expose
+    private String hargaSatuan;
+
+    @SerializedName("idtax")
+    @Expose
+    private String idTax;
+
+    public PostTransaksiListModel(String idProduk, String idVariant, String idPaket, String quantity, String hargaSatuan, String idTax){
+        this.idProduk = idProduk;
+        this.idVariant = idVariant;
+        this.idPaket = idPaket;
+        this.quantity = quantity;
+        this.hargaSatuan = hargaSatuan;
+        this.idTax = idTax;
     }
 
-    public void setHargasatuan(String hargasatuan) {
-        this.hargasatuan = hargasatuan;
+    public PostTransaksiListModel(List<String> dataIdProduk, List<String> dataNamaProduk, List<String> dataIdVariant, List<String> dataNamaVariant, List<String> dataHargaVariant, List<String> dataIdTax) {
+
     }
 
-    public void setIdvarpro(String idvarpro) {
-        this.idvarpro = idvarpro;
+    public void setIdProduk(String idProduk) {
+        this.idProduk = idProduk;
     }
 
-    public void setQty(String qty) {
-        this.qty = qty;
+    public void setIdVariant(String idVariant) {
+        this.idVariant = idVariant;
     }
 
-    public String getHargasatuan() {
-        return hargasatuan;
+    public void setIdPaket(String idPaket) {
+        this.idPaket = idPaket;
     }
 
-    public String getIdvarpro() {
-        return idvarpro;
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
-    public String getQty() {
-        return qty;
+    public void setHargaSatuan(String hargaSatuan) {
+        this.hargaSatuan = hargaSatuan;
+    }
+
+    public void setIdTax(String idTax) {
+        this.idTax = idTax;
+    }
+
+    public String getIdProduk() {
+        return idProduk;
+    }
+
+    public String getIdVariant() {
+        return idVariant;
+    }
+
+    public String getIdPaket() {
+        return idPaket;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public String getHargaSatuan() {
+        return hargaSatuan;
+    }
+
+    public String getIdTax() {
+        return idTax;
     }
 }

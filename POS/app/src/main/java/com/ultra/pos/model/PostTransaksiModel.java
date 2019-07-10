@@ -107,6 +107,10 @@ public class PostTransaksiModel implements Serializable {
         this.cashBackTransHD = cashBackTransHD;
     }
 
+    public PostTransaksiModel() {
+
+    }
+
     public void setIdTb(String idTb) {
         this.idTb = idTb;
     }
