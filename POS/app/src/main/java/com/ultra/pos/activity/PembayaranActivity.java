@@ -33,8 +33,10 @@ import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
 import com.ultra.pos.api.SharedPrefManager;
 import com.ultra.pos.model.EDCModel;
+import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.model.OrderModel;
 import com.ultra.pos.model.PostTransaksiListModel;
+import com.ultra.pos.model.PostTransaksiModel;
 import com.ultra.pos.model.TransaksiModel;
 
 import org.json.JSONArray;
@@ -68,13 +70,15 @@ public class PembayaranActivity extends AppCompatActivity {
     private BaseApiInterface mApiInterface;
     Button konfirmasibayar,pas,limapuluh,seratus,duaratus,tunai,edc;
     String totalbayar, idtb,  idcop,  idctm, noinv_transHD, diskon, statusBayar, idUser, idSaltype, totalTransHD;
-
+    APIConnect mApiConnect;
+    String[] produkList;
 
     List<String> dataIdProduk = new ArrayList<>();
     List<String> dataNamaProduk = new ArrayList<>();
     List<String> dataIdVariant = new ArrayList<>();
     List<String> dataNamaVariant = new ArrayList<>();
     List<String> dataHargaVariant = new ArrayList<>();
+    List<String> dataIdTax = new ArrayList<>();
     private ArrayList<PostTransaksiListModel> postTransaksiListModels;
     private String typeTrans;
 
@@ -117,6 +121,7 @@ public class PembayaranActivity extends AppCompatActivity {
         idUser = getIntent().getStringExtra("iduser");
         idSaltype = getIntent().getStringExtra("idsaltype");
         totalTransHD = getIntent().getStringExtra("total_transHD");
+        dataIdTax = bundle.getStringArrayList("1");
 
         pas.setOnClickListener(v -> {
             totalKembalian=0;
@@ -127,18 +132,6 @@ public class PembayaranActivity extends AppCompatActivity {
             totalKembalian=50000-Integer.parseInt(totalbayar);
             Log.i("Sisa 50",""+totalKembalian);
         });
-
-        String[][] dataIdProdukList = new String[dataIdProduk.size()][5];
-
-        for (int j=0;j<dataIdProduk.size();j++){
-            dataIdProdukList[j][0] = dataIdProduk.get(j);
-            dataIdProdukList[j][1] = dataNamaProduk.get(j);
-            dataIdProdukList[j][2] = dataIdVariant.get(j);
-            dataIdProdukList[j][3] = dataNamaVariant.get(j);
-            dataIdProdukList[j][4] = dataHargaVariant.get(j);
-
-            Log.i("Hasil",""+dataIdProdukList[j][0]+" "+dataIdProdukList[j][1]+" "+dataIdProdukList[j][2]+" "+dataIdProdukList[j][3]);
-        }
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -179,6 +172,7 @@ public class PembayaranActivity extends AppCompatActivity {
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
                 }
+                bayar();
 
                 startActivity(intent);
             });
@@ -198,6 +192,7 @@ public class PembayaranActivity extends AppCompatActivity {
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
                 }
+                bayar();
 
                 startActivity(intent);
             });
@@ -335,5 +330,57 @@ public class PembayaranActivity extends AppCompatActivity {
     public void settype_pembayaran(String type){
         typeTrans=type;
         Log.i("Nama",""+typeTrans);
+    }
+
+    private void bayar(){
+        String[][] dataIdProdukList = new String[dataIdProduk.size()][5];
+
+        for (int j=0;j<dataIdProduk.size();j++){
+            dataIdProdukList[j][0] = dataIdProduk.get(j);
+            dataIdProdukList[j][1] = dataNamaProduk.get(j);
+            dataIdProdukList[j][2] = dataIdVariant.get(j);
+            dataIdProdukList[j][3] = dataNamaVariant.get(j);
+            dataIdProdukList[j][4] = dataHargaVariant.get(j);
+
+            Log.i("Hasil",""+dataIdProdukList[j][0]+" "+dataIdProdukList[j][1]+" "+dataIdProdukList[j][2]+" "+dataIdProdukList[j][3]);
+        }
+
+        postTransaksiListModels = new ArrayList<>();
+        postTransaksiListModels.add(new PostTransaksiListModel(dataIdProduk, dataNamaProduk, dataIdVariant, dataNamaVariant, dataHargaVariant, dataIdTax));
+
+        PostTransaksiModel postTransaksiModel = new PostTransaksiModel();
+        postTransaksiModel.setIdTb(idtb);
+        postTransaksiModel.setIdBusiness(idbusiness);
+        postTransaksiModel.setIdCop(idcop);
+        postTransaksiModel.setIdOutlet(idoutlet);
+        postTransaksiModel.setIdCtm(idctm);
+        postTransaksiModel.setNoInvTransHD(noinv_transHD);
+        postTransaksiModel.setDiskonTransaksi(diskon);
+        postTransaksiModel.setStatusTransHD(statusBayar);
+        postTransaksiModel.setPostTransaksiListModels(postTransaksiListModels);
+        postTransaksiModel.setIdUser(idUser);
+        postTransaksiModel.setIdPay("1");
+        postTransaksiModel.setIdSaltype("11");
+        postTransaksiModel.setTypeTrans("penjualan");
+        postTransaksiModel.setKetRefund("0");
+        postTransaksiModel.setTotalTransHD(totalTransHD);
+        postTransaksiModel.setIdTax("1");
+        postTransaksiModel.setPayTransHD("100000");
+        postTransaksiModel.setCashBackTransHD(String.valueOf(totalKembalian));
+
+        Log.i("PRODUKLIST", " === " +postTransaksiListModels);
+
+        mApiInterface = APIUrl.getAPIService();
+        mApiInterface.sendTransaksi(postTransaksiModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

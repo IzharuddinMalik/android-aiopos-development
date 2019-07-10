@@ -1,9 +1,12 @@
 package com.ultra.pos.api;
 
+import com.ultra.pos.model.PostTransaksiModel;
+
 import java.util.HashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -71,4 +74,8 @@ public interface BaseApiInterface {
     @FormUrlEncoded
     @POST("api_pos/transaksi_detail_riwayat.php")
     Call<ResponseBody> getdetailRiwayat(@FieldMap HashMap<String, String> params, @Field("idtransHD") String idtrans);
+
+
+    @POST("api_pos/transaksi.php")
+    Call<ResponseBody> sendTransaksi(@Body PostTransaksiModel postTransaksiModel);
 }
