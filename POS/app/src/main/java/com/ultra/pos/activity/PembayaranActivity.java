@@ -19,9 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultra.pos.R;
+import com.ultra.pos.adapter.AdapterRingkasanOrder;
+import com.ultra.pos.adapter.AdapterTransaksiTersimpan;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
+import com.ultra.pos.model.OrderModel;
+import com.ultra.pos.model.PesananModel;
 import com.ultra.pos.model.PostTransaksiListModel;
 import com.ultra.pos.model.PostTransaksiModel;
 
@@ -46,13 +50,18 @@ public class PembayaranActivity extends AppCompatActivity {
     LayoutInflater inflater;
     View dialogView;
     TextView total;
-    int totalKembalian=0;
+    int totalKembalian,cash=0;
     TextInputEditText jumlahLain;
-    String totalbayar, idtb, idbusiness, idcop, idoutlet, idctm, noinv_transHD, diskon, statusBayar, idUser, idSaltype, totalTransHD, idTax;
-    Button konfirmasibayar,pas,limapuluh,seratus,duaratus;
-    String[] produkList;
-    BaseApiInterface mApiInterface;
+    RecyclerView recEDC;
+    private SharedPrefManager pref;
+    private AdapterEDC adapter;
+    private List<EDCModel> listEDC;
+    private String idbusiness,idoutlet;
+    private BaseApiInterface mApiInterface;
+    Button konfirmasibayar,pas,limapuluh,seratus,duaratus,tunai,edc;
+    String totalbayar, idtb,  idcop,  idctm, noinv_transHD, diskon, statusBayar, idUser, idSaltype, totalTransHD;
     APIConnect mApiConnect;
+    String[] produkList;
 
     List<String> dataIdProduk = new ArrayList<>();
     List<String> dataNamaProduk = new ArrayList<>();
@@ -62,6 +71,7 @@ public class PembayaranActivity extends AppCompatActivity {
     List<String> dataIdTax = new ArrayList<>();
     List<String> dataJumlah = new ArrayList<>();
     private ArrayList<PostTransaksiListModel> postTransaksiListModels;
+    private String typeTrans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +86,11 @@ public class PembayaranActivity extends AppCompatActivity {
         duaratus=findViewById(R.id.btnUang200K);
         total=findViewById(R.id.tvTotalPembayaranAct);
         jumlahLain=findViewById(R.id.tietJumlahLain);
+        tunai=findViewById(R.id.btnTunai);
+        edc=findViewById(R.id.btnEDC);
 
         totalbayar = getIntent().getStringExtra("totalbyr");
-
+        total.setText("Rp. "+totalbayar);
         Bundle bundle = getIntent().getExtras();
 
         postTransaksiListModels = new ArrayList<>();
@@ -103,9 +115,15 @@ public class PembayaranActivity extends AppCompatActivity {
         dataJumlah = bundle.getStringArrayList("jumlahPesanan");
         idTax = getIntent().getStringExtra("idtax");
 
+        pas.setOnClickListener(v -> {
+            totalKembalian=0;
+            Log.i("Pas",""+totalKembalian);
+        });
 
-        Log.i("TRANSAKSI COBA", " === " +idtb +" " +idbusiness+" "+idcop+" "+idoutlet+" "+idctm+" "+noinv_transHD+" "+diskon+" "+statusBayar+" "+dataIdProduk +" "+dataNamaProduk+" "+dataIdVariant+" "+dataNamaVariant+" "+dataHargaVariant+ " "+ dataJumlah+" "+idUser+" "+idSaltype+" "+totalTransHD);
-
+        limapuluh.setOnClickListener(v -> {
+            totalKembalian=50000-Integer.parseInt(totalbayar);
+            Log.i("Sisa 50",""+totalKembalian);
+        });
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -150,6 +168,9 @@ public class PembayaranActivity extends AppCompatActivity {
 
                 startActivity(intent);
             });
+            edc.setOnClickListener(v -> {
+                edc_list();
+            });
         }else {
             total.setText("Rp. " + totalTransHD);
 
@@ -187,6 +208,10 @@ public class PembayaranActivity extends AppCompatActivity {
                 totalKembalian=200000-Integer.parseInt(totalTransHD);
                 Log.i("Sisa 200",""+totalKembalian);
             });
+
+            edc.setOnClickListener(v -> {
+                edc_list();
+            });
         }
     }
 
@@ -213,6 +238,90 @@ public class PembayaranActivity extends AppCompatActivity {
         dialog.setCancelable(true);
 
         dialog.show();
+    }
+
+    public void edc_list(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_edc, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        recEDC = dialogView.findViewById(R.id.rvEDC);
+
+        getListEDC();
+
+        dialog.setPositiveButton("Submit",(dialog1, which) -> {
+            dialog1.dismiss();
+//            edc.setBackgroundColor(Color.parseColor("#BFEBFF"));
+        });
+
+        dialog.setNegativeButton("Batal",(dialog1, which) -> {
+            typeTrans="";
+            dialog1.dismiss();
+        });
+        dialog.show();
+    }
+    public void getListEDC(){
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String idBusiness = user.get(SharedPrefManager.ID_BUSINESS);
+        String idOutlet = user.get(SharedPrefManager.ID_OUTLET);
+        idbusiness = idBusiness;
+        idoutlet = idOutlet;
+
+        listEDC = new ArrayList<>();
+        listEDC.clear();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idbusiness",idbusiness);
+        params.put("idOulet",idoutlet);
+
+        mApiInterface = APIUrl.getAPIService();
+        mApiInterface.getEDC(params,idbusiness,idoutlet).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try{
+                        String result = response.body().string();
+                        JSONObject jsonResult = new JSONObject(result);
+                        JSONArray array = jsonResult.getJSONArray("info");
+                        Log.i("Result",""+array);
+
+                        for (int i = 0; i<array.length(); i++){
+                            JSONObject objKategori = array.getJSONObject(i);
+                            listEDC.add(i, new EDCModel(""+objKategori.getString("idpay"),""+objKategori.getString("nama_pay")));
+                        }
+
+                        adapter = new AdapterEDC(PembayaranActivity.this, listEDC);
+                        final RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(PembayaranActivity.this);
+                        recEDC.setLayoutManager(mLayoutManager2);
+                        recEDC.setItemAnimator(new DefaultItemAnimator());
+                        recEDC.setItemViewCacheSize(listEDC.size());
+                        recEDC.setDrawingCacheEnabled(true);
+                        recEDC.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                        recEDC.setAdapter(adapter);
+                        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(PembayaranActivity.this, R.anim.animation_slide_from_right);
+                        recEDC.setLayoutAnimation(animation);
+                        adapter.notifyDataSetChanged();
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void settype_pembayaran(String type){
+        typeTrans=type;
+        Log.i("Nama",""+typeTrans);
     }
 
     private void bayar(){

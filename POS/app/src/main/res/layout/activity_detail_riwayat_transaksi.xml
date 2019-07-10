@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorGraye6e6e6"
             android:padding="@dimen/_10sdp"
+            android:textColor="@color/colorBlueBasic"
             android:text="Informasi Transaksi"
             android:textSize="@dimen/_14sdp" />
 
@@ -90,6 +91,7 @@
                     android:src="@drawable/ic_store_blue_24dp" />
 
                 <TextView
+                    android:id="@+id/tvDetailNamaOutletRiwayat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -110,6 +112,7 @@
                     android:src="@drawable/ic_description_blue_24dp" />
 
                 <TextView
+                    android:id="@+id/tvDetailKodeTransaksiRiwayat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -130,6 +133,7 @@
                     android:src="@drawable/ic_person_bluebasic_24dp" />
 
                 <TextView
+                    android:id="@+id/tvDetailNamaPelangganRiwayat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -158,13 +162,29 @@
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/ic_access_time_blue_24dp" />
 
-                <TextView
-                    android:id="@+id/tvJamTransaksi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:text="TextView" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTanggalTransaksi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/tvJamTransaksi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="TextView" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -179,6 +199,7 @@
                     android:src="@drawable/ic_payment_blue_24dp" />
 
                 <TextView
+                    android:id="@+id/tvDetailMetodePembayaranRiwayat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -247,12 +268,6 @@
             android:layout_weight="1"
             android:text="Cetak" />
 
-        <Button
-            android:id="@+id/btnBatalkan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Batalkan Transaksi" />
     </LinearLayout>
 
 </LinearLayout>

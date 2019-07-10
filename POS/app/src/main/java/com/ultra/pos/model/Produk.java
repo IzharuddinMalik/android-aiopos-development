@@ -60,6 +60,13 @@ public class Produk implements Serializable {
         this.idKategori = idKategori;
     }
 
+    public Produk(String namaProduk, String namaVariant, String hargaProduk, String jumlahProduk){
+        this.namaProduk = namaProduk;
+        this.namaVariant = namaVariant;
+        this.hargaProduk = hargaProduk;
+        this.jumlahProduk = jumlahProduk;
+    }
+
     public void setIdProduk(String idProduk) {
         this.idProduk = idProduk;
     }
@@ -92,6 +99,7 @@ public class Produk implements Serializable {
         this.fotoProduk = fotoProduk;
     }
 
+
     public String getIdProduk() {
         return idProduk;
     }
@@ -123,4 +131,5 @@ public class Produk implements Serializable {
     public String getFotoProduk() {
         return fotoProduk;
     }
+
 }

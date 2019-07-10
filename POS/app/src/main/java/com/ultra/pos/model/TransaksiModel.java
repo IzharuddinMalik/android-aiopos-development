@@ -8,6 +8,14 @@ import java.io.Serializable;
 public class TransaksiModel implements Serializable {
     @SerializedName("")
     @Expose
+    private String tipepembayaran;
+
+    @SerializedName("")
+    @Expose
+    private String idtrans;
+
+    @SerializedName("")
+    @Expose
     private String total;
 
     @SerializedName("")
@@ -23,11 +31,13 @@ public class TransaksiModel implements Serializable {
     private String jam;
 
 
-    public TransaksiModel(String total, String nomor, String status, String jam){
+    public TransaksiModel(String idtrans,String total, String nomor, String status, String jam,String tipepembayaran){
         this.total = total;
         this.nomor = nomor;
         this.status = status;
         this.jam = jam;
+        this.tipepembayaran=tipepembayaran;
+        this.idtrans=idtrans;
     }
 
     public String getNomor() {
@@ -60,5 +70,21 @@ public class TransaksiModel implements Serializable {
 
     public void setJam(String jam) {
         this.jam = jam;
+    }
+
+    public String getTipepembayaran() {
+        return tipepembayaran;
+    }
+
+    public void setTipepembayaran(String tipepembayaran) {
+        this.tipepembayaran = tipepembayaran;
+    }
+
+    public String getIdtrans() {
+        return idtrans;
+    }
+
+    public void setIdtrans(String idtrans) {
+        this.idtrans = idtrans;
     }
 }

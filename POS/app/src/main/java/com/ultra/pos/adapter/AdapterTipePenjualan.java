@@ -97,7 +97,7 @@ public class AdapterTipePenjualan extends RecyclerView.Adapter<AdapterTipePenjua
                 @Override
                 public void onClick(View v) {
                     index = position;
-                    ((RingkasanOrderActivity)mCtx).saleslistener(tipeModel.getTipe());
+                    ((RingkasanOrderActivity)mCtx).saleslistener(tipeModel.getIdsaltipe(),tipeModel.getTipe());
                     notifyDataSetChanged();
                 }
             });

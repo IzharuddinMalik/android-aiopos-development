@@ -28,7 +28,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.PesananV
     @Override
     public void onBindViewHolder(final PesananViewHolder holder, final int position) {
         final Produk produkModel = listPesanan.get(position);
-        if (produkModel.getIdVariant().equals("0")) {
+        if (produkModel.getNamaVariant().equals("")) {
             holder.namaorder.setText(produkModel.getNamaProduk());
             holder.hargaorder.setText(produkModel.getHargaProduk());
             holder.jumlahorder.setText(produkModel.getJumlahProduk());

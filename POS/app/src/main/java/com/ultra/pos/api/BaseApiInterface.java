@@ -71,12 +71,19 @@ public interface BaseApiInterface {
     Call<ResponseBody> getSalesType(@FieldMap HashMap<String, String> params,
                                     @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
 
-//    @FormUrlEncoded
-//    @POST("api_pos/transaksi.php")
-//    Call<ResponseBody> sendTransaksi(@HeaderMap Map<String, String> params, @HeaderMap Map<String, Boolean> listProduk , @Field("idtb") String idtb, @Field("idbusiness") String idBusiness, @Field("idcop") String idCop, @Field("idoutlet") String idOutlet, @Field("idctm") String idCtm,
-//                                     @Field("noinv_transHD") String noInvTransHD, @Field("diskon") String diskon, @Field("status_transHD") String statusTransHD, @Field("produklist[]") String arrayList, @Field("iduser") String idUser, @Field("idpay") String idPay,
-//                                     @Field("idsaltype") String idSaltype, @Field("idrefund") String idRefund, @Field("type_trans") String typeTrans, @Field("ket_refund") String ketRefund, @Field("total_transHD") String totalTransHD, @Field("idtax") String idTax,
-//                                     @Field("pay_transHD") String payTransHD, @Field("cashback_transHD") String cashbackTransHD);
+    @FormUrlEncoded
+    @POST("api_pos/payment_setup_list.php")
+    Call<ResponseBody> getEDC(@FieldMap HashMap<String, String> params,
+                                    @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
+
+    @FormUrlEncoded
+    @POST("api_pos/transaksi_riwayat.php")
+    Call<ResponseBody> getListRiwayat(@FieldMap HashMap<String, String> params, @Field("iduser") String idUser);
+
+    @FormUrlEncoded
+    @POST("api_pos/transaksi_detail_riwayat.php")
+    Call<ResponseBody> getdetailRiwayat(@FieldMap HashMap<String, String> params, @Field("idtransHD") String idtrans);
+
 
     @POST("api_pos/transaksi.php")
     Call<ResponseBody> sendTransaksi(@Body PostTransaksiModel postTransaksiModel);

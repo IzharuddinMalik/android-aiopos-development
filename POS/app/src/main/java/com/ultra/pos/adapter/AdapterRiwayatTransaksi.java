@@ -34,6 +34,12 @@ public class AdapterRiwayatTransaksi extends RecyclerView.Adapter<AdapterRiwayat
         holder.total.setText(transaksiModel.getTotal());
         holder.status.setText(transaksiModel.getStatus());
         holder.jam.setText(transaksiModel.getJam());
+
+        if(transaksiModel.getTipepembayaran().equals("0")){
+            holder.JenisPembayaran.setText("Tunai");
+        }else {
+            holder.JenisPembayaran.setText("EDC");
+        }
     }
 
     @Override
@@ -42,21 +48,20 @@ public class AdapterRiwayatTransaksi extends RecyclerView.Adapter<AdapterRiwayat
     }
 
     public class RiwayatViewHolder extends RecyclerView.ViewHolder{
-        TextView total,status,jam;
+        TextView total,status,jam,JenisPembayaran;
         public RiwayatViewHolder(View view) {
             super(view);
 
             total=view.findViewById(R.id.tvTotalTransaksi);
             status=view.findViewById(R.id.tvStatusTransaksi);
             jam=view.findViewById(R.id.tvJamTransaksi);
+            JenisPembayaran=view.findViewById(R.id.tvJenisPembayaran);
 
             view.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION){
                     Intent intent = new Intent(view.getContext(), DetailRiwayatTransaksiActivity.class);
-                    intent.putExtra("totalharga", listRiwayat.get(position).getTotal());
-                    intent.putExtra("notransaksi", listRiwayat.get(position).getNomor());
-                    intent.putExtra("jamtransaksi", listRiwayat.get(position).getJam());
+                    intent.putExtra("idtrans", listRiwayat.get(position).getIdtrans());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     view.getContext().startActivity(intent);
                 }

@@ -85,7 +85,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     private SharedPrefManager pref;
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
-    public String SalesType;
+    public String SalesType,IDSalType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,9 +145,14 @@ public class RingkasanOrderActivity extends AppCompatActivity {
 
         bayar.setOnClickListener(v -> {
             Intent intent = new Intent(this, PembayaranActivity.class);
+            intent.putExtra("diskon", String.valueOf(disc));
             intent.putExtra("totalbyr", String.valueOf(total));
+            intent.putExtra("salestype", String.valueOf(IDSalType));
+//            intent.putExtra("totalbyr", String.valueOf(total));
 
-            Log.i("Hasil",""+total);
+            Log.i("Diskon",""+disc);
+            Log.i("Total",""+total);
+            Log.i("Sales Type",""+IDSalType);
 
             startActivity(intent);
         });
@@ -216,7 +221,14 @@ public class RingkasanOrderActivity extends AppCompatActivity {
 
     public void back(View view){
         startActivity(new Intent(this, Dashboard.class));
-        finish();
+        resetOrder();
+//        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Dashboard.class));
+        resetOrder();
     }
 
     public void selectionData(){
@@ -230,29 +242,43 @@ public class RingkasanOrderActivity extends AppCompatActivity {
             hargaPesanan.add(datahargaPesanan.get(0));
             jumlahPesanan.add(datajumlahPesanan.get(0));
         }else{
-            for(int i=0;i<datanamaVariant.size();i++){
-                if(tmp.equals(datanamaVariant.get(i))){
-//                    if(jml<Integer.parseInt(data5.get(i))){
-//                        jml=Integer.parseInt(data5.get(i));
-//                        databaru5.add(""+jml);
-//                    }
-                }else{
-                    idProduk.add(dataidProduk.get(i));
-                    namaProduk.add(datanamaProduk.get(i));
-                    idVariant.add(dataidVariant.get(i));
-                    namaVariant.add(datanamaVariant.get(i));
-                    hargaPesanan.add(datahargaPesanan.get(i));
-//                    databaru5.add(data5.get(i));
-                    tmp=datanamaVariant.get(i);
+            for(int i=0;i<dataidProduk.size();i++){
+                if(dataidVariant.get(i).equals("0")){
+                    if(tmp.equals(datanamaProduk.get(i))){
 
-                    for(int k=0;k<datanamaVariant.size();k++){
-                        if(tmp.equals(datanamaVariant.get(k))){
-                            jml=Integer.parseInt(datajumlahPesanan.get(k));
-//                            Log.i("Iterasi K",""+jml);
+                    }else{
+                        idProduk.add(dataidProduk.get(i));
+                        namaProduk.add(datanamaProduk.get(i));
+                        idVariant.add(dataidVariant.get(i));
+                        namaVariant.add(datanamaVariant.get(i));
+                        hargaPesanan.add(datahargaPesanan.get(i));
+                        tmp=datanamaProduk.get(i);
+
+                        for(int k=0;k<datanamaProduk.size();k++){
+                            if(tmp.equals(datanamaProduk.get(k))){
+                                jml=Integer.parseInt(datajumlahPesanan.get(k));
+                            }
                         }
+                        jumlahPesanan.add(""+jml);
                     }
-                    jumlahPesanan.add(""+jml);
-//                    Log.i("JML akhir",""+jml);
+                }else{
+                    if(tmp.equals(datanamaVariant.get(i))){
+
+                    }else{
+                        idProduk.add(dataidProduk.get(i));
+                        namaProduk.add(datanamaProduk.get(i));
+                        idVariant.add(dataidVariant.get(i));
+                        namaVariant.add(datanamaVariant.get(i));
+                        hargaPesanan.add(datahargaPesanan.get(i));
+                        tmp=datanamaVariant.get(i);
+
+                        for(int k=0;k<datanamaVariant.size();k++){
+                            if(tmp.equals(datanamaVariant.get(k))){
+                                jml=Integer.parseInt(datajumlahPesanan.get(k));
+                            }
+                        }
+                        jumlahPesanan.add(""+jml);
+                    }
                 }
             }
         }
@@ -284,13 +310,13 @@ public class RingkasanOrderActivity extends AppCompatActivity {
                         JSONObject jsonResult = new JSONObject(result);
                         JSONArray array = jsonResult.getJSONArray("info");
 
-                        TipeModel tipeMOdel=new TipeModel();
+                        TipeModel tipeMOdel=new TipeModel("","");
                         for (int i = 0; i<array.length(); i++){
                             JSONObject objKategori = array.getJSONObject(i);
                             objKategori.getString("idsaltype");
                             objKategori.getString("nama_saltype");
 
-                            listTipe.add(0, new TipeModel( objKategori.getString("idsaltype"), objKategori.getString("nama_saltype")));
+                            listTipe.add(0, new TipeModel(objKategori.getString("idsaltype"),objKategori.getString("nama_saltype")));
                         }
 
                         adapter2 = new AdapterTipePenjualan(RingkasanOrderActivity.this, listTipe);
@@ -328,9 +354,11 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         jumlahPesanan.clear();
     }
 
-    public void saleslistener(String salesType){
+    public void saleslistener(String idsaltype,String salesType){
+        IDSalType=idsaltype;
         SalesType=salesType;
 
         Log.i("Sales",""+SalesType);
+        Log.i("ID Sal Type",""+IDSalType);
     }
 }
