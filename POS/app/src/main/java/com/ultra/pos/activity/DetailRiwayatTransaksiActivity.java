@@ -1,5 +1,6 @@
 package com.ultra.pos.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -95,6 +96,10 @@ public class DetailRiwayatTransaksiActivity extends AppCompatActivity {
         cetak.setOnClickListener(v -> {
             dialogPrint();
         });
+    }
+
+    public void back(){
+        startActivity(new Intent(this, RiwayatTerakhirActivity.class));
     }
 
     public void dialogPrint(){

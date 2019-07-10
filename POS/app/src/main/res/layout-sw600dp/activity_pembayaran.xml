@@ -112,6 +112,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnTunai"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -120,7 +121,7 @@
                         android:textColor="@color/colorWhiteffffff"/>
 
                     <Button
-                        android:id="@+id/button11"
+                        android:id="@+id/btnEDC"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -130,7 +131,7 @@
                         android:layout_marginLeft="@dimen/_5sdp"/>
 
                     <Button
-                        android:id="@+id/button12"
+                        android:id="@+id/btnLainnya"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

@@ -85,8 +85,12 @@ public interface BaseApiInterface {
     Call<ResponseBody> getdetailRiwayat(@FieldMap HashMap<String, String> params, @Field("idtransHD") String idtrans);
 
 
+    @FormUrlEncoded
     @POST("api_pos/transaksi.php")
-    Call<ResponseBody> sendTransaksi(@Body PostTransaksiModel postTransaksiModel);
+    Call<ResponseBody> sendTransaksi(@Field("idtb") String idtb, @Field("idbusiness") String idBusiness, @Field("idcop") String idCop, @Field("idoutlet") String idOutlet, @Field("idctm") String idCtm,
+                                     @Field("noinv_transHD") String noInvTransHD, @Field("diskon") String diskon, @Field("status_transHD") String statusTransHD, @Field("produklist") String produkList,
+                                     @Field("iduser") String idUser, @Field("idpay") String idPay, @Field("idsaltype") String idSaltype, @Field("idrefund") String idRefund, @Field("type_trans") String typeTrans,
+                                     @Field("ket_refund") String ketRefund, @Field("total_transHD") String totalTransHD, @Field("idtax") String idTax, @Field("pay_transHD") String payTransHD, @Field("cashback_transHD") String cashbackTransHD);
 
 //    @POST("api_pos/transaksi.php")
 //    Call<Void> sendTransaksi(@HeaderMap Map<String, String> params, @HeaderMap Map<String, Boolean> ListProduk , @Body PostTransaksiModel postTransaksiModel);

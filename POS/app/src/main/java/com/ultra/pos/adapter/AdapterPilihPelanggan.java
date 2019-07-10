@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +16,19 @@ import com.squareup.picasso.Picasso;
 import com.ultra.pos.R;
 import com.ultra.pos.activity.DetailPelangganActivity;
 import com.ultra.pos.model.PelangganModel;
+import com.ultra.pos.model.Produk;
 import com.ultra.pos.util.StylingUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPelanggan.PelangganViewHolder> {
+public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPelanggan.PelangganViewHolder> implements Filterable {
 
     private Context mCtx;
     private List<PelangganModel> listPelanggan;
+    private List<PelangganModel> mFilterlistPelanggan;
     StylingUtils stylingUtils;
 
     public class PelangganViewHolder extends RecyclerView.ViewHolder{
@@ -57,6 +62,7 @@ public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPela
     public AdapterPilihPelanggan(Context context, List<PelangganModel> listPelanggan){
         this.mCtx = context;
         this.listPelanggan = listPelanggan;
+        this.mFilterlistPelanggan = listPelanggan;
 
         stylingUtils = new StylingUtils();
     }
@@ -74,5 +80,44 @@ public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPela
         holder.listNoTelpPelanggan.setText(pelangganModel.getTelpPelanggan());
     }
 
-    public int getItemCount(){ return listPelanggan.size();}
+    public int getItemCount(){ return mFilterlistPelanggan.size();}
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+
+                if (charString.isEmpty()) {
+
+                    mFilterlistPelanggan = listPelanggan;
+                } else {
+
+                    List<PelangganModel> filteredList = new ArrayList<PelangganModel>();
+
+                    int i = 0;
+                    for (PelangganModel name : listPelanggan) {
+
+                        if (name.getNamaPelanggan().toLowerCase().contains(charString) || name.getNamaPelanggan().toUpperCase().contains(charString)) {
+                            filteredList.add(i, new PelangganModel(name.getNamaPelanggan(), name.getEmailPelanggan(), name.getTelpPelanggan()));
+                            i = i+1;
+                        }
+                    }
+
+                    mFilterlistPelanggan = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mFilterlistPelanggan;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mFilterlistPelanggan = (ArrayList<PelangganModel>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
 }

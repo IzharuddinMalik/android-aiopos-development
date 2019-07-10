@@ -6,6 +6,9 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
@@ -14,21 +17,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultra.pos.R;
+import com.ultra.pos.adapter.AdapterEDC;
 import com.ultra.pos.adapter.AdapterRingkasanOrder;
 import com.ultra.pos.adapter.AdapterTransaksiTersimpan;
 import com.ultra.pos.api.APIConnect;
 import com.ultra.pos.api.APIUrl;
 import com.ultra.pos.api.BaseApiInterface;
+import com.ultra.pos.api.SharedPrefManager;
+import com.ultra.pos.model.EDCModel;
 import com.ultra.pos.model.OrderModel;
 import com.ultra.pos.model.PesananModel;
 import com.ultra.pos.model.PostTransaksiListModel;
 import com.ultra.pos.model.PostTransaksiModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,7 +67,7 @@ public class PembayaranActivity extends AppCompatActivity {
     private List<EDCModel> listEDC;
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
-    Button konfirmasibayar,pas,limapuluh,seratus,duaratus,tunai,edc;
+    Button konfirmasibayar,pas,limapuluh,seratus,duaratus,tunai,edc,lainnya;
     String totalbayar, idtb,  idcop,  idctm, noinv_transHD, diskon, statusBayar, idUser, idSaltype, totalTransHD;
     APIConnect mApiConnect;
     String[] produkList;
@@ -72,6 +81,7 @@ public class PembayaranActivity extends AppCompatActivity {
     List<String> dataJumlah = new ArrayList<>();
     private ArrayList<PostTransaksiListModel> postTransaksiListModels;
     private String typeTrans;
+    private String idTax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +98,7 @@ public class PembayaranActivity extends AppCompatActivity {
         jumlahLain=findViewById(R.id.tietJumlahLain);
         tunai=findViewById(R.id.btnTunai);
         edc=findViewById(R.id.btnEDC);
+        lainnya = findViewById(R.id.btnLainnya);
 
         totalbayar = getIntent().getStringExtra("totalbyr");
         total.setText("Rp. "+totalbayar);
@@ -114,6 +125,24 @@ public class PembayaranActivity extends AppCompatActivity {
         totalTransHD = getIntent().getStringExtra("total_transHD");
         dataJumlah = bundle.getStringArrayList("jumlahPesanan");
         idTax = getIntent().getStringExtra("idtax");
+
+
+        seratus.setEnabled(false);
+        duaratus.setEnabled(false);
+        tunai.setEnabled(false);
+        lainnya.setEnabled(false);
+
+        if (!limapuluh.isEnabled()){
+            limapuluh.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+        } else if (!duaratus.isEnabled()){
+            duaratus.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+        } else if (!tunai.isEnabled()){
+            tunai.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+        } else if (!lainnya.isEnabled()){
+            lainnya.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+        }
+
+        String jumlahLainnya = jumlahLain.getText().toString();
 
         pas.setOnClickListener(v -> {
             totalKembalian=0;
@@ -159,12 +188,13 @@ public class PembayaranActivity extends AppCompatActivity {
                 if(jumlahLain.getText().toString().equals("0")){
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Bukan Jml lain",""+totalKembalian);
+                    bayarEDC();
                 }else{
                     totalKembalian=Integer.parseInt(jumlahLain.getText().toString())-Integer.parseInt(totalbayar);
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
+                    bayarLainnya();
                 }
-                bayar();
 
                 startActivity(intent);
             });
@@ -179,12 +209,13 @@ public class PembayaranActivity extends AppCompatActivity {
                 if(jumlahLain.getText().toString().equals("0")){
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Bukan Jml lain",""+totalKembalian);
+                    bayarEDC();
                 }else{
                     totalKembalian=Integer.parseInt(jumlahLain.getText().toString())-Integer.parseInt(totalTransHD);
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
+                    bayarLainnya();
                 }
-                bayar();
 
                 startActivity(intent);
             });
@@ -208,7 +239,6 @@ public class PembayaranActivity extends AppCompatActivity {
                 totalKembalian=200000-Integer.parseInt(totalTransHD);
                 Log.i("Sisa 200",""+totalKembalian);
             });
-
             edc.setOnClickListener(v -> {
                 edc_list();
             });
@@ -324,20 +354,16 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.i("Nama",""+typeTrans);
     }
 
-    private void bayar(){
+    private void bayarEDC(){
         postTransaksiListModels = new ArrayList<>();
 
         String[][] dataIdProdukList = new String[dataIdProduk.size()][6];
 
         PostTransaksiModel postTransaksiModel = new PostTransaksiModel();
-        postTransaksiModel.setIdTb(idtb);
-        postTransaksiModel.setIdBusiness(idbusiness);
-        postTransaksiModel.setIdCop(idcop);
-        postTransaksiModel.setIdOutlet(idoutlet);
-        postTransaksiModel.setIdCtm(idctm);
-        postTransaksiModel.setNoInvTransHD(noinv_transHD);
-        postTransaksiModel.setDiskonTransaksi(diskon);
-        postTransaksiModel.setStatusTransHD(statusBayar);
+
+        JSONArray arrdata= new JSONArray();
+        JSONObject itemobj = new JSONObject();
+
         for (int j=0;j<dataIdProduk.size();j++){
             dataIdProdukList[j][0] = dataIdProduk.get(j);
             dataIdProdukList[j][1] = dataNamaProduk.get(j);
@@ -346,59 +372,37 @@ public class PembayaranActivity extends AppCompatActivity {
             dataIdProdukList[j][4] = dataHargaVariant.get(j);
             dataIdProdukList[j][5] = dataJumlah.get(j);
 
+
+            itemobj = new JSONObject();
+            try {
+                itemobj.put("harga_satuan", dataIdProdukList[j][4]);
+                itemobj.put("idpaket", "0");
+                itemobj.put("idproduk", dataIdProdukList[j][0]);
+                itemobj.put("idtax", "0");
+                itemobj.put("idvariant", dataIdProdukList[j][2]);
+                itemobj.put("qty",dataIdProdukList[j][5]);
+                arrdata.put(itemobj);
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+
             Log.i("Hasil",""+dataIdProdukList[j][0] + dataIdProdukList[j][2] + "0" + dataIdProdukList[j][5] + dataIdProdukList[j][4] + "0");
             postTransaksiListModels.add(new PostTransaksiListModel(dataIdProdukList[j][0], dataIdProdukList[j][2],"0", dataIdProdukList[j][5], dataIdProdukList[j][4], "0"));
             postTransaksiModel.setPostTransaksiListModels(postTransaksiListModels);
         }
-        postTransaksiModel.setIdUser(idUser);
-        postTransaksiModel.setIdPay("1");
-        postTransaksiModel.setIdSaltype(idSaltype);
-        postTransaksiModel.setIdRefund("0");
-        postTransaksiModel.setTypeTrans("penjualan");
-        postTransaksiModel.setKetRefund("0");
-        postTransaksiModel.setTotalTransHD(totalTransHD);
-        postTransaksiModel.setIdTax(idTax);
-        postTransaksiModel.setPayTransHD("300000");
-        postTransaksiModel.setCashBackTransHD(String.valueOf(totalKembalian));
 
-//        Map<String, String> params = new HashMap<>();
-//        params.put("idtb", idtb);
-//        params.put("idbusiness", idbusiness);
-//        params.put("idcop", idcop);
-//        params.put("idoutlet", idoutlet);
-//        params.put("idctm", idctm);
-//        params.put("noinv_transHD", noinv_transHD);
-//        params.put("diskon", diskon);
-//        params.put("status_transHD", statusBayar);
-//        Map<String, Boolean> params2 = new HashMap<>();
-//        for (int j=0;j<dataIdProduk.size();j++){
-//            dataIdProdukList[j][0] = dataIdProduk.get(j);
-//            dataIdProdukList[j][1] = dataNamaProduk.get(j);
-//            dataIdProdukList[j][2] = dataIdVariant.get(j);
-//            dataIdProdukList[j][3] = dataNamaVariant.get(j);
-//            dataIdProdukList[j][4] = dataHargaVariant.get(j);
-//            dataIdProdukList[j][5] = dataJumlah.get(j);
-//
-//            Log.i("Hasil",""+dataIdProdukList[j][0] + dataIdProdukList[j][2] + "0" + dataIdProdukList[j][5] + dataIdProdukList[j][4] + "0");
-//            postTransaksiListModels.add(new PostTransaksiListModel(dataIdProdukList[j][0], dataIdProdukList[j][2],"0", dataIdProdukList[j][5], dataIdProdukList[j][4], "0"));
-//            params2.put("produklist", postTransaksiListModels.add(new PostTransaksiListModel(dataIdProdukList[j][0], dataIdProdukList[j][2],"0", dataIdProdukList[j][5], dataIdProdukList[j][4], "0")));
-//        }
-//        params.put("iduser", idUser);
-//        params.put("idpay", "1");
-//        params.put("idsaltype", idSaltype);
-//        params.put("idrefund", "0");
-//        params.put("type_trans", "penjualan");
-//        params.put("ket_refund", "0");
-//        params.put("total_transHD", totalTransHD);
-//        params.put("idtax", idTax);
-//        params.put("pay_transHD", "300000");
-//        params.put("cashback_transHD", String.valueOf(totalKembalian));
-
-        Log.i("DATAPRODUK", " === "+postTransaksiListModels.toString());
+        Log.i("DATAPRODUK", " === "+arrdata.toString());
 
         int pos = 0;
+
+        Log.i("idpay", " === "+listEDC.get(pos).getIdPay() + " "+ total.getText().toString());
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(postTransaksiModel).enqueue(new Callback<ResponseBody>() {
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, idctm, noinv_transHD, diskon, listEDC.get(pos).getIdPay(), arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), idSaltype, "0",
+                "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
@@ -423,18 +427,78 @@ public class PembayaranActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void bayarLainnya(){
+        postTransaksiListModels = new ArrayList<>();
 
-//        mApiInterface = APIUrl.getAPIService();
-//        mApiInterface.sendTransaksi(params, params2, postTransaksiModel).enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//
-//            }
-//        });
+        String[][] dataIdProdukList = new String[dataIdProduk.size()][6];
+
+        PostTransaksiModel postTransaksiModel = new PostTransaksiModel();
+
+        JSONArray arrdata= new JSONArray();
+        JSONObject itemobj = new JSONObject();
+
+        for (int j=0;j<dataIdProduk.size();j++){
+            dataIdProdukList[j][0] = dataIdProduk.get(j);
+            dataIdProdukList[j][1] = dataNamaProduk.get(j);
+            dataIdProdukList[j][2] = dataIdVariant.get(j);
+            dataIdProdukList[j][3] = dataNamaVariant.get(j);
+            dataIdProdukList[j][4] = dataHargaVariant.get(j);
+            dataIdProdukList[j][5] = dataJumlah.get(j);
+
+
+            itemobj = new JSONObject();
+            try {
+                itemobj.put("harga_satuan", dataIdProdukList[j][4]);
+                itemobj.put("idpaket", "0");
+                itemobj.put("idproduk", dataIdProdukList[j][0]);
+                itemobj.put("idtax", "0");
+                itemobj.put("idvariant", dataIdProdukList[j][2]);
+                itemobj.put("qty",dataIdProdukList[j][5]);
+                arrdata.put(itemobj);
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+
+            Log.i("Hasil",""+dataIdProdukList[j][0] + dataIdProdukList[j][2] + "0" + dataIdProdukList[j][5] + dataIdProdukList[j][4] + "0");
+            postTransaksiListModels.add(new PostTransaksiListModel(dataIdProdukList[j][0], dataIdProdukList[j][2],"0", dataIdProdukList[j][5], dataIdProdukList[j][4], "0"));
+            postTransaksiModel.setPostTransaksiListModels(postTransaksiListModels);
+        }
+
+        Log.i("DATAPRODUK", " === "+arrdata.toString());
+
+        int pos = 0;
+
+        mApiInterface = APIUrl.getAPIService();
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, idctm, noinv_transHD, diskon, statusBayar, arrdata.toString(),idUser, "0", idSaltype, "0",
+                "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try{
+                        String result = response.body().string();
+
+                        JSONObject jsonResult = new JSONObject(result);
+                        jsonResult.getString("success");
+                        jsonResult.getString("message");
+
+                        Toast.makeText(PembayaranActivity.this, " " + jsonResult.getString("message"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

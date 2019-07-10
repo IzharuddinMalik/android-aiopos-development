@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterPilihPelanggan;
@@ -46,6 +47,7 @@ public class PelangganActivity extends AppCompatActivity {
     private SharedPrefManager pref;
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
+    SearchView svPelanggan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class PelangganActivity extends AppCompatActivity {
         });
 
         recPelanggan = findViewById(R.id.rvMenuPelangganDaftarPelanggan);
+
+        svPelanggan = findViewById(R.id.svMenuPelanggan);
 
         getAlllistpelanggan();
 
@@ -149,6 +153,21 @@ public class PelangganActivity extends AppCompatActivity {
                         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(PelangganActivity.this, R.anim.animation_slide_from_right);
                         recPelanggan.setLayoutAnimation(animation);
                         adapter.notifyDataSetChanged();
+
+                        svPelanggan.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                            @Override
+                            public boolean onQueryTextSubmit(String query) {
+
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onQueryTextChange(String newText) {
+
+                                adapter.getFilter().filter(newText);
+                                return true;
+                            }
+                        });
                     }catch (JSONException e){
                         e.printStackTrace();
                     } catch (IOException e){

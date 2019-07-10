@@ -26,17 +26,16 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_weight="1"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvDashboardHargaProduk"
             android:text="Harga Produk"
             android:textSize="@dimen/_8ssp"
             android:textColor="@android:color/black"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_weight="1"/>
+            android:layout_marginLeft="@dimen/_5sdp"/>
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edtDashboardJumlahProdukPesanan"
             android:hint="Jumlah"
@@ -44,6 +43,6 @@
             android:textColor="@color/colorblack"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_weight="1"/>
+            android:inputType="number" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

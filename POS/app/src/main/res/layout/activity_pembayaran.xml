@@ -121,11 +121,11 @@
                     android:text="EDC" />
 
                 <Button
-                    android:id="@+id/button12"
+                    android:id="@+id/btnLainnya"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lainya" />
+                    android:text="Lainya"/>
             </LinearLayout>
 
         </LinearLayout>

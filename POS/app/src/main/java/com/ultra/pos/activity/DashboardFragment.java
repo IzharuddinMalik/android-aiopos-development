@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.ultra.pos.R;
 import com.ultra.pos.adapter.AdapterPilihProduk;
@@ -50,6 +51,7 @@ public class DashboardFragment extends Fragment {
     SharedPrefManager pref;
     ArrayList<ProdukModel> dataProduk;
     List<Produk> produk;
+    SearchView srcProdukList;
     int posfrag = 0;
 
     public static DashboardFragment newInstance(int position){
@@ -73,6 +75,8 @@ public class DashboardFragment extends Fragment {
 
         context = getActivity();
         linearLihatPesanan = view.findViewById(R.id.llDashboardLihatPesanan);
+
+        srcProdukList = view.findViewById(R.id.svDashboardNamaProduk);
 
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -127,5 +131,20 @@ public class DashboardFragment extends Fragment {
         recProduk.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recProduk.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        srcProdukList.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 }

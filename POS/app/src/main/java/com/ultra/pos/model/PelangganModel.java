@@ -68,6 +68,10 @@ public class PelangganModel implements Serializable {
         this.telpPelanggan = telpPelanggan;
     }
 
+    public PelangganModel(String namaPelanggan, String emailPelanggan, String telpPelanggan) {
+
+    }
+
     public void setIdPelanggan(String idPelanggan) {
         this.idPelanggan = idPelanggan;
     }
