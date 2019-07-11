@@ -397,25 +397,7 @@ public class PembayaranActivity extends AppCompatActivity {
         int pos = 0;
 
         Log.i("idpay", " === "+listEDC.get(pos).getIdPay() + " "+ total.getText().toString());
-//                ""+idtb,
-//                ""+idbusiness,
-//                ""+idcop,
-//                ""+idoutlet,
-//                ""+idctm,
-//                ""+noinv_transHD,
-//                ""+diskon,
-//                ""+listEDC.get(pos).getIdPay(),
-//                ""+arrdata.toString(),
-//                ""+idUser,
-//                ""+listEDC.get(pos).getIdPay(),
-//                ""+idSaltype,
-//                "0",
-//                "penjualan",
-//                "0",
-//                ""+totalTransHD,
-//                ""+idTax,
-//                ""+total.getText().toString(),
-//                ""+String.valueOf(totalKembalian)
+
         Log.i("batas", " =================================================================== ");
         Log.i("idtb", " === "+ idtb);
         Log.i("idbusiness", " === "+ idbusiness);
@@ -430,9 +412,9 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.i("idpay", " === "+ listEDC.get(pos).getIdPay());
         Log.i("idSaltype", " === "+ idSaltype);
         Log.i("totalTransHD", " === "+ totalTransHD);
-        Log.i("idTax", " === "+ idTax);
-        Log.i("ttoal", " === "+ total.getText().toString());
-        Log.i("kembalian", " === "+ totalKembalian);
+//        Log.i("idTax", " === "+ idTax);
+//        Log.i("ttoal", " === "+ total);
+//        Log.i("kembalian", " === "+ totalKembalian);
 
         mApiInterface = APIUrl.getAPIService();
         mApiInterface.sendTransaksi(
@@ -454,7 +436,7 @@ public class PembayaranActivity extends AppCompatActivity {
                                     ""+totalTransHD,
                                     ""+idTax,
                                     ""+total.getText().toString(),
-                                    ""+String.valueOf(totalKembalian)
+                                    ""+totalKembalian
         ).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -465,6 +447,7 @@ public class PembayaranActivity extends AppCompatActivity {
                         JSONObject jsonResult = new JSONObject(result);
                         jsonResult.getString("success");
                         jsonResult.getString("message");
+                        Log.i("produk", " === "+ arrdata.toString());
 
                         Toast.makeText(PembayaranActivity.this, " " + jsonResult.getString("message"), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e){

@@ -179,6 +179,14 @@ public class Dashboard extends AppCompatActivity
             llDashboardLihatPesanan.setOnClickListener(v -> {
 //                startActivity(new Intent(this, RingkasanOrderActivity.class));
                 Intent intent = new Intent(this, RingkasanOrderActivity.class);
+                intent.putExtra("idtb", idtb);
+                intent.putExtra("idbusiness", idbusiness);
+                intent.putExtra("idcop", "0");
+                intent.putExtra("idoutlet", idoutlet);
+                intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+                intent.putExtra("noinv_transHD", "0");
+                intent.putExtra("diskon", diskon);
+                intent.putExtra("status_transHD", "1");
                 intent.putExtra("idProduk", arridProduk);
                 intent.putExtra("namaProduk", arrnamaProduk);
                 intent.putExtra("idVariant", arridVariant);
@@ -186,6 +194,9 @@ public class Dashboard extends AppCompatActivity
                 intent.putExtra("hargaPesanan", arrhargaPesanan);
                 intent.putExtra("jumlahPesanan", arrjumlahPesanan);
                 intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+                intent.putExtra("iduser", idUser);
+                intent.putExtra("idsaltype", idSaltype2);
+                intent.putExtra("idtax", idTax);
 
                 startActivity(intent);
             });
