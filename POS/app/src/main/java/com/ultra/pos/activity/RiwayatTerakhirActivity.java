@@ -121,9 +121,6 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
             finish();
         } else if (id == R.id.nav_transhistory) {
 
-        } else if (id == R.id.nav_shiftkerja) {
-            startActivity(new Intent(this, ShiftActivity.class));
-            finish();
         } else if (id == R.id.nav_pengaturan) {
             startActivity(new Intent(this, PengaturanActivity.class));
             finish();

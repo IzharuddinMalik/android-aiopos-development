@@ -544,9 +544,6 @@ public class Dashboard extends AppCompatActivity
         } else if (id == R.id.nav_transhistory) {
             startActivity(new Intent(this,RiwayatTerakhirActivity.class));
             finish();
-        } else if (id == R.id.nav_shiftkerja) {
-            startActivity(new Intent(this, ShiftActivity.class));
-            finish();
         } else if (id == R.id.nav_pengaturan) {
             startActivity(new Intent(this, PengaturanActivity.class));
             finish();

@@ -6,16 +6,21 @@ android {
         applicationId "com.ultra.pos"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'BASE_URL', '"http://pos.ultrapreneur.id/"'
+//            buildConfigField 'String', 'BASE_URL', '"http://pos.ultrapreneur.id/"'
         }
+    }
+    lintOptions {
+
+        checkReleaseBuilds false
+
     }
     compileOptions {
         sourceCompatibility = '1.8'
