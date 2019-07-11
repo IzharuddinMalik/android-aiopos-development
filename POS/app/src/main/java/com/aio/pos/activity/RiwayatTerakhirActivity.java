@@ -127,6 +127,10 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
         return true;
     }
 
+    public void back(){
+        startActivity(new Intent(this, Dashboard.class));
+    }
+
     public void getAlllistriwayat(){
         pref = new SharedPrefManager(this);
         HashMap<String, String> user = pref.getUserDetails();

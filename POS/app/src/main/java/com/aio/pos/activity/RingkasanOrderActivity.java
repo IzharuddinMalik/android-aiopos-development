@@ -66,6 +66,13 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     List<String> datahargaPesanan=new ArrayList<String>();
     List<String> datajumlahPesanan=new ArrayList<String>();
 
+    ArrayList<String> arridProduk= new ArrayList<String>();
+    ArrayList<String> arrnamaProduk= new ArrayList<String>();
+    ArrayList<String> arridVariant= new ArrayList<String>();
+    ArrayList<String> arrnamaVariant= new ArrayList<String>();
+    ArrayList<String> arrhargaPesanan= new ArrayList<String>();
+    ArrayList<String> arrjumlahPesanan= new ArrayList<String>();
+
     List<String> idProduk=new ArrayList<String>();
     List<String> namaProduk=new ArrayList<String>();
     List<String> idVariant=new ArrayList<String>();
@@ -76,7 +83,8 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     private SharedPrefManager pref;
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
-    public String SalesType,IDSalType;
+    public String SalesType,IDSalType, idtb, diskonBaru;
+    private String idcop, idctm, noinv_transHD, statusBayar, idUser, idSaltype, totalTransHD, idTax, idSaltype2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +94,24 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
+        idtb = getIntent().getStringExtra("idtb");
+        idbusiness = getIntent().getStringExtra("idbusiness");
+        idcop = getIntent().getStringExtra("idcop");
+        idoutlet = getIntent().getStringExtra("idoutlet");
+        idctm = getIntent().getStringExtra("idctm");
+        noinv_transHD = getIntent().getStringExtra("noinv_transHD");
+        diskonBaru = getIntent().getStringExtra("diskon");
+        statusBayar = getIntent().getStringExtra("status_transHD");
         dataidProduk = bundle.getStringArrayList("idProduk");
         datanamaProduk = bundle.getStringArrayList("namaProduk");
         dataidVariant = bundle.getStringArrayList("idVariant");
         datanamaVariant = bundle.getStringArrayList("namaVariant");
         datahargaPesanan = bundle.getStringArrayList("hargaPesanan");
+        idUser = getIntent().getStringExtra("iduser");
+        idSaltype = getIntent().getStringExtra("idsaltype");
+        totalTransHD = getIntent().getStringExtra("total_transHD");
         datajumlahPesanan = bundle.getStringArrayList("jumlahPesanan");
+        idTax = getIntent().getStringExtra("idtax");
 
         selectionData();
 
@@ -139,11 +159,30 @@ public class RingkasanOrderActivity extends AppCompatActivity {
             intent.putExtra("diskon", String.valueOf(disc));
             intent.putExtra("totalbyr", String.valueOf(total));
             intent.putExtra("salestype", String.valueOf(IDSalType));
+            intent.putExtra("idtb", idtb);
+            intent.putExtra("idbusiness", idbusiness);
+            intent.putExtra("idcop", "0");
+            intent.putExtra("idoutlet", idoutlet);
+            intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+            intent.putExtra("noinv_transHD", "0");
+            intent.putExtra("diskon", diskonBaru);
+            intent.putExtra("status_transHD", "1");
+            intent.putExtra("idProduk", arridProduk);
+            intent.putExtra("namaProduk", arrnamaProduk);
+            intent.putExtra("idVariant", arridVariant);
+            intent.putExtra("namaVariant", arrnamaVariant);
+            intent.putExtra("hargaPesanan", arrhargaPesanan);
+            intent.putExtra("jumlahPesanan", arrjumlahPesanan);
+            intent.putExtra("iduser", idUser);
+            intent.putExtra("idsaltype", idSaltype2);
+            intent.putExtra("total_transHD", TOTAL.getText().toString());
+            intent.putExtra("idtax", idTax);
 //            intent.putExtra("totalbyr", String.valueOf(total));
 
             Log.i("Diskon",""+disc);
             Log.i("Total",""+total);
             Log.i("Sales Type",""+IDSalType);
+            Log.i("IDPRODUK", " === " +arridProduk);
 
             startActivity(intent);
         });

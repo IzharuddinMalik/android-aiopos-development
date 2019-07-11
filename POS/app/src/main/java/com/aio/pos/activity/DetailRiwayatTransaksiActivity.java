@@ -95,7 +95,7 @@ public class DetailRiwayatTransaksiActivity extends AppCompatActivity {
         });
     }
 
-    public void back(){
+    public void back(View view){
         startActivity(new Intent(this, RiwayatTerakhirActivity.class));
     }
 

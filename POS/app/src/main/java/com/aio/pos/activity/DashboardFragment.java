@@ -64,8 +64,6 @@ public class DashboardFragment extends Fragment {
         context = getActivity();
         linearLihatPesanan = view.findViewById(R.id.llDashboardLihatPesanan);
 
-
-
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -74,14 +72,14 @@ public class DashboardFragment extends Fragment {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width == 720 && height == 1280){
-
-        }else{
+        if (width >= 1920 && height >= 1200){
             srcProdukList = view.findViewById(R.id.svDashboardNamaProduk);
+            showrecycler();
+        }else{
+            showrecyclerMobile();
         }
 
         Log.e("HENING", " == "+((Dashboard)context).gettabpos());
-        showrecycler();
     }
 
     public void showrecycler(){
@@ -136,5 +134,44 @@ public class DashboardFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    public void showrecyclerMobile(){
+
+        List<ProdukModel> produkModels = new ArrayList<ProdukModel>();
+        produkModels.clear();
+
+        produkModels = ((Dashboard)context).getProdukModels(Integer.parseInt(((Dashboard)context).gettabpos()));
+
+        produk = new ArrayList<Produk>();
+        produk.clear();
+
+        for(int i=0;i<produkModels.size();i++){
+
+            ProdukModel prod = produkModels.get(i);
+            if(prod.getDataProduk().size()==0){
+
+            }else{
+                for(int j=0;j<prod.getDataProduk().size();j++){
+
+                    Produk isiprod = prod.getDataProduk().get(j);
+
+
+                    Log.e("ONCE", " == "+prod.getNamaKategori() + " --> "+isiprod.getNamaProduk());
+                }
+            }
+        }
+
+        produk = produkModels.get(0).getDataProduk();
+
+        adapter = new AdapterPilihProduk(getContext(), produk);
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recProduk.setLayoutManager(mLayoutManager);
+        recProduk.setItemAnimator(new DefaultItemAnimator());
+        recProduk.setItemViewCacheSize(produk.size());
+        recProduk.setDrawingCacheEnabled(true);
+        recProduk.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        recProduk.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }
