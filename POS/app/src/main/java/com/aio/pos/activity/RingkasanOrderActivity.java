@@ -59,12 +59,12 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     private List<TipeModel> listTipe;
     private AdapterPesanan adapter;
     private AdapterTipePenjualan adapter2;
-    List<String> dataidProduk=new ArrayList<String>();
-    List<String> datanamaProduk=new ArrayList<String>();
-    List<String> dataidVariant=new ArrayList<String>();
-    List<String> datanamaVariant=new ArrayList<String>();
-    List<String> datahargaPesanan=new ArrayList<String>();
-    List<String> datajumlahPesanan=new ArrayList<String>();
+    ArrayList<String> dataidProduk=new ArrayList<String>();
+    ArrayList<String> datanamaProduk=new ArrayList<String>();
+    ArrayList<String> dataidVariant=new ArrayList<String>();
+    ArrayList<String> datanamaVariant=new ArrayList<String>();
+    ArrayList<String> datahargaPesanan=new ArrayList<String>();
+    ArrayList<String> datajumlahPesanan=new ArrayList<String>();
 
     List<String> idProduk=new ArrayList<String>();
     List<String> namaProduk=new ArrayList<String>();
@@ -135,11 +135,29 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         });
 
         bayar.setOnClickListener(v -> {
+            HashMap<String, String> user = pref.getUserDetails();
+            String idUser = user.get(SharedPrefManager.ID_USER);
+            String idTb = user.get(SharedPrefManager.ID_TB);
+            String idTax = user.get(SharedPrefManager.ID_TAX);
+
             Intent intent = new Intent(this, PembayaranActivity.class);
             intent.putExtra("diskon", String.valueOf(disc));
             intent.putExtra("totalbyr", String.valueOf(total));
             intent.putExtra("salestype", String.valueOf(IDSalType));
-//            intent.putExtra("totalbyr", String.valueOf(total));
+            intent.putExtra("idtb", idTb);
+            intent.putExtra("idcop", "0");
+            intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+            intent.putExtra("noinv_transHD", "0");
+            intent.putExtra("iduser", idUser);
+            intent.putExtra("idsaltype", IDSalType);
+            intent.putExtra("total_transHD", ""+total);
+            intent.putExtra("idtax", idTax);
+            intent.putExtra("idProduk", dataidProduk);
+            intent.putExtra("namaProduk", datanamaProduk);
+            intent.putExtra("idVariant", dataidVariant);
+            intent.putExtra("namaVariant", datanamaVariant);
+            intent.putExtra("hargaPesanan", datahargaPesanan);
+            intent.putExtra("jumlahPesanan", datajumlahPesanan);
 
             Log.i("Diskon",""+disc);
             Log.i("Total",""+total);

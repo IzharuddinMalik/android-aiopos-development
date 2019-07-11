@@ -143,10 +143,18 @@ public class Dashboard extends AppCompatActivity
 
         tvDashboardNamaPelanggan = findViewById(R.id.tvDashboardBukaPelanggan);
 
-        if (!tvDashboardNamaPelanggan.equals(null)){
-            tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("namaPelanggan"));
+//        if (!tvDashboardNamaPelanggan.equals(null)){
+//            tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("namaPelanggan"));
+//        } else {
+//            tvDashboardNamaPelanggan.setText("Nama Pelanggan");
+//        }
+
+        String namapelanggan=""+getIntent().getStringExtra("namaPelanggan");
+        Log.i("Nama",namapelanggan);
+        if (namapelanggan.equals("null")){
+
         } else {
-            tvDashboardNamaPelanggan.setText("Nama Pelanggan");
+            tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("namaPelanggan"));
         }
 
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
@@ -177,6 +185,7 @@ public class Dashboard extends AppCompatActivity
                 intent.putExtra("namaVariant", arrnamaVariant);
                 intent.putExtra("hargaPesanan", arrhargaPesanan);
                 intent.putExtra("jumlahPesanan", arrjumlahPesanan);
+                intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
 
                 startActivity(intent);
             });

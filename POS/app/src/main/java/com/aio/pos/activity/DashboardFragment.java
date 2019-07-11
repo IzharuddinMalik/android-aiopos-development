@@ -75,13 +75,14 @@ public class DashboardFragment extends Fragment {
         Log.d("height", "" + height);
 
         if (width == 720 && height == 1280){
-
+            srcProdukList = view.findViewById(R.id.svDashboardNamaProduk);
+            showrecycler();
         }else{
             srcProdukList = view.findViewById(R.id.svDashboardNamaProduk);
+            showrecycler();
         }
 
         Log.e("HENING", " == "+((Dashboard)context).gettabpos());
-        showrecycler();
     }
 
     public void showrecycler(){
