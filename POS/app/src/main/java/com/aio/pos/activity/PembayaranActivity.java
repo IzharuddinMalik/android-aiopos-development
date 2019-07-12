@@ -1,6 +1,7 @@
 package com.aio.pos.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
@@ -129,27 +130,20 @@ public class PembayaranActivity extends AppCompatActivity {
         tunai.setEnabled(false);
         lainnya.setEnabled(false);
 
-        if (!limapuluh.isEnabled()){
-            limapuluh.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
-        } else if (!duaratus.isEnabled()){
-            duaratus.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
-        } else if (!tunai.isEnabled()){
-            tunai.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
-        } else if (!lainnya.isEnabled()){
-            lainnya.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
-        }
+
+
 
         String jumlahLainnya = jumlahLain.getText().toString();
 
-        pas.setOnClickListener(v -> {
-            totalKembalian=0;
-            Log.i("Pas",""+totalKembalian);
-        });
-
-        limapuluh.setOnClickListener(v -> {
-            totalKembalian=50000-Integer.parseInt(totalbayar);
-            Log.i("Sisa 50",""+totalKembalian);
-        });
+//        pas.setOnClickListener(v -> {
+//            totalKembalian=0;
+//            Log.i("Pas",""+totalKembalian);
+//        });
+//
+//        limapuluh.setOnClickListener(v -> {
+//            totalKembalian=50000-Integer.parseInt(totalbayar);
+//            Log.i("Sisa 50",""+totalKembalian);
+//        });
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -160,6 +154,10 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.d("height", "" + height);
 
         if (width == 720 && height == 1280){
+
+            pas.setEnabled(false);
+            limapuluh.setEnabled(false);
+
             total.setText("Rp. "+totalbayar);
             pas.setOnClickListener(v -> {
                 totalKembalian=0;
@@ -199,6 +197,16 @@ public class PembayaranActivity extends AppCompatActivity {
                 edc_list();
             });
         }else {
+            if (!limapuluh.isEnabled()){
+                limapuluh.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+            } else if (!duaratus.isEnabled()){
+                duaratus.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+            } else if (!tunai.isEnabled()){
+                tunai.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+            } else if (!lainnya.isEnabled()){
+                lainnya.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
+            }
+
             total.setText("Rp. " + totalTransHD);
 
             konfirmasibayar.setOnClickListener(v -> {
@@ -407,7 +415,7 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.i("noinv_transHD", " === "+ noinv_transHD);
         Log.i("diskon", " === "+ diskon);
         Log.i("idpay", " === "+ listEDC.get(pos).getIdPay());
-        Log.i("produk", " === "+ arrdata.toString());
+        Log.i("produk", " === "+ itemobj.toString());
         Log.i("idUser", " === "+ idUser);
         Log.i("idpay", " === "+ listEDC.get(pos).getIdPay());
         Log.i("idSaltype", " === "+ idSaltype);
@@ -425,7 +433,7 @@ public class PembayaranActivity extends AppCompatActivity {
                                     ""+idctm,
                                     ""+noinv_transHD,
                                     ""+diskon,
-                                    ""+listEDC.get(pos).getIdPay(),
+                                    "1",
                                     ""+arrdata.toString(),
                                     ""+idUser,
                                     ""+listEDC.get(pos).getIdPay(),
