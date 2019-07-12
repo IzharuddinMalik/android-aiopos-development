@@ -709,7 +709,7 @@ public class Dashboard extends AppCompatActivity
         intent.putExtra("idbusiness", idbusiness);
         intent.putExtra("idcop", "0");
         intent.putExtra("idoutlet", idoutlet);
-        intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+        intent.putExtra("idctm", "0");
         intent.putExtra("noinv_transHD", "0");
         intent.putExtra("diskon", diskon);
         intent.putExtra("status_transHD", "1");
@@ -720,7 +720,7 @@ public class Dashboard extends AppCompatActivity
         intent.putExtra("hargaPesanan", arrhargaPesanan);
         intent.putExtra("jumlahPesanan", arrjumlahPesanan);
         intent.putExtra("iduser", idUser);
-        intent.putExtra("idsaltype", idSaltype2);
+        intent.putExtra("idsaltype", "0");
         intent.putExtra("total_transHD", tvDashboardTotalHarga.getText().toString());
         intent.putExtra("idtax", idTax);
         startActivity(intent);

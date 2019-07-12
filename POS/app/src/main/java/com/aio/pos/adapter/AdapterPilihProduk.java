@@ -117,7 +117,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
             Activity a = new Activity();
             if (width >= 1920 && height >= 1200){
-                a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//                a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
                 view.setOnClickListener(v -> {
                     int position = getAdapterPosition();

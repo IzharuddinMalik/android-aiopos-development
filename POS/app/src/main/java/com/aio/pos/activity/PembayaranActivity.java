@@ -121,6 +121,9 @@ public class PembayaranActivity extends AppCompatActivity {
         dataJumlah = bundle.getStringArrayList("jumlahPesanan");
         idTax = getIntent().getStringExtra("idtax");
 
+        Log.i("IDSALTYPE", " === " + idSaltype);
+        Log.i("DISKON", " === " + diskon);
+        Log.i("IDCTM" , " === " + idctm);
 
         seratus.setEnabled(false);
         duaratus.setEnabled(false);
@@ -394,9 +397,8 @@ public class PembayaranActivity extends AppCompatActivity {
 
         int pos = 0;
 
-        Log.i("idpay", " === "+listEDC.get(pos).getIdPay() + " "+ total.getText().toString());
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, idctm, noinv_transHD, diskon, listEDC.get(pos).getIdPay(), arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), idSaltype, "0",
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, listEDC.get(pos).getIdPay(), arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), "0", "0",
                 "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -469,7 +471,7 @@ public class PembayaranActivity extends AppCompatActivity {
         int pos = 0;
 
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, idctm, noinv_transHD, diskon, statusBayar, arrdata.toString(),idUser, "0", idSaltype, "0",
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, statusBayar, arrdata.toString(),idUser, "0", "0", "0",
                 "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
