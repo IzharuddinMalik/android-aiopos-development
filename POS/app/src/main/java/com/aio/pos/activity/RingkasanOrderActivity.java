@@ -59,12 +59,12 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     private List<TipeModel> listTipe;
     private AdapterPesanan adapter;
     private AdapterTipePenjualan adapter2;
-    List<String> dataidProduk=new ArrayList<String>();
-    List<String> datanamaProduk=new ArrayList<String>();
-    List<String> dataidVariant=new ArrayList<String>();
-    List<String> datanamaVariant=new ArrayList<String>();
-    List<String> datahargaPesanan=new ArrayList<String>();
-    List<String> datajumlahPesanan=new ArrayList<String>();
+    ArrayList<String> dataidProduk=new ArrayList<String>();
+    ArrayList<String> datanamaProduk=new ArrayList<String>();
+    ArrayList<String> dataidVariant=new ArrayList<String>();
+    ArrayList<String> datanamaVariant=new ArrayList<String>();
+    ArrayList<String> datahargaPesanan=new ArrayList<String>();
+    ArrayList<String> datajumlahPesanan=new ArrayList<String>();
 
     ArrayList<String> arridProduk= new ArrayList<String>();
     ArrayList<String> arrnamaProduk= new ArrayList<String>();
@@ -155,6 +155,11 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         });
 
         bayar.setOnClickListener(v -> {
+            HashMap<String, String> user = pref.getUserDetails();
+            String idUser = user.get(SharedPrefManager.ID_USER);
+            String idTb = user.get(SharedPrefManager.ID_TB);
+            String idTax = user.get(SharedPrefManager.ID_TAX);
+
             Intent intent = new Intent(this, PembayaranActivity.class);
             intent.putExtra("diskon", String.valueOf(disc));
             intent.putExtra("totalbyr", String.valueOf(total));
@@ -165,17 +170,17 @@ public class RingkasanOrderActivity extends AppCompatActivity {
             intent.putExtra("idoutlet", idoutlet);
             intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
             intent.putExtra("noinv_transHD", "0");
-            intent.putExtra("diskon", diskonBaru);
+            intent.putExtra("diskon", ""+disc);
             intent.putExtra("status_transHD", "1");
-            intent.putExtra("idProduk", arridProduk);
-            intent.putExtra("namaProduk", arrnamaProduk);
-            intent.putExtra("idVariant", arridVariant);
-            intent.putExtra("namaVariant", arrnamaVariant);
-            intent.putExtra("hargaPesanan", arrhargaPesanan);
-            intent.putExtra("jumlahPesanan", arrjumlahPesanan);
+            intent.putExtra("idProduk", dataidProduk);
+            intent.putExtra("namaProduk", datanamaProduk);
+            intent.putExtra("idVariant", dataidVariant);
+            intent.putExtra("namaVariant", datanamaVariant);
+            intent.putExtra("hargaPesanan", datahargaPesanan);
+            intent.putExtra("jumlahPesanan", datajumlahPesanan);
             intent.putExtra("iduser", idUser);
-            intent.putExtra("idsaltype", idSaltype2);
-            intent.putExtra("total_transHD", TOTAL.getText().toString());
+            intent.putExtra("idsaltype", IDSalType);
+            intent.putExtra("total_transHD", ""+total);
             intent.putExtra("idtax", idTax);
 //            intent.putExtra("totalbyr", String.valueOf(total));
 

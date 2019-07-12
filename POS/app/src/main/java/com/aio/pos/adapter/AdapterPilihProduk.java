@@ -215,7 +215,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
     public void onBindViewHolder(final ProdukViewHolder holder, final int position){
         final Produk produkModel = listProduk.get(position);
-        if (produkModel.getIdVariant().equals("")) {
+        if (produkModel.getIdVariant().equals("0")) {
             holder.namaProduk.setText(produkModel.getNamaProduk());
             holder.hargaProduk.setText(produkModel.getHargaProduk());
         } else {
