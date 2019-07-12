@@ -398,7 +398,7 @@ public class PembayaranActivity extends AppCompatActivity {
         int pos = 0;
 
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, listEDC.get(pos).getIdPay(), arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), "0", "0",
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, "1", arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), "0", "0",
                 "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -471,7 +471,7 @@ public class PembayaranActivity extends AppCompatActivity {
         int pos = 0;
 
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, statusBayar, arrdata.toString(),idUser, "0", "0", "0",
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, "1", arrdata.toString(),idUser, "0", "0", "0",
                 "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
