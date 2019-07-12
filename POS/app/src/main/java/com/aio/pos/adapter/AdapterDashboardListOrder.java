@@ -108,7 +108,7 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
 
     public void onBindViewHolder(final ListOrderViewHolder holder, int position){
         final PesananModel produk = listOrderProduk.get(position);
-        if (produk.getIdVariant().equals("0")) {
+        if (produk.getIdVariant().equals("")) {
             holder.tvNamaPesananProduk.setText(produk.getNamaProduk());
             holder.tvHargaPesananProduk.setText(produk.getHargaProduk());
         } else {
