@@ -35,17 +35,19 @@ import java.util.List;
 public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.ProdukViewHolder> implements Filterable {
 
     private Context mCtx;
-    private List<Produk> listProduk;
-    private List<Produk> mFilteredList;
+    private ArrayList<Produk> listProduk;
+    private ArrayList<Produk> mFilteredList;
     StylingUtils stylingUtils;
 
-    public AdapterPilihProduk(Context context, List<Produk> listProduk){
+    public AdapterPilihProduk(Context context, ArrayList<Produk> listProduk){
         this.mCtx = context;
         this.listProduk = listProduk;
         this.mFilteredList = listProduk;
 
         stylingUtils = new StylingUtils();
     }
+
+    public int getItemCount(){ return mFilteredList.size();}
 
     public Filter getFilter() {
         return new Filter() {
@@ -59,14 +61,14 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                     mFilteredList = listProduk;
                 } else {
 
-                    List<Produk> filteredList = new ArrayList<Produk>();
+                    ArrayList<Produk> filteredList = new ArrayList<Produk>();
 
-                    int i = 0;
+                    int pos = 0;
                     for (Produk name : listProduk) {
 
                         if (name.getNamaProduk().toLowerCase().contains(charString) || name.getNamaProduk().toUpperCase().contains(charString)) {
-                            filteredList.add(i, new Produk(name.getIdProduk(), name.getNamaProduk(), name.getHargaProduk()));
-                            i = i+1;
+                            filteredList.add(pos, new Produk(name.getIdProduk(), name.getNamaProduk(), name.getHargaProduk()));
+                            pos = pos+1;
                         }
                     }
 
@@ -82,6 +84,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 mFilteredList = (ArrayList<Produk>) filterResults.values;
                 notifyDataSetChanged();
+                Log.i("HASIL FILTER"," == " + mFilteredList);
             }
         };
     }
@@ -214,18 +217,18 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
     }
 
     public void onBindViewHolder(final ProdukViewHolder holder, final int position){
-        final Produk produkModel = listProduk.get(position);
-        if (produkModel.getIdVariant().equals("")) {
-            holder.namaProduk.setText(produkModel.getNamaProduk());
-            holder.hargaProduk.setText(produkModel.getHargaProduk());
-        } else {
-            holder.namaProduk.setText(produkModel.getNamaVariant());
-            holder.hargaProduk.setText(produkModel.getHargaProduk());
-        }
-        Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + produkModel.getFotoProduk()).into(holder.gambarProduk);
-    }
+//        if (mFilteredList.get(position).getIdVariant().equals("")) {
+//            holder.namaProduk.setText(mFilteredList.get(position).getNamaProduk());
+//            holder.hargaProduk.setText(mFilteredList.get(position).getHargaProduk());
+//        } else {
+//            holder.namaProduk.setText(mFilteredList.get(position).getNamaVariant());
+//            holder.hargaProduk.setText(mFilteredList.get(position).getHargaProduk());
+//        }
 
-    public int getItemCount(){ return mFilteredList.size();}
+        holder.namaProduk.setText(mFilteredList.get(position).getNamaProduk());
+        holder.hargaProduk.setText(mFilteredList.get(position).getHargaProduk());
+        Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + mFilteredList.get(position).getFotoProduk()).into(holder.gambarProduk);
+    }
 
     public Fragment getItem(int position) {
         return DashboardFragment.newInstance(position);

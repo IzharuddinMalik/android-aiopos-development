@@ -484,7 +484,7 @@ public class Dashboard extends AppCompatActivity
                                 replacementFragment(dashboardFragment);
                                 JSONArray arrayProduk = objisinya.getJSONArray("produk");
                                 if(arrayProduk.length()==0){
-                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), (ArrayList<Produk>) produk));
                                     pos++;
 
                                     tabLayout.addTab(tabLayout.newTab().setText(""+objisinya.getString("nama_kategori")));
@@ -494,7 +494,7 @@ public class Dashboard extends AppCompatActivity
                                         produk.add(j, new Produk(objprod.getString("idproduk"), objprod.getString("nama_produk"), objprod.getString("idvariant"), objprod.getString("nama_variant"), objprod.getString("harga_produk"), objprod.getString("foto_produk"),objprod.getString("idkategori")));
                                     }
 
-                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), (ArrayList<Produk>) produk));
                                     pos++;
 
                                     tabLayout.addTab(tabLayout.newTab().setText("" + objisinya.getString("nama_kategori")));
@@ -571,9 +571,9 @@ public class Dashboard extends AppCompatActivity
     }
 
 
-    public List<ProdukModel> getProdukModels(int postabfrag){
+    public ArrayList<ProdukModel> getProdukModels(int postabfrag){
 
-        List<ProdukModel> pro = new ArrayList<ProdukModel>();
+        ArrayList<ProdukModel> pro = new ArrayList<ProdukModel>();
         pro.clear();
 
         int a = 0;

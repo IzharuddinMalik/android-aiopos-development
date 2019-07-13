@@ -72,7 +72,9 @@ public class Produk implements Serializable {
     }
 
     public Produk(String idProduk, String namaProduk, String hargaProduk) {
-
+        this.idProduk = idProduk;
+        this.namaProduk = namaProduk;
+        this.hargaProduk = hargaProduk;
     }
 
     public void setIdProduk(String idProduk) {

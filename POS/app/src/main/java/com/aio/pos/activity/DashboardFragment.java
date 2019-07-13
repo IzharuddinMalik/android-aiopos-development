@@ -38,7 +38,7 @@ public class DashboardFragment extends Fragment {
     APIConnect mApiConnect;
     SharedPrefManager pref;
     ArrayList<ProdukModel> dataProduk;
-    List<Produk> produk;
+    ArrayList<Produk> produk;
     SearchView srcProdukList;
     int posfrag = 0;
 
@@ -84,7 +84,7 @@ public class DashboardFragment extends Fragment {
 
     public void showrecycler(){
 
-        List<ProdukModel> produkModels = new ArrayList<ProdukModel>();
+        ArrayList<ProdukModel> produkModels = new ArrayList<ProdukModel>();
         produkModels.clear();
 
         produkModels = ((Dashboard)context).getProdukModels(Integer.parseInt(((Dashboard)context).gettabpos()));
