@@ -357,8 +357,6 @@ public class PembayaranActivity extends AppCompatActivity {
 
         String[][] dataIdProdukList = new String[dataIdProduk.size()][6];
 
-        PostTransaksiModel postTransaksiModel = new PostTransaksiModel();
-
         JSONArray arrdata= new JSONArray();
         JSONObject itemobj = new JSONObject();
 
@@ -369,7 +367,6 @@ public class PembayaranActivity extends AppCompatActivity {
             dataIdProdukList[j][3] = dataNamaVariant.get(j);
             dataIdProdukList[j][4] = dataHargaVariant.get(j);
             dataIdProdukList[j][5] = dataJumlah.get(j);
-
 
             itemobj = new JSONObject();
             try {
@@ -386,11 +383,6 @@ public class PembayaranActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
-
-            Log.i("Hasil",""+dataIdProdukList[j][0] + dataIdProdukList[j][2] + "0" + dataIdProdukList[j][5] + dataIdProdukList[j][4] + "0");
-            postTransaksiListModels.add(new PostTransaksiListModel(dataIdProdukList[j][0], dataIdProdukList[j][2],"0", dataIdProdukList[j][5], dataIdProdukList[j][4], "0"));
-            postTransaksiModel.setPostTransaksiListModels(postTransaksiListModels);
         }
 
         Log.i("DATAPRODUK", " === "+arrdata.toString());

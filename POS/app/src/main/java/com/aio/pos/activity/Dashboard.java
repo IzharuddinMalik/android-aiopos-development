@@ -640,14 +640,6 @@ public class Dashboard extends AppCompatActivity
         arrjumlahPesanan.add(jumlahPesanan);
     }
 
-    public void setOrder(String idProduk,String namaProduk, String idVariant, String namaVariant, String hargaPesanan){
-        arridProduk.add(idProduk);
-        arrnamaProduk.add(namaProduk);
-        arridVariant.add(idVariant);
-        arrnamaVariant.add(namaVariant);
-        arrhargaPesanan.add(hargaPesanan);
-    }
-
     public void resetOrder(){
         arridProduk.clear();
         arrnamaProduk.clear();

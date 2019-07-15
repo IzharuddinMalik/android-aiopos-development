@@ -85,6 +85,15 @@ public class PesananModel implements Serializable {
         this.jumlahPesanan = jumlahPesanan;
     }
 
+    public PesananModel(String idPesanan ,String idProduk, String idKategori, String namaProduk, String hargaProduk, String jumlahPesanan) {
+        this.idPesanan = idPesanan;
+        this.idProduk = idProduk;
+        this.idKategori = idKategori;
+        this.namaProduk = namaProduk;
+        this.hargaProduk = hargaProduk;
+        this.jumlahPesanan = jumlahPesanan;
+    }
+
     public void setIdPesanan(String idPesanan) {
         this.idPesanan = idPesanan;
     }
