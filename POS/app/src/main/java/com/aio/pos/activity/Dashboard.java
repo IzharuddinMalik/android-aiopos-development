@@ -484,7 +484,7 @@ public class Dashboard extends AppCompatActivity
                                 replacementFragment(dashboardFragment);
                                 JSONArray arrayProduk = objisinya.getJSONArray("produk");
                                 if(arrayProduk.length()==0){
-                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), (ArrayList<Produk>) produk));
                                     pos++;
 
                                     tabLayout.addTab(tabLayout.newTab().setText(""+objisinya.getString("nama_kategori")));
@@ -494,7 +494,7 @@ public class Dashboard extends AppCompatActivity
                                         produk.add(j, new Produk(objprod.getString("idproduk"), objprod.getString("nama_produk"), objprod.getString("idvariant"), objprod.getString("nama_variant"), objprod.getString("harga_produk"), objprod.getString("foto_produk"),objprod.getString("idkategori")));
                                     }
 
-                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), produk));
+                                    produkModels.add(pos, new ProdukModel(objisinya.getString("idkategori"), objisinya.getString("nama_kategori"), (ArrayList<Produk>) produk));
                                     pos++;
 
                                     tabLayout.addTab(tabLayout.newTab().setText("" + objisinya.getString("nama_kategori")));
@@ -571,9 +571,9 @@ public class Dashboard extends AppCompatActivity
     }
 
 
-    public List<ProdukModel> getProdukModels(int postabfrag){
+    public ArrayList<ProdukModel> getProdukModels(int postabfrag){
 
-        List<ProdukModel> pro = new ArrayList<ProdukModel>();
+        ArrayList<ProdukModel> pro = new ArrayList<ProdukModel>();
         pro.clear();
 
         int a = 0;
@@ -638,14 +638,6 @@ public class Dashboard extends AppCompatActivity
         arrnamaVariant.add(namaVariant);
         arrhargaPesanan.add(hargaPesanan);
         arrjumlahPesanan.add(jumlahPesanan);
-    }
-
-    public void setOrder(String idProduk,String namaProduk, String idVariant, String namaVariant, String hargaPesanan){
-        arridProduk.add(idProduk);
-        arrnamaProduk.add(namaProduk);
-        arridVariant.add(idVariant);
-        arrnamaVariant.add(namaVariant);
-        arrhargaPesanan.add(hargaPesanan);
     }
 
     public void resetOrder(){
@@ -718,7 +710,7 @@ public class Dashboard extends AppCompatActivity
         intent.putExtra("idbusiness", idbusiness);
         intent.putExtra("idcop", "0");
         intent.putExtra("idoutlet", idoutlet);
-        intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+        intent.putExtra("idctm", "0");
         intent.putExtra("noinv_transHD", "0");
         intent.putExtra("diskon", diskon);
         intent.putExtra("status_transHD", "1");
@@ -729,7 +721,7 @@ public class Dashboard extends AppCompatActivity
         intent.putExtra("hargaPesanan", arrhargaPesanan);
         intent.putExtra("jumlahPesanan", arrjumlahPesanan);
         intent.putExtra("iduser", idUser);
-        intent.putExtra("idsaltype", idSaltype2);
+        intent.putExtra("idsaltype", "0");
         intent.putExtra("total_transHD", tvDashboardTotalHarga.getText().toString());
         intent.putExtra("idtax", idTax);
         startActivity(intent);

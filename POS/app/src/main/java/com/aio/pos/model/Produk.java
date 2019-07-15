@@ -60,11 +60,11 @@ public class Produk implements Serializable {
         this.idKategori = idKategori;
     }
 
-    public Produk(String namaProduk, String namaVariant, String hargaProduk, String jumlahProduk){
+    public Produk(String idKategori, String idProduk, String namaProduk, String hargaProduk){
+        this.idKategori = idKategori;
+        this.idProduk = idProduk;
         this.namaProduk = namaProduk;
-        this.namaVariant = namaVariant;
         this.hargaProduk = hargaProduk;
-        this.jumlahProduk = jumlahProduk;
     }
 
     public Produk(String idProduk, String namaProduk, String hargaProduk, String namaVariant, String idVariant) {
@@ -72,7 +72,9 @@ public class Produk implements Serializable {
     }
 
     public Produk(String idProduk, String namaProduk, String hargaProduk) {
-
+        this.idProduk = idProduk;
+        this.namaProduk = namaProduk;
+        this.hargaProduk = hargaProduk;
     }
 
     public void setIdProduk(String idProduk) {

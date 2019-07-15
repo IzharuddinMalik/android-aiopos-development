@@ -19,9 +19,9 @@ public class ProdukModel implements Serializable {
 
     @SerializedName("produk")
     @Expose
-    private List<Produk> dataProduk = new ArrayList<Produk>();
+    private ArrayList<Produk> dataProduk = new ArrayList<Produk>();
 
-    public ProdukModel(String idKategori, String namaKategori, List<Produk> dataProduk){
+    public ProdukModel(String idKategori, String namaKategori, ArrayList<Produk> dataProduk){
         this.idKategori = idKategori;
         this.namaKategori = namaKategori;
         this.dataProduk = dataProduk;
@@ -39,7 +39,7 @@ public class ProdukModel implements Serializable {
         this.namaKategori = namaKategori;
     }
 
-    public void setDataProduk(List<Produk> dataProduk) {
+    public void setDataProduk(ArrayList<Produk> dataProduk) {
         this.dataProduk = dataProduk;
     }
 
@@ -51,7 +51,7 @@ public class ProdukModel implements Serializable {
         return namaKategori;
     }
 
-    public List<Produk> getDataProduk() {
+    public ArrayList<Produk> getDataProduk() {
         return dataProduk;
     }
 }

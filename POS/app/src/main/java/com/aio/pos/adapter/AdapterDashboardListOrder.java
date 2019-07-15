@@ -108,13 +108,14 @@ public class AdapterDashboardListOrder extends RecyclerView.Adapter<AdapterDashb
 
     public void onBindViewHolder(final ListOrderViewHolder holder, int position){
         final PesananModel produk = listOrderProduk.get(position);
-        if (produk.getIdVariant().equals("0")) {
-            holder.tvNamaPesananProduk.setText(produk.getNamaProduk());
-            holder.tvHargaPesananProduk.setText(produk.getHargaProduk());
-        } else {
-            holder.tvNamaPesananProduk.setText(produk.getNamaVariant());
-            holder.tvHargaPesananProduk.setText(produk.getHargaProduk());
-        }
+//        if (produk.getIdVariant().equals("")){
+//
+//        } else{
+//            holder.tvNamaPesananProduk.setText(produk.getNamaVariant());
+//            holder.tvHargaPesananProduk.setText(produk.getHargaProduk());
+//        }
+        holder.tvNamaPesananProduk.setText(produk.getNamaProduk());
+        holder.tvHargaPesananProduk.setText(produk.getHargaProduk());
         Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + produk.getFotoProduk()).into(holder.ivGambarPesananProduk);
         holder.jumlahPesananProduk.setText(produk.getJumlahPesanan());
     }

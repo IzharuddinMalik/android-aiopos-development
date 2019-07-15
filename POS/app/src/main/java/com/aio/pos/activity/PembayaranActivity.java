@@ -111,19 +111,20 @@ public class PembayaranActivity extends AppCompatActivity {
         noinv_transHD = getIntent().getStringExtra("noinv_transHD");
         diskon = getIntent().getStringExtra("diskon");
         statusBayar = getIntent().getStringExtra("status_transHD");
-
         dataIdProduk = bundle.getStringArrayList("idProduk");
         dataNamaProduk = bundle.getStringArrayList("namaProduk");
         dataIdVariant = bundle.getStringArrayList("idVariant");
         dataNamaVariant = bundle.getStringArrayList("namaVariant");
         dataHargaVariant = bundle.getStringArrayList("hargaPesanan");
-        dataJumlah = bundle.getStringArrayList("jumlahPesanan");
-
         idUser = getIntent().getStringExtra("iduser");
         idSaltype = getIntent().getStringExtra("idsaltype");
         totalTransHD = getIntent().getStringExtra("total_transHD");
+        dataJumlah = bundle.getStringArrayList("jumlahPesanan");
         idTax = getIntent().getStringExtra("idtax");
 
+        Log.i("IDSALTYPE", " === " + idSaltype);
+        Log.i("DISKON", " === " + diskon);
+        Log.i("IDCTM" , " === " + idctm);
 
         seratus.setEnabled(false);
         duaratus.setEnabled(false);
@@ -364,8 +365,6 @@ public class PembayaranActivity extends AppCompatActivity {
 
         String[][] dataIdProdukList = new String[dataIdProduk.size()][6];
 
-        PostTransaksiModel postTransaksiModel = new PostTransaksiModel();
-
         JSONArray arrdata= new JSONArray();
         JSONObject itemobj = new JSONObject();
 
@@ -376,7 +375,6 @@ public class PembayaranActivity extends AppCompatActivity {
             dataIdProdukList[j][3] = dataNamaVariant.get(j);
             dataIdProdukList[j][4] = dataHargaVariant.get(j);
             dataIdProdukList[j][5] = dataJumlah.get(j);
-
 
             itemobj = new JSONObject();
             try {
@@ -393,59 +391,15 @@ public class PembayaranActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
-
-            Log.i("Hasil",""+dataIdProdukList[j][0] +" "+ dataIdProdukList[j][2]+" " + "0" + dataIdProdukList[j][5] + dataIdProdukList[j][4] + "0");
-            postTransaksiListModels.add(new PostTransaksiListModel(""+dataIdProdukList[j][0], ""+dataIdProdukList[j][2],"0", ""+dataIdProdukList[j][5], ""+dataIdProdukList[j][4], "0"));
-            postTransaksiModel.setPostTransaksiListModels(postTransaksiListModels);
         }
 
         Log.i("DATAPRODUK", " === "+arrdata.toString());
 
         int pos = 0;
 
-        Log.i("idpay", " === "+listEDC.get(pos).getIdPay() + " "+ total.getText().toString());
-
-        Log.i("batas", " =================================================================== ");
-        Log.i("idtb", " === "+ idtb);
-        Log.i("idbusiness", " === "+ idbusiness);
-        Log.i("idcop", " === "+ idcop);
-        Log.i("idoutlet", " === "+ idoutlet);
-        Log.i("idctm", " === "+ idctm);
-        Log.i("noinv_transHD", " === "+ noinv_transHD);
-        Log.i("diskon", " === "+ diskon);
-        Log.i("idpay", " === "+ listEDC.get(pos).getIdPay());
-        Log.i("produk", " === "+ itemobj.toString());
-        Log.i("idUser", " === "+ idUser);
-        Log.i("idpay", " === "+ listEDC.get(pos).getIdPay());
-        Log.i("idSaltype", " === "+ idSaltype);
-        Log.i("totalTransHD", " === "+ totalTransHD);
-//        Log.i("idTax", " === "+ idTax);
-//        Log.i("ttoal", " === "+ total);
-//        Log.i("kembalian", " === "+ totalKembalian);
-
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(
-                                    ""+idtb,
-                                    ""+idbusiness,
-                                    ""+idcop,
-                                    ""+idoutlet,
-                                    ""+idctm,
-                                    ""+noinv_transHD,
-                                    ""+diskon,
-                                    "1",
-                                    ""+arrdata.toString(),
-                                    ""+idUser,
-                                    ""+listEDC.get(pos).getIdPay(),
-                                    ""+idSaltype,
-                                    "0",
-                                    "penjualan",
-                                    "0",
-                                    ""+totalTransHD,
-                                    ""+idTax,
-                                    ""+total.getText().toString(),
-                                    ""+totalKembalian
-        ).enqueue(new Callback<ResponseBody>() {
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, "1", arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), "0", "0",
+                "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
@@ -455,7 +409,6 @@ public class PembayaranActivity extends AppCompatActivity {
                         JSONObject jsonResult = new JSONObject(result);
                         jsonResult.getString("success");
                         jsonResult.getString("message");
-                        Log.i("produk", " === "+ arrdata.toString());
 
                         Toast.makeText(PembayaranActivity.this, " " + jsonResult.getString("message"), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e){
@@ -518,7 +471,7 @@ public class PembayaranActivity extends AppCompatActivity {
         int pos = 0;
 
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, idctm, noinv_transHD, diskon, statusBayar, arrdata.toString(),idUser, "0", idSaltype, "0",
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, "1", arrdata.toString(),idUser, "0", "0", "0",
                 "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

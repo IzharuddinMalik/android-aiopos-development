@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                         apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.gagal));
                         e.printStackTrace();
                     } catch (JSONException e){
-//                        dialogLoading.dismiss();
+                        dialogLoading.dismiss();
                         apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.gagal));
                         e.printStackTrace();
                     }
