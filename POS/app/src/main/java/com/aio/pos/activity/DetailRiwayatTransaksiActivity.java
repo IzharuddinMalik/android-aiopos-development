@@ -169,11 +169,11 @@ public class DetailRiwayatTransaksiActivity extends AppCompatActivity {
 
                                 JSONArray arrHarga = objKategori.getJSONArray("harga");
 //                                Log.i("Isi",""+arrHarga);
-//                                Log.i("Isi",""+arrHarga.length());
+                                Log.i("Isi",""+arrHarga.length());
 
                                 for(int j=0;j<arrHarga.length();j++){
                                     JSONObject objharga = arrHarga.getJSONObject(j);
-                                    listPesanan.add(j, new Produk(""+objharga.getString("nama_produk"),""+objharga.getString("nama_variant"),""+objharga.getString("harga_satuan"),""+objharga.getString("qty")));
+                                    listPesanan.add(j, new Produk("",""+objharga.getString("nama_produk"),"","",""+objharga.getString("harga_satuan"),"",""+objharga.getString("qty"),""));
                                 }
                                 adapter = new AdapterPesanan(DetailRiwayatTransaksiActivity.this, listPesanan);
                                 final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DetailRiwayatTransaksiActivity.this);

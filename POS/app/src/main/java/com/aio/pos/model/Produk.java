@@ -67,14 +67,16 @@ public class Produk implements Serializable {
         this.hargaProduk = hargaProduk;
     }
 
-    public Produk(String idProduk, String namaProduk, String hargaProduk, String namaVariant, String idVariant) {
-
-    }
-
-    public Produk(String idProduk, String namaProduk, String hargaProduk) {
+    public Produk(String idProduk, String namaProduk,String idVariant, String namaVariant, String hargaProduk) {
         this.idProduk = idProduk;
         this.namaProduk = namaProduk;
+        this.idVariant = idVariant;
+        this.namaVariant = namaVariant;
         this.hargaProduk = hargaProduk;
+    }
+
+    public Produk(){
+
     }
 
     public void setIdProduk(String idProduk) {

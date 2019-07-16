@@ -67,7 +67,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                     for (Produk name : listProduk) {
 
                         if (name.getNamaProduk().toLowerCase().contains(charString) || name.getNamaProduk().toUpperCase().contains(charString)) {
-                            filteredList.add(pos, new Produk(name.getIdProduk(), name.getNamaProduk(), name.getHargaProduk()));
+                            filteredList.add(pos, new Produk(name.getIdProduk(), name.getNamaProduk(),name.getIdVariant(),name.getNamaVariant(), name.getHargaProduk()));
                             pos = pos+1;
                         }
                     }
@@ -172,15 +172,23 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                             visible();
 
                             int position = getAdapterPosition();
-                            Log.i("Posisi",listProduk.get(position).getNamaVariant()+" "+inputJumlahProduk.getText()+position);
+                            Log.i("Posisi",listProduk.get(position).getNamaProduk()+" "+inputJumlahProduk.getText()+position);
                             if (position != RecyclerView.NO_POSITION){
-                                ((Dashboard)mCtx).setOrder(
-                                        listProduk.get(position).getIdProduk(),
-                                        listProduk.get(position).getNamaProduk(),
-                                        listProduk.get(position).getIdVariant(),
-                                        listProduk.get(position).getNamaVariant(),
-                                        listProduk.get(position).getHargaProduk(),
-                                        inputJumlahProduk.getText().toString());
+                                if (mFilteredList != listProduk){
+                                    ((Dashboard)mCtx).setOrder(mFilteredList.get(position).getIdProduk(),
+                                            mFilteredList.get(position).getNamaProduk(),
+                                            mFilteredList.get(position).getIdVariant(),
+                                            mFilteredList.get(position).getNamaVariant(),
+                                            mFilteredList.get(position).getHargaProduk(),
+                                            inputJumlahProduk.getText().toString());
+                                } else{
+                                    ((Dashboard)mCtx).setOrder(listProduk.get(position).getIdProduk(),
+                                            listProduk.get(position).getNamaProduk(),
+                                            listProduk.get(position).getIdVariant(),
+                                            listProduk.get(position).getNamaVariant(),
+                                            listProduk.get(position).getHargaProduk(),
+                                            inputJumlahProduk.getText().toString());
+                                }
                             }
                         }
                     }
@@ -244,6 +252,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 //            Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + listProduk.get(position).getFotoProduk()).into(holder.gambarProduk);
 //        }
         holder.namaProduk.setText(mFilteredList.get(position).getNamaProduk());
+        Log.i("Isi Holder",""+holder.namaProduk.getText());
         holder.hargaProduk.setText(mFilteredList.get(position).getHargaProduk());
         Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + mFilteredList.get(position).getFotoProduk()).into(holder.gambarProduk);
     }

@@ -278,7 +278,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
             jumlahPesanan.add(datajumlahPesanan.get(0));
         }else{
             for(int i=0;i<dataidProduk.size();i++){
-                if(dataidVariant.get(i).equals("0")){
+                if(dataidVariant.get(i).equals("")){
                     if(tmp.equals(datanamaProduk.get(i))){
 
                     }else{

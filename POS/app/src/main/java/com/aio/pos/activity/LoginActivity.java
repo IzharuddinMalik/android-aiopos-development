@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.cekkoneksidataanda));
-                dialogLoading.dismiss();
+//                dialogLoading.dismiss();
             }
         });
     }
