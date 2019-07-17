@@ -63,8 +63,8 @@ public class PembayaranActivity extends AppCompatActivity {
     private List<EDCModel> listEDC;
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
-    Button konfirmasibayar,pas,limapuluh,seratus,duaratus,tunai,edc,lainnya;
-    String totalbayar, idtb,  idcop,  idctm, noinv_transHD, diskon, statusBayar, idUser, idSaltype, totalTransHD;
+    Button konfirmasibayar,pas,limapuluh,seratus,duaratus,edc,lainnya;
+    String totalbayar, idtb,  idcop,  idctm, noinv_transHD, diskon, statusBayar, idUser,idtunai, idSaltype, totalTransHD;
     APIConnect mApiConnect;
     String[] produkList;
 
@@ -92,7 +92,6 @@ public class PembayaranActivity extends AppCompatActivity {
         duaratus=findViewById(R.id.btnUang200K);
         total=findViewById(R.id.tvTotalPembayaranAct);
         jumlahLain=findViewById(R.id.tietJumlahLain);
-        tunai=findViewById(R.id.btnTunai);
         edc=findViewById(R.id.btnEDC);
         lainnya = findViewById(R.id.btnLainnya);
 
@@ -126,10 +125,10 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.i("DISKON", " === " + diskon);
         Log.i("IDCTM" , " === " + idctm);
 
-        seratus.setEnabled(false);
-        duaratus.setEnabled(false);
-        tunai.setEnabled(false);
-        lainnya.setEnabled(false);
+//        seratus.setEnabled(false);
+//        duaratus.setEnabled(false);
+//        tunai.setEnabled(false);
+//        lainnya.setEnabled(false);
 
 
 
@@ -154,39 +153,53 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width == 720 && height == 1280){
+        if (width <= 720 && height <= 1280){
 
-            pas.setEnabled(false);
-            limapuluh.setEnabled(false);
+//            pas.setEnabled(false);
+//            limapuluh.setEnabled(false);
+//            seratus.setEnabled(false);
+//            duaratus.setEnabled(false);
+            lainnya.setEnabled(false);
 
             total.setText("Rp. "+totalbayar);
+
             pas.setOnClickListener(v -> {
                 totalKembalian=0;
+                idtunai="0";
                 Log.i("Pas",""+totalKembalian);
             });
 
             limapuluh.setOnClickListener(v -> {
                 totalKembalian=50000-Integer.parseInt(totalbayar);
+                idtunai="0";
                 Log.i("Sisa 50",""+totalKembalian);
             });
 
             seratus.setOnClickListener(v -> {
                 totalKembalian=100000-Integer.parseInt(totalbayar);
+                idtunai="0";
                 Log.i("Sisa 100",""+totalKembalian);
             });
 
             duaratus.setOnClickListener(v -> {
                 totalKembalian=200000-Integer.parseInt(totalbayar);
+                idtunai="0";
                 Log.i("Sisa 200",""+totalKembalian);
             });
             konfirmasibayar.setOnClickListener(v -> {
                 Intent intent = new Intent(this, PembayaranSuksesActivity.class);
-                if(jumlahLain.getText().toString().equals("0")){
+                if(jumlahLain.getText().toString().equals("0") && !idtunai.equals("0")){
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Bukan Jml lain",""+totalKembalian);
                     bayarEDC();
-                }else{
+                }else if(idtunai.equals("")){
                     totalKembalian=Integer.parseInt(jumlahLain.getText().toString())-Integer.parseInt(totalbayar);
+                    idtunai="0";
+                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
+                    Log.i("Jml Lain",""+totalKembalian);
+                    bayarLainnya();
+                }else{
+                    idtunai="0";
                     intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
                     bayarLainnya();
@@ -202,8 +215,6 @@ public class PembayaranActivity extends AppCompatActivity {
                 limapuluh.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
             } else if (!duaratus.isEnabled()){
                 duaratus.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
-            } else if (!tunai.isEnabled()){
-                tunai.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
             } else if (!lainnya.isEnabled()){
                 lainnya.setBackgroundColor(getResources().getColor(R.color.colorGray4d4d4d));
             }
@@ -398,7 +409,7 @@ public class PembayaranActivity extends AppCompatActivity {
         int pos = 0;
 
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, "1", arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), "0", "0",
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, ""+getIntent().getStringExtra("idctm"), noinv_transHD, diskon, "1", arrdata.toString(),idUser, listEDC.get(pos).getIdPay(), ""+getIntent().getStringExtra("idsaltype"), "0",
                 "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -462,7 +473,7 @@ public class PembayaranActivity extends AppCompatActivity {
 
 
             Log.i("Hasil",""+dataIdProdukList[j][0] + dataIdProdukList[j][2] + "0" + dataIdProdukList[j][5] + dataIdProdukList[j][4] + "0");
-            postTransaksiListModels.add(new PostTransaksiListModel(dataIdProdukList[j][0], dataIdProdukList[j][2],"0", dataIdProdukList[j][5], dataIdProdukList[j][4], "0"));
+            postTransaksiListModels.add(new PostTransaksiListModel(""+dataIdProdukList[j][0], ""+dataIdProdukList[j][2],"0", ""+dataIdProdukList[j][5], ""+dataIdProdukList[j][4], "0"));
             postTransaksiModel.setPostTransaksiListModels(postTransaksiListModels);
         }
 
@@ -471,7 +482,7 @@ public class PembayaranActivity extends AppCompatActivity {
         int pos = 0;
 
         mApiInterface = APIUrl.getAPIService();
-        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, "0", noinv_transHD, diskon, "1", arrdata.toString(),idUser, "0", "0", "0",
+        mApiInterface.sendTransaksi(idtb, idbusiness, idcop, idoutlet, ""+getIntent().getStringExtra("idctm"), noinv_transHD, diskon, "1", arrdata.toString(),idUser, ""+idtunai, "0", "0",
                 "penjualan", "0", totalTransHD, idTax, total.getText().toString(), String.valueOf(totalKembalian)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
