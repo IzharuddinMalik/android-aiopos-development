@@ -54,6 +54,14 @@ public class APIConnect {
 
             imgloading.setImageResource(R.drawable.iconloading);
 
+        } else {
+            dialogloading.dismiss();
+        }
+    }
+
+    public void closeDialogloading(){
+        if (isdialogshow1){
+            dialogloading.dismiss();
         }
     }
 

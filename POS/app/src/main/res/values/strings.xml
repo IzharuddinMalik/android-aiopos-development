@@ -6,6 +6,7 @@
     <string name="cekkoneksidataanda">Cek koneksi data anda</string>
     <string name="element">Element</string>
     <string name="gagal">Gagal!</string>
+    <string name="GagalloginBukanakunkaryawan">Gagal Login, Bukan akun karyawan!</string>
 
     <string name="response200">200 OK</string>
     <string name="response400">400 Bad Request</string>

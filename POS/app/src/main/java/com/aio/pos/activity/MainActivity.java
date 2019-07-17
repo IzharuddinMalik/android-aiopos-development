@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
         display.getSize(size);
         int width = size.x;
         int height = size.y;
-        Log.d("Width", "" + width);
-        Log.d("height", "" + height);
+        Log.d("Width", "" + width%9);
+        Log.d("height", "" + height%16);
 
-        if ((width % 9)==0 || (height % 16)==0){
+        if ((width % 9)==0 && (height % 16)==0){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

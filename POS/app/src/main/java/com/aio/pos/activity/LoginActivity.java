@@ -1,6 +1,7 @@
 package com.aio.pos.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
@@ -74,10 +75,11 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width >= 1920 && height >= 1200){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
+        if ((width % 9)==0 && (height % 16)==0){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
         pref = new SharedPrefManager(LoginActivity.this);
@@ -85,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(this, Dashboard.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
         }
+        dialogLoading = new Dialog(LoginActivity.this);
+
     }
 
     public void loginRequest(){
@@ -102,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         apiConnect.showdialogloading();
-
         HashMap<String, String> params = new HashMap<>();
         params.put("email_user", emailUser);
         params.put("password", passwordUser);
@@ -114,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                     try{
                         String result = response.body().string();
 
+                        dialogLoading.dismiss();
                         JSONObject jsonResult = new JSONObject(result);
                         jsonResult.getString("success");
                         jsonResult.getString("message");
@@ -149,25 +153,25 @@ public class LoginActivity extends AppCompatActivity {
                             apiConnect.showtoastsucces(LoginActivity.this.getResources().getString(R.string.sukses));
                             finish();
                         }
-                    } catch (IOException e){
-                        dialogLoading.dismiss();
-                        apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.gagal));
-                        e.printStackTrace();
                     } catch (JSONException e){
-                        dialogLoading.dismiss();
+                        apiConnect.closeDialogloading();
+                        apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.GagalloginBukanakunkaryawan));
+                        e.printStackTrace();
+                    } catch (IOException e){
                         apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.gagal));
+                        apiConnect.closeDialogloading();
                         e.printStackTrace();
                     }
                 } else{
-                    dialogLoading.dismiss();
-                    Toast.makeText(LoginActivity.this, "Gagal Login", Toast.LENGTH_SHORT).show();
+                    apiConnect.closeDialogloading();
+                    apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.gagal));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 apiConnect.showtoastfailed(LoginActivity.this.getResources().getString(R.string.cekkoneksidataanda));
-//                dialogLoading.dismiss();
+                apiConnect.closeDialogloading();
             }
         });
     }
