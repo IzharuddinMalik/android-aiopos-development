@@ -107,13 +107,6 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnTunai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Tunai" />
-
-                <Button
                     android:id="@+id/btnEDC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

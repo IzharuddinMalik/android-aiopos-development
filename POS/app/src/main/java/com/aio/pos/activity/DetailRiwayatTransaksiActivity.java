@@ -159,12 +159,25 @@ public class DetailRiwayatTransaksiActivity extends AppCompatActivity {
                                 JSONObject objKategori = array.getJSONObject(i);
                                 Log.i("Cek Isi",""+objKategori);
                                 outlet.setText(objKategori.getString("name_outlet"));
-                                metode.setText(objKategori.getString("nama_pay"));
+
+                                Log.i("Isi Nama Pay","Isinya ---->"+objKategori.getString("nama_pay").length());
+
+                                if(objKategori.getString("nama_pay").equals("null")){
+                                    metode.setText(" - ");
+                                }else{
+                                    metode.setText(objKategori.getString("nama_pay"));
+                                }
+
+                                if(objKategori.getString("nama_pelanggan").equals("null")){
+                                    pelanggan.setText(" - ");
+                                }else{
+                                    pelanggan.setText(objKategori.getString("nama_pelanggan"));
+                                }
                                 kodetrans.setText(objKategori.getString("kode_transHD"));
                                 tanggal.setText(objKategori.getString("tgl"));
                                 jam.setText(objKategori.getString("jam"));
                                 total.setText(objKategori.getString("total_transHD"));
-                                pelanggan.setText(objKategori.getString("nama_pelanggan"));
+
 //
 
                                 JSONArray arrHarga = objKategori.getJSONArray("harga");

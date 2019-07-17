@@ -67,7 +67,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                     for (Produk name : listProduk) {
 
                         if (name.getNamaProduk().toLowerCase().contains(charString) || name.getNamaProduk().toUpperCase().contains(charString)) {
-                            filteredList.add(pos, new Produk(name.getIdProduk(), name.getNamaProduk(),name.getIdVariant(),name.getNamaVariant(), name.getHargaProduk()));
+                            filteredList.add(pos, new Produk(name.getIdProduk(), name.getNamaProduk(),name.getIdVariant(),name.getNamaVariant(),name.getFotoProduk(), name.getHargaProduk()));
                             pos = pos+1;
                         }
                     }

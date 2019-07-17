@@ -99,6 +99,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         idcop = getIntent().getStringExtra("idcop");
         idoutlet = getIntent().getStringExtra("idoutlet");
         idctm = getIntent().getStringExtra("idctm");
+        Log.i("isi ctm","isi---->"+idctm);
         noinv_transHD = getIntent().getStringExtra("noinv_transHD");
         diskonBaru = getIntent().getStringExtra("diskon");
         statusBayar = getIntent().getStringExtra("status_transHD");
@@ -212,16 +213,20 @@ public class RingkasanOrderActivity extends AppCompatActivity {
 
         diskon=dialogView.findViewById(R.id.edtDialogFormNilaiDiskon);
         dialog.setPositiveButton("Simpan",(dialog1, which) -> {
-            diskonll.setVisibility(View.VISIBLE);
-            subtotal.setVisibility(View.VISIBLE);
+            if((diskon.getText()).equals("")){
 
-            disc=total*Integer.parseInt(diskon.getText().toString())/100;
-            sub=total;
-            total=sub-disc;
-            Subtotal.setText("Rp. "+sub);
-            Diskon.setText("- Rp. "+disc);
-            TOTAL.setText("Rp. "+(total));
-            dialog1.dismiss();
+            }else{
+                diskonll.setVisibility(View.VISIBLE);
+                subtotal.setVisibility(View.VISIBLE);
+
+                disc=total*Integer.parseInt(diskon.getText().toString())/100;
+                sub=total;
+                total=sub-disc;
+                Subtotal.setText("Rp. "+sub);
+                Diskon.setText("- Rp. "+disc);
+                TOTAL.setText("Rp. "+(total));
+                dialog1.dismiss();
+            }
         });
         dialog.show();
     }
