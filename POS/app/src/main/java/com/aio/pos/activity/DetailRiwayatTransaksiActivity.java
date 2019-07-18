@@ -78,7 +78,8 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
     private ProgressDialog mBluetoothConnectProgressDialog;
     private BluetoothSocket mBluetoothSocket;
     BluetoothDevice mBluetoothDevice;
-    PrinterCommands commands;
+    String namaProduk, hargaProduk, jumlahProduk, subTotalHarga, totalHarga, kodeTransHD, tglTransHD, jamTransHD, metodePembayaran;
+    JSONArray arrHarga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,10 +173,13 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
 
                                 Log.i("Isi Nama Pay","Isinya ---->"+objKategori.getString("nama_pay").length());
 
-                                if(objKategori.getString("nama_pay").equals("null")){
+                                metodePembayaran = objKategori.getString("nama_pay");
+
+                                if(metodePembayaran.equals("null")){
                                     metode.setText(" - ");
                                 }else{
-                                    metode.setText(objKategori.getString("nama_pay"));
+
+                                    metode.setText(metodePembayaran);
                                 }
 
                                 if(objKategori.getString("nama_pelanggan").equals("null")){
@@ -183,18 +187,26 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                                 }else{
                                     pelanggan.setText(objKategori.getString("nama_pelanggan"));
                                 }
-                                kodetrans.setText(objKategori.getString("kode_transHD"));
-                                tanggal.setText(objKategori.getString("tgl"));
-                                jam.setText(objKategori.getString("jam"));
-                                total.setText(objKategori.getString("total_transHD"));
+                                kodeTransHD = objKategori.getString("kode_transHD");
+                                tglTransHD = objKategori.getString("tgl");
+                                jamTransHD = objKategori.getString("jam");
+                                subTotalHarga = objKategori.getString("total_transHD");
 
-                                JSONArray arrHarga = objKategori.getJSONArray("harga");
+                                kodetrans.setText(kodeTransHD);
+                                tanggal.setText(tglTransHD);
+                                jam.setText(jamTransHD);
+                                total.setText(totalHarga);
+
+                                arrHarga = objKategori.getJSONArray("harga");
 //                                Log.i("Isi",""+arrHarga);
                                 Log.i("Isi",""+arrHarga.length());
 
                                 for(int j=0;j<arrHarga.length();j++){
                                     JSONObject objharga = arrHarga.getJSONObject(j);
-                                    listPesanan.add(j, new Produk("",""+objharga.getString("nama_produk"),"","",""+objharga.getString("harga_satuan"),"",""+objharga.getString("qty"),""));
+                                    namaProduk = objharga.getString("nama_produk");
+                                    hargaProduk = objharga.getString("harga_satuan");
+                                    jumlahProduk = objharga.getString("qty");
+                                    listPesanan.add(j, new Produk("",""+namaProduk,"","",""+hargaProduk,"",""+jumlahProduk,""));
                                 }
                                 adapter = new AdapterPesanan(DetailRiwayatTransaksiActivity.this, listPesanan);
                                 final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DetailRiwayatTransaksiActivity.this);
@@ -251,28 +263,14 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                     os.write(" --------------------------------------------- \n".getBytes());
 
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
-//                    os.write("\n".getBytes());
-//                    os.write(String.format("%1$5s %2$8s %3$8s %4$8s", "Item", "Qty", "Harga", "Total").getBytes());
-                    os.write("\n \n".getBytes());
-                    //os.write("--------------------------------".getBytes());
+
                     for (int k=0;k<listPesanan.size();k++){
-//                        os.write(String.format("%1$8s %2$8s %3$8s %4$8s", "Pizza Mozarrella", "2", "Rp. 30.000", "Rp. 60.000").getBytes());
-//                        os.write("\n".getBytes());
-                        os.write(String.format("%1$8s", "Pizza Mozarrella").getBytes());
-                        os.write("\n".getBytes());
-                        os.write(String.format("%1$12s %2$17s", "2 x 20000", "Rp. 40000").getBytes());
-                        os.write("\n".getBytes());
+                        os.write((namaProduk + "\n\n").getBytes());
+                        os.write((hargaProduk + "\n\n").getBytes());
+                        os.write((jumlahProduk + "\n\n").getBytes());
                     }
                     os.write(PrinterCommands.ESC_ENTER);
 
-//                    BILL = BILL + "\n" + String.format("%1$-10s %2$10s %3$11s %4$10s", "item-004", "50", "10", "500.00");
-//
-//                    BILL = BILL + "\n-------------------------";
-//                    BILL = BILL + "\n\n";
-//                    BILL = BILL + " Total Qty: " + "  " + " 85 " + "\n";
-//                    BILL = BILL + " Total Value: " + "  " + " 700.00 " + "\n";
-//                    BILL = BILL + "--------------------------------";
-                    //this is printer specific code you can comment === > Start
 
                     //setting height
                     int gs = 29;
