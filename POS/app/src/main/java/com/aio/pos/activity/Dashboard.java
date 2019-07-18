@@ -127,6 +127,7 @@ public class Dashboard extends AppCompatActivity
         HashMap<String, String> user = pref.getUserDetails();
         String nama = user.get(SharedPrefManager.NAMA_USER);
         tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
+
         idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
         idUser = user.get(SharedPrefManager.ID_USER);
         idTax = user.get(SharedPrefManager.ID_TAX);

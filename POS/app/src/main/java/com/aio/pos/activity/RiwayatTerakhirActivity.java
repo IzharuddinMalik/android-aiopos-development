@@ -14,6 +14,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
     private SharedPrefManager pref;
     private String iduser;
     private BaseApiInterface mApiInterface;
+    TextView tvDashboardNavNama;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,13 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
         toggle.syncState();
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorGray4d4d4d));
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        tvDashboardNavNama = header.findViewById(R.id.tvDashboardNamaAkun);
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String nama = user.get(SharedPrefManager.NAMA_USER);
+        tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
 
         recTransaksi = findViewById(R.id.rvRiwayatTransaksi);
         JumlahTransaki=findViewById(R.id.tvJumlahRiwayatTransaksi);
