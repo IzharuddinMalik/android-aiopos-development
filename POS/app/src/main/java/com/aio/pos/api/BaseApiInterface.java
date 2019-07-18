@@ -13,68 +13,75 @@ import retrofit2.http.POST;
 public interface BaseApiInterface {
 
     @FormUrlEncoded
-    @POST("api_pos/login.php")
+    @POST("Master/login")
     Call<ResponseBody> postLogin(@FieldMap HashMap<String, String> params, @Field("email_user") String emailUser,
                                  @Field("password_user") String passwordUser);
 
+    @POST("Master/wilayah_provinsi")
+    Call<ResponseBody> getProvinsi();
+
     @FormUrlEncoded
-    @POST("api_pos/pelanggan_get_list.php")
+    @POST("Master/wilayah_kab_kec")
+    Call<ResponseBody> getKecamatan(@FieldMap HashMap<String, String> params,
+                                    @Field("id") String id, @Field("pilih") String pilih);
+
+    @FormUrlEncoded
+    @POST("Master/get_produk")
+    Call<ResponseBody> getProduk(@FieldMap HashMap<String, String> params,
+                                 @Field("idbusiness") String idBusiness, @Field("idtb") String idTB, @Field("idoutlet") String idOutlet);
+
+    @FormUrlEncoded
+    @POST("Master/sales_type_get_list")
+    Call<ResponseBody> getSalesType(@FieldMap HashMap<String, String> params,
+                                    @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
+
+    @FormUrlEncoded
+    @POST("Master/payment_setup_list")
+    Call<ResponseBody> getEDC(@FieldMap HashMap<String, String> params,
+                              @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
+
+    @FormUrlEncoded
+    @POST("Pelanggan/get_list")
     Call<ResponseBody> listPelanggan(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness,
                                      @Field("idoutlet") String idOutlet);
 
     @FormUrlEncoded
-    @POST("api_pos/pelanggan_get_detail.php")
+    @POST("Pelanggan/get_detail")
     Call<ResponseBody> detailPelanggan(@FieldMap HashMap<String, String> params, @Field("idctm") String idPelanggan);
 
     @FormUrlEncoded
-    @POST("api_pos/pelanggan_tambah.php")
+    @POST("Pelanggan/delete")
+    Call<ResponseBody> hapusPelanggan(@FieldMap HashMap<String, String> params, @Field("idctm") String idPelanggan);
+
+    @FormUrlEncoded
+    @POST("Pelanggan/tambah")
     Call<ResponseBody> insertPelanggan(@FieldMap HashMap<String, String> params, @Field("idbusiness") String idBusiness,
                                        @Field("idoutlet") String idOutlet, @Field("province_id") String province_id,
                                        @Field("regencies_id") String regencies_id, @Field("district_id") String district_id,
                                        @Field("nama_pelanggan") String nama_pelanggan, @Field("email_pelanggan") String email_pelanggan,
                                        @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
     @FormUrlEncoded
-    @POST("api_pos/pelanggan_update.php")
+    @POST("Pelanggan/update")
     Call<ResponseBody> updatePelanggan(@FieldMap HashMap<String, String> params, @Field("idctm") String idPelanggan,
                                        @Field("province_id") String province_id,
                                        @Field("regencies_id") String regencies_id, @Field("district_id") String district_id,
                                        @Field("nama_pelanggan") String nama_pelanggan, @Field("email_pelanggan") String email_pelanggan,
                                        @Field("telp_pelanggan") String telp_pelanggan, @Field("telepon_pelanggan2") String telepon_pelanggan2);
 
-    @GET("api_pos/wilayah_get_provinsi.php")
-    Call<ResponseBody> getProvinsi();
-
     @FormUrlEncoded
-    @POST("api_pos/wilayah_get_kab_kec.php")
-    Call<ResponseBody> getKecamatan(@FieldMap HashMap<String, String> params,
-                                    @Field("id") String id, @Field("pilih") String pilih);
-
-    @FormUrlEncoded
-    @POST("api_pos/get_produk.php")
-    Call<ResponseBody> getProduk(@FieldMap HashMap<String, String> params,
-                                 @Field("idbusiness") String idBusiness, @Field("idtb") String idTB, @Field("idoutlet") String idOutlet);
-
-    @FormUrlEncoded
-    @POST("api_pos/sales_type_get_list.php")
-    Call<ResponseBody> getSalesType(@FieldMap HashMap<String, String> params,
-                                    @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
-
-    @FormUrlEncoded
-    @POST("api_pos/payment_setup_list.php")
-    Call<ResponseBody> getEDC(@FieldMap HashMap<String, String> params,
-                                    @Field("idbusiness") String idBusiness, @Field("idoutlet") String idOutlet);
-
-    @FormUrlEncoded
-    @POST("api_pos/transaksi_riwayat.php")
+    @POST("Transaksi/riwayat")
     Call<ResponseBody> getListRiwayat(@FieldMap HashMap<String, String> params, @Field("iduser") String idUser);
 
     @FormUrlEncoded
-    @POST("api_pos/transaksi_detail_riwayat.php")
+    @POST("Transaksi/detail")
     Call<ResponseBody> getdetailRiwayat(@FieldMap HashMap<String, String> params, @Field("idtransHD") String idtrans);
 
+    @FormUrlEncoded
+    @POST("Transaksi/refund")
+    Call<ResponseBody> refundTransaksi(@FieldMap HashMap<String, String> params, @Field("idtransHD") String idtrans, @Field("ket_refund") String ketRefund);
 
     @FormUrlEncoded
-    @POST("api_pos/transaksi.php")
+    @POST("Transaksi")
     Call<ResponseBody> sendTransaksi(@Field("idtb") String idtb, @Field("idbusiness") String idBusiness, @Field("idcop") String idCop, @Field("idoutlet") String idOutlet, @Field("idctm") String idCtm,
                                      @Field("noinv_transHD") String noInvTransHD, @Field("diskon") String diskon, @Field("status_transHD") String statusTransHD, @Field("produklist") String produkList,
                                      @Field("iduser") String idUser, @Field("idpay") String idPay, @Field("idsaltype") String idSaltype, @Field("idrefund") String idRefund, @Field("type_trans") String typeTrans,

@@ -25,7 +25,7 @@
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_lens_blue_24dp" />
+                    android:src="@drawable/ic_lens_blue_24dp" />
 
                 <TextView
                     android:id="@+id/tvJumlahDetailOrder"
