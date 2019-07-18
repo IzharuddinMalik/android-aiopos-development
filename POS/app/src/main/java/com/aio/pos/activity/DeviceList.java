@@ -59,22 +59,22 @@ public class DeviceList extends AppCompatActivity {
     }
 
     private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View mView, int position, long mLong) {
+        public void onItemClick(AdapterView<?> mAdapterView, View mView, int mPosition, long mLong) {
 
-            try{
+            try {
 
                 mBluetoothAdapter.cancelDiscovery();
                 String mDeviceInfo = ((TextView) mView).getText().toString();
                 String mDeviceAddress = mDeviceInfo.substring(mDeviceInfo.length() - 17);
-                Log.v(TAG, "Device_Address" + mDeviceAddress);
+                Log.v(TAG, "Device_Address " + mDeviceAddress);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("DeviceAddress", mDeviceAddress);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("DeviceAddress", mDeviceAddress);
                 Intent mBackIntent = new Intent();
+                mBackIntent.putExtras(mBundle);
                 setResult(Activity.RESULT_OK, mBackIntent);
                 finish();
-            } catch (Exception ex){
+            } catch (Exception ex) {
 
             }
         }
