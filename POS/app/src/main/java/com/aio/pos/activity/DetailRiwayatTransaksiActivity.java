@@ -188,8 +188,6 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                                 jam.setText(objKategori.getString("jam"));
                                 total.setText(objKategori.getString("total_transHD"));
 
-//
-
                                 JSONArray arrHarga = objKategori.getJSONArray("harga");
 //                                Log.i("Isi",""+arrHarga);
                                 Log.i("Isi",""+arrHarga.length());
@@ -253,10 +251,18 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                     os.write(" --------------------------------------------- \n".getBytes());
 
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
-                    os.write("\n".getBytes());
-                    os.write(String.format("%1$5s %2$8s %3$8s %4$8s", "Item", "Qty", "Harga", "Total").getBytes());
-                    os.write("\n".getBytes());
-                    os.write("--------------------------------".getBytes());
+//                    os.write("\n".getBytes());
+//                    os.write(String.format("%1$5s %2$8s %3$8s %4$8s", "Item", "Qty", "Harga", "Total").getBytes());
+                    os.write("\n \n".getBytes());
+                    //os.write("--------------------------------".getBytes());
+                    for (int k=0;k<listPesanan.size();k++){
+//                        os.write(String.format("%1$8s %2$8s %3$8s %4$8s", "Pizza Mozarrella", "2", "Rp. 30.000", "Rp. 60.000").getBytes());
+//                        os.write("\n".getBytes());
+                        os.write(String.format("%1$8s", "Pizza Mozarrella").getBytes());
+                        os.write("\n".getBytes());
+                        os.write(String.format("%1$12s %2$17s", "2 x 20000", "Rp. 40000").getBytes());
+                        os.write("\n".getBytes());
+                    }
                     os.write(PrinterCommands.ESC_ENTER);
 
 //                    BILL = BILL + "\n" + String.format("%1$-10s %2$10s %3$11s %4$10s", "item-004", "50", "10", "500.00");
