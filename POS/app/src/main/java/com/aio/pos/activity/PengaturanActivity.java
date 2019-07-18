@@ -11,14 +11,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aio.pos.R;
 import com.aio.pos.api.SharedPrefManager;
+
+import java.util.HashMap;
 
 public class PengaturanActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -26,6 +31,8 @@ public class PengaturanActivity extends AppCompatActivity
     LinearLayout llProfilAkun,llPrinter,llBantuan;
     Button logout;
     SharedPrefManager pref;
+    TextView tvDashboardNavNama;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,13 @@ public class PengaturanActivity extends AppCompatActivity
         toggle.syncState();
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorGray4d4d4d));
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        tvDashboardNavNama = header.findViewById(R.id.tvDashboardNamaAkun);
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String nama = user.get(SharedPrefManager.NAMA_USER);
+        tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
 
         llProfilAkun=findViewById(R.id.llProfilAkun);
         llPrinter=findViewById(R.id.llPrinter);
@@ -88,7 +102,8 @@ public class PengaturanActivity extends AppCompatActivity
             startActivity(new Intent(this, Dashboard.class));
             finish();
         } else if (id == R.id.nav_transhistory) {
-
+            startActivity(new Intent(this, RiwayatTerakhirActivity.class));
+            finish();
         } else if (id == R.id.nav_pengaturan) {
             startActivity(new Intent(this, PengaturanActivity.class));
             finish();
