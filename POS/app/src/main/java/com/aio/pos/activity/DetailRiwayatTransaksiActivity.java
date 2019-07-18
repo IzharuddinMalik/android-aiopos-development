@@ -252,7 +252,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
 
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
                     os.write("\n".getBytes());
-                    os.write(String.format("%1$-6s %2$6s %3$6s %4$6s", "Item", "Qty", "Harga", "Total").getBytes());
+                    os.write(String.format("%1$5s %2$8s %3$8s %4$8s", "Item", "Qty", "Harga", "Total").getBytes());
                     os.write("\n".getBytes());
                     os.write("--------------------------------".getBytes());
                     os.write(PrinterCommands.ESC_ENTER);
