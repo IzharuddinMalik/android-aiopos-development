@@ -78,7 +78,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
     private ProgressDialog mBluetoothConnectProgressDialog;
     private BluetoothSocket mBluetoothSocket;
     BluetoothDevice mBluetoothDevice;
-    String namaProduk, hargaProduk, jumlahProduk, subTotalHarga, totalHarga, kodeTransHD, tglTransHD, jamTransHD, metodePembayaran;
+    String namaProduk, hargaProduk, jumlahProduk, subTotalHarga, totalHarga, kodeTransHD, tglTransHD, jamTransHD, metodePembayaran, namaPelanggan;
     JSONArray arrHarga;
 
     @Override
@@ -182,10 +182,11 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                                     metode.setText(metodePembayaran);
                                 }
 
-                                if(objKategori.getString("nama_pelanggan").equals("null")){
+                                namaPelanggan = objKategori.getString("nama_pelanggan");
+                                if(namaPelanggan.equals("null")){
                                     pelanggan.setText(" - ");
                                 }else{
-                                    pelanggan.setText(objKategori.getString("nama_pelanggan"));
+                                    pelanggan.setText(namaPelanggan);
                                 }
                                 kodeTransHD = objKategori.getString("kode_transHD");
                                 tglTransHD = objKategori.getString("tgl");
@@ -260,14 +261,26 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                     os.write((user.get(SharedPrefManager.NAMA_OUTLET) + "\n\n").getBytes());
                     os.write((user.get(SharedPrefManager.ALAMAT_OUTLET) + "\n\n").getBytes());
                     os.write((user.get(SharedPrefManager.NAMA_USER) + "\n\n").getBytes());
-                    os.write(" --------------------------- \n".getBytes());
+                    os.write(" ----------------------------- \n\n".getBytes());
 
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
+                    if (namaPelanggan.equals("null")){
+                        os.write(("Nama Pelanggan : " + " - " + "\n").getBytes());
+                    } else {
+                        os.write(("Nama Pelanggan : " + namaPelanggan + "\n").getBytes());
+                    }
                     os.write(("Kode Transaksi : " + kodeTransHD +"\n").getBytes());
-                    os.write(("Tanggal Transaksi : " + tglTransHD + " " + jamTransHD + "\n").getBytes());
+                    if (metodePembayaran.equals("null")){
+                        os.write(("Metode Pembayaran : " + " - " + "\n").getBytes());
+                    }else {
+                        os.write(("Metode Pembayaran : " + metodePembayaran + "\n").getBytes());
+                    }
+                    os.write(("Tanggal Transaksi : " + tglTransHD + "\n").getBytes());
+                    os.write(("Jam Transaksi : " + jamTransHD + "\n\n").getBytes());
                     os.write(PrinterCommands.ESC_ALIGN_CENTER);
-                    os.write(" --------------------------- \n".getBytes());
+                    os.write(" ----------------------------- \n\n".getBytes());
 
+                    os.write(PrinterCommands.ESC_ALIGN_LEFT);
                     int subtotalItem = Integer.parseInt(hargaProduk) * Integer.parseInt(jumlahProduk);
                     for (int k=0;k<listPesanan.size();k++){
                         os.write((listPesanan.get(k).getNamaProduk() + "\n").getBytes());
@@ -275,13 +288,17 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                     }
 
                     os.write(PrinterCommands.ESC_ALIGN_CENTER);
-                    os.write(" --------------------------- \n\n".getBytes());
+                    os.write(" ----------------------------- \n\n".getBytes());
 
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
-                    os.write(("Sub Total : " + subTotalHarga + "\n").getBytes());
-                    os.write(("Total : " + subTotalHarga + "\n").getBytes());
-                    os.write(PrinterCommands.ESC_ENTER);
+                    os.write(("Total : " + subTotalHarga + "\n\n").getBytes());
 
+                    os.write(PrinterCommands.ESC_ALIGN_CENTER);
+                    os.write(("Terima Kasih Atas Kunjungannya" + "\n").getBytes());
+                    os.write(("POS by " + "\n").getBytes());
+                    os.write(("aiopos.id" + "\n\n").getBytes());
+
+                    os.write(PrinterCommands.ESC_ENTER);
 
                     //setting height
                     int gs = 29;
