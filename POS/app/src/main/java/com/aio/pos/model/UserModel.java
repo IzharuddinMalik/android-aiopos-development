@@ -41,6 +41,10 @@ public class UserModel implements Serializable {
     @Expose
     private String statusUser;
 
+    @SerializedName("img_business")
+    @Expose
+    private String imgBusiness;
+
     @SerializedName("idtb")
     @Expose
     private String idTb;
@@ -74,7 +78,7 @@ public class UserModel implements Serializable {
     private String besaranTax;
 
     public UserModel(String idUser, String namaUser, String telpUser, String emailUser, String roleUser, String idBusiness, String idOutlet,
-                     String statusUser, String idTb,String namaBisnis, String alamatBisnis, String namaOutlet, String alamatOutlet, String idTax, String namaTax, String besaranTax){
+                     String statusUser, String imgBusiness, String idTb,String namaBisnis, String alamatBisnis, String namaOutlet, String alamatOutlet, String idTax, String namaTax, String besaranTax){
         this.idUser = idUser;
         this.namaUser = namaUser;
         this.telpUser = telpUser;
@@ -83,6 +87,7 @@ public class UserModel implements Serializable {
         this.idBusiness = idBusiness;
         this.idOutlet = idOutlet;
         this.statusUser = statusUser;
+        this.imgBusiness = imgBusiness;
         this.idTb = idTb;
         this.namaBisnis = namaBisnis;
         this.alamatBisnis = alamatBisnis;
@@ -123,6 +128,10 @@ public class UserModel implements Serializable {
 
     public void setStatusUser(String statusUser) {
         this.statusUser = statusUser;
+    }
+
+    public void setImgBusiness(String imgBusiness) {
+        this.imgBusiness = imgBusiness;
     }
 
     public void setIdTb(String idTb) {
@@ -187,6 +196,10 @@ public class UserModel implements Serializable {
 
     public String getStatusUser() {
         return statusUser;
+    }
+
+    public String getImgBusiness() {
+        return imgBusiness;
     }
 
     public String getIdTb() {

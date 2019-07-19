@@ -134,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                     objUser.getString("idbusiness"),
                                     objUser.getString("idoutlet"),
                                     objUser.getString("status_user"),
+                                    objUser.getString("img_business"),
                                     objUser.getString("idtb"),
                                     objUser.getString("nama_business"),
                                     objUser.getString("alamat_business"),

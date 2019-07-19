@@ -260,15 +260,26 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                     os.write((user.get(SharedPrefManager.NAMA_OUTLET) + "\n\n").getBytes());
                     os.write((user.get(SharedPrefManager.ALAMAT_OUTLET) + "\n\n").getBytes());
                     os.write((user.get(SharedPrefManager.NAMA_USER) + "\n\n").getBytes());
-                    os.write(" --------------------------------------------- \n".getBytes());
+                    os.write(" --------------------------- \n".getBytes());
 
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
+                    os.write(("Kode Transaksi : " + kodeTransHD +"\n").getBytes());
+                    os.write(("Tanggal Transaksi : " + tglTransHD + " " + jamTransHD + "\n").getBytes());
+                    os.write(PrinterCommands.ESC_ALIGN_CENTER);
+                    os.write(" --------------------------- \n".getBytes());
 
+                    int subtotalItem = Integer.parseInt(hargaProduk) * Integer.parseInt(jumlahProduk);
                     for (int k=0;k<listPesanan.size();k++){
-                        os.write((namaProduk + "\n\n").getBytes());
-                        os.write((hargaProduk + "\n\n").getBytes());
-                        os.write((jumlahProduk + "\n\n").getBytes());
+                        os.write((listPesanan.get(k).getNamaProduk() + "\n").getBytes());
+                        os.write((listPesanan.get(k).getHargaProduk() + " x " + listPesanan.get(k).getJumlahProduk() + " = " + subtotalItem + "\n\n").getBytes());
                     }
+
+                    os.write(PrinterCommands.ESC_ALIGN_CENTER);
+                    os.write(" --------------------------- \n\n".getBytes());
+
+                    os.write(PrinterCommands.ESC_ALIGN_LEFT);
+                    os.write(("Sub Total : " + subTotalHarga + "\n").getBytes());
+                    os.write(("Total : " + subTotalHarga + "\n").getBytes());
                     os.write(PrinterCommands.ESC_ENTER);
 
 
