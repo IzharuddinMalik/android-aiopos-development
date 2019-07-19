@@ -79,7 +79,7 @@
             android:textSize="@dimen/_14sdp" />
 
         <TextView
-            android:id="@+id/textView26"
+            android:id="@+id/tvuangkembali"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -139,6 +139,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnConnectPrint"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@color/colorGreen4caf50"
+        android:text="Selesai"
+        android:textColor="@color/colorWhiteffffff" />
 
     <Button
         android:id="@+id/btnSelesaiPembayaran"
