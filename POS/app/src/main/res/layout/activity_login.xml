@@ -58,6 +58,17 @@
         android:textColor="@color/colorWhiteffffff"
         android:layout_marginRight="@dimen/_45sdp"
         android:layout_marginLeft="@dimen/_45sdp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRegister"
+        android:text="Daftar"
+        android:background="@color/colorBlueBasic"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/colorWhiteffffff"
+        android:layout_marginLeft="@dimen/_45sdp"
+        android:layout_marginRight="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_5sdp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
