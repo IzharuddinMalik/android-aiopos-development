@@ -153,7 +153,7 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width <= 720 && height <= 1280){
+        if ((width % 9)==0 && (height % 16)==0){
 
 //            pas.setEnabled(false);
 //            limapuluh.setEnabled(false);

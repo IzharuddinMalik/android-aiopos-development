@@ -26,10 +26,10 @@ public class ShiftSaatIniActivity extends AppCompatActivity {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width >= 1920 && height >= 1200){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
+        if ((width % 9)==0 && (height % 16)==0){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
     }
 

@@ -72,7 +72,7 @@ public class DashboardFragment extends Fragment {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if (width >= 1920 && height >= 1200){
+        if ((width % 9)==0 && (height % 16)==0){
             srcProdukList = view.findViewById(R.id.svDashboardNamaProduk);
             showrecycler();
         }else{

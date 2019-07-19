@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,10 @@ import com.aio.pos.api.APIUrl;
 import com.aio.pos.api.BaseApiInterface;
 import com.aio.pos.api.SharedPrefManager;
 import com.aio.pos.model.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -96,6 +102,17 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
         dialogLoading = new Dialog(LoginActivity.this);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()){
+                        return;
+                    }
+
+                    String token = Objects.requireNonNull(task.getResult()).getId();
+                    String msg = getString(R.string.fcm_token, token);
+                    Log.d("TAG", msg);
+                });
 
     }
 

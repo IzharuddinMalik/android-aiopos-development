@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvPenjelasanLupaKataSandi2"
-        android:text="alamat email yang terdaftar di UltraPOS dan kami akan"
+        android:text="alamat email yang terdaftar di AIOPOS dan kami akan"
         android:textSize="@dimen/_10ssp"
         android:textColor="@android:color/darker_gray" />
     <TextView
@@ -88,4 +88,9 @@
             android:textColor="@android:color/darker_gray"
             android:textStyle="bold"/>
     </LinearLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="gone"/>
 </LinearLayout>
