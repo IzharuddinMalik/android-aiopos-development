@@ -64,9 +64,9 @@ public class PembayaranActivity extends AppCompatActivity {
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
     Button konfirmasibayar,pas,limapuluh,seratus,duaratus,edc,lainnya;
-    String totalbayar, idtb,  idcop,  idctm, noinv_transHD, diskon, statusBayar, idUser,idtunai, idSaltype, totalTransHD;
+    String totalbayar, idtb,  idcop,  idctm, noinv_transHD, diskon, statusBayar, idUser, idSaltype, totalTransHD;
     APIConnect mApiConnect;
-    String[] produkList;
+    String kodetranshd,idtunai="";
 
     List<String> dataIdProduk = new ArrayList<>();
     List<String> dataNamaProduk = new ArrayList<>();
@@ -78,6 +78,7 @@ public class PembayaranActivity extends AppCompatActivity {
     private ArrayList<PostTransaksiListModel> postTransaksiListModels;
     private String typeTrans;
     private String idTax;
+//    Intent intent = new Intent(this, PembayaranSuksesActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,25 +188,26 @@ public class PembayaranActivity extends AppCompatActivity {
                 Log.i("Sisa 200",""+totalKembalian);
             });
             konfirmasibayar.setOnClickListener(v -> {
-                Intent intent = new Intent(this, PembayaranSuksesActivity.class);
-                if(jumlahLain.getText().toString().equals("0") && !idtunai.equals("0")){
-                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
+//                Intent intent = new Intent(this, PembayaranSuksesActivity.class);
+                Log.i("Bukan Jml lain","isi"+idtunai);
+                if(jumlahLain.getText().toString().equals("0") && idtunai.equals("")){
+//                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Bukan Jml lain",""+totalKembalian);
                     bayarEDC();
-                }else if(idtunai.equals("")){
+                }else if(!jumlahLain.getText().toString().equals("0")){
                     totalKembalian=Integer.parseInt(jumlahLain.getText().toString())-Integer.parseInt(totalbayar);
                     idtunai="0";
-                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
+//                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
                     bayarLainnya();
                 }else{
                     idtunai="0";
-                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
+//                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
                     bayarLainnya();
                 }
 
-                startActivity(intent);
+//                startActivity(intent);
             });
             edc.setOnClickListener(v -> {
                 edc_list();
@@ -222,19 +224,19 @@ public class PembayaranActivity extends AppCompatActivity {
             total.setText("Rp. " + totalTransHD);
 
             konfirmasibayar.setOnClickListener(v -> {
-                Intent intent = new Intent(this, PembayaranSuksesActivity.class);
+//                Intent intent = new Intent(this, PembayaranSuksesActivity.class);
                 if(jumlahLain.getText().toString().equals("0")){
-                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
+//                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Bukan Jml lain",""+totalKembalian);
                     bayarEDC();
                 }else{
                     totalKembalian=Integer.parseInt(jumlahLain.getText().toString())-Integer.parseInt(totalTransHD);
-                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
+//                    intent.putExtra("kembalian", String.valueOf(totalKembalian));
                     Log.i("Jml Lain",""+totalKembalian);
                     bayarLainnya();
                 }
 
-                startActivity(intent);
+//                startActivity(intent);
             });
 
             pas.setOnClickListener(v -> {
@@ -421,7 +423,23 @@ public class PembayaranActivity extends AppCompatActivity {
                         jsonResult.getString("success");
                         jsonResult.getString("message");
 
+                        JSONArray array = jsonResult.getJSONArray("info");
+                        Log.i("data ID","isi="+array);
+
+                        JSONObject objKategori = array.getJSONObject(0);
+                        kodetranshd=objKategori.getString("idtransHD");
+                        Log.i("DAta ID","isi="+objKategori.getString("idtransHD"));
+//                        for (int i = 0; i<array.length(); i++){
+//                            JSONObject objKategori = array.getJSONObject(i);
+//                            kodetranshd=objKategori.getString("kode_transHD");
+//                            Log.i("DAta ID","isi="+objKategori.getString("kode_transHD"));
+//                        }
+
                         Toast.makeText(PembayaranActivity.this, " " + jsonResult.getString("message"), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PembayaranActivity.this, PembayaranSuksesActivity.class);
+                        intent.putExtra("hasil", kodetranshd);
+                        intent.putExtra("kembalian", String.valueOf(totalKembalian));
+                        PembayaranActivity.this.startActivity(intent);
                     } catch (JSONException e){
                         e.printStackTrace();
                     } catch (IOException e){
@@ -492,9 +510,19 @@ public class PembayaranActivity extends AppCompatActivity {
 
                         JSONObject jsonResult = new JSONObject(result);
                         jsonResult.getString("success");
+                        Log.i("ID Trans","isi --> "+noinv_transHD);
                         jsonResult.getString("message");
 
+                        JSONArray array = jsonResult.getJSONArray("info");
+                        JSONObject objKategori = array.getJSONObject(0);
+                        kodetranshd=objKategori.getString("idtransHD");
+                        Log.i("DAta ID","isi="+objKategori.getString("idtransHD"));
+
                         Toast.makeText(PembayaranActivity.this, " " + jsonResult.getString("message"), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PembayaranActivity.this, PembayaranSuksesActivity.class);
+                        intent.putExtra("hasil", kodetranshd);
+                        intent.putExtra("kembalian", String.valueOf(totalKembalian));
+                        PembayaranActivity.this.startActivity(intent);
                     } catch (JSONException e){
                         e.printStackTrace();
                     } catch (IOException e){

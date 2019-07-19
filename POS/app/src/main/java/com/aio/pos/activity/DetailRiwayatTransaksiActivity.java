@@ -80,6 +80,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
     BluetoothDevice mBluetoothDevice;
     String namaProduk, hargaProduk, jumlahProduk, subTotalHarga, totalHarga, kodeTransHD, tglTransHD, jamTransHD, metodePembayaran, namaPelanggan;
     JSONArray arrHarga;
+    String namaBT="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +100,29 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
 
 
         cetak=findViewById(R.id.btnCetakRiwayat);
+        if(namaBT==""){
+            cetak.setText("Connect Printer & Print");
+        }
 
         cetak.setOnClickListener(v -> {
-            dialogPrint();
+//            dialogPrint();
+            if(cetak.getText()=="Connect Printer & Print"){
+                mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (mBluetoothAdapter == null){
+                    Toast.makeText(this, "Message1", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!mBluetoothAdapter.isEnabled()){
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    } else {
+                        ListPairedDevices();
+                        Intent connectIntent = new Intent(DetailRiwayatTransaksiActivity.this, DeviceList.class);
+                        startActivityForResult(connectIntent, REQUEST_CONNECT_DEVICE);
+                    }
+                }
+            }else{
+                printData();
+            }
         });
     }
 
@@ -109,39 +130,39 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
         startActivity(new Intent(this, RiwayatTerakhirActivity.class));
     }
 
-    public void dialogPrint(){
-        dialog = new AlertDialog.Builder(this);
-        inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.dialog_form_cetak,null);
-        dialog.setView(dialogView);
-        dialog.setCancelable(true);
-        konekBT = dialogView.findViewById(R.id.tvYaPrint);
-        printBT = dialogView.findViewById(R.id.btnPrintData);
-
-        konekBT.setOnClickListener(view -> {
-            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            if (mBluetoothAdapter == null){
-                Toast.makeText(this, "Message1", Toast.LENGTH_SHORT).show();
-            } else {
-                if (!mBluetoothAdapter.isEnabled()){
-                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                } else {
-                    ListPairedDevices();
-                    Intent connectIntent = new Intent(DetailRiwayatTransaksiActivity.this, DeviceList.class);
-                    startActivityForResult(connectIntent, REQUEST_CONNECT_DEVICE);
-                }
-            }
-        });
-
-
-        printBT.setOnClickListener(view -> {
-
-            printData();
-        });
-
-        dialog.show();
-    }
+//    public void dialogPrint(){
+//        dialog = new AlertDialog.Builder(this);
+//        inflater = getLayoutInflater();
+//        dialogView = inflater.inflate(R.layout.dialog_form_cetak,null);
+//        dialog.setView(dialogView);
+//        dialog.setCancelable(true);
+//        konekBT = dialogView.findViewById(R.id.tvYaPrint);
+//        printBT = dialogView.findViewById(R.id.btnPrintData);
+//
+//        konekBT.setOnClickListener(view -> {
+//            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//            if (mBluetoothAdapter == null){
+//                Toast.makeText(this, "Message1", Toast.LENGTH_SHORT).show();
+//            } else {
+//                if (!mBluetoothAdapter.isEnabled()){
+//                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//                } else {
+//                    ListPairedDevices();
+//                    Intent connectIntent = new Intent(DetailRiwayatTransaksiActivity.this, DeviceList.class);
+//                    startActivityForResult(connectIntent, REQUEST_CONNECT_DEVICE);
+//                }
+//            }
+//        });
+//
+//
+//        printBT.setOnClickListener(view -> {
+//
+//            printData();
+//        });
+//
+//        dialog.show();
+//    }
 
     public void getAlldetailriwayat(){
         idtrans = getIntent().getStringExtra("idtrans");
@@ -196,7 +217,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                                 kodetrans.setText(kodeTransHD);
                                 tanggal.setText(tglTransHD);
                                 jam.setText(jamTransHD);
-                                total.setText(totalHarga);
+                                total.setText(subTotalHarga);
 
                                 arrHarga = objKategori.getJSONArray("harga");
 //                                Log.i("Isi",""+arrHarga);
@@ -244,6 +265,20 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        try{
+            if (mBluetoothSocket != null){
+                mBluetoothSocket.close();
+            }
+        } catch (Exception e){
+            Log.e("TAG", "Exe", e);
+        }
+
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     public void printData(){
@@ -334,19 +369,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
         }
     }
 
-    @Override
-    public void onBackPressed(){
-        try{
-            if (mBluetoothSocket != null){
-                mBluetoothSocket.close();
-            }
-        } catch (Exception e){
-            Log.e("TAG", "Exe", e);
-        }
 
-        setResult(RESULT_CANCELED);
-        finish();
-    }
 
     public void onActivityResult(int mRequestCode, int mResultCode, Intent mDataIntent){
         super.onActivityResult(mRequestCode, mResultCode, mDataIntent);
@@ -403,7 +426,10 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
         @Override
         public void handleMessage(Message msg){
             mBluetoothConnectProgressDialog.dismiss();
-            Toast.makeText(DetailRiwayatTransaksiActivity.this, "DeviceConnected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailRiwayatTransaksiActivity.this, "Device Connected", Toast.LENGTH_SHORT).show();
+            namaBT=mBluetoothDevice.getName();
+            cetak.setText("Print Transaksi Lagi");
+            printData();
         }
     };
 
@@ -417,12 +443,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
         return b[3];
     }
 
-    public byte[] sel(int val){
-        ByteBuffer buffer = ByteBuffer.allocate(2);
-        buffer.putInt(val);
-        buffer.flip();
-        return buffer.array();
-    }
+
 
     private void ListPairedDevices(){
         Set<BluetoothDevice> mPairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -433,4 +454,10 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
         }
     }
 
+    public byte[] sel(int val){
+        ByteBuffer buffer = ByteBuffer.allocate(2);
+        buffer.putInt(val);
+        buffer.flip();
+        return buffer.array();
+    }
 }
