@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
+import android.net.Uri;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnLogin;
+    Button btnLogin, btnDaftar;
     TextInputEditText tietEmail, tietPassword;
     TextView tvLupaKataSandi;
     APIConnect apiConnect;
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         tietEmail = findViewById(R.id.tietEmailLogin);
         tietPassword = findViewById(R.id.tietPasswordLogin);
         tvLupaKataSandi = findViewById(R.id.tvLupaKataSandi);
+        btnDaftar = findViewById(R.id.btnRegister);
 
         tvLupaKataSandi.setOnClickListener(v -> {
             startActivity(new Intent(this, LupaKataSandiActivity.class));
@@ -59,6 +61,12 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> {
             loginRequest();
+        });
+
+        btnDaftar.setOnClickListener(view -> {
+            Uri uri = Uri.parse("https://backoffice.aiopos.id/home/register");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
 
         View toastsucces = getLayoutInflater().inflate(R.layout.toast_success, null);
