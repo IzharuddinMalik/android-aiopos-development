@@ -1,0 +1,71 @@
+package com.aiopos.apps.activity;
+
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Point;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Display;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.aiopos.apps.R;
+
+public class LupaKataSandiActivity extends AppCompatActivity {
+
+    TextView tvMasukLogin;
+    Button btnLupaPassword;
+    EditText edtEmailForget;
+    private ProgressBar progressBar;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_lupa_kata_sandi);
+
+        tvMasukLogin = findViewById(R.id.tvMasukLupaKataSandi);
+
+        tvMasukLogin.setOnClickListener(v -> {
+            startActivity(new Intent(this, LoginActivity.class));
+        });
+
+        btnLupaPassword = findViewById(R.id.btnKirimLupaPassword);
+
+        btnLupaPassword.setOnClickListener(view -> {
+            sendEmailPassword();
+        });
+
+        edtEmailForget = findViewById(R.id.edtEmailYangTerdaftar);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        Log.d("Width", "" + width);
+        Log.d("height", "" + height);
+
+        if (getResources().getConfiguration().smallestScreenWidthDp == 360){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    public void sendEmailPassword(){
+        String email = edtEmailForget.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email)){
+            edtEmailForget.setError("Masukkan Email Anda");
+            edtEmailForget.requestFocus();
+        }
+
+    }
+}

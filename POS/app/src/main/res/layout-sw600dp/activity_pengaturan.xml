@@ -5,7 +5,7 @@
     android:id="@+id/drawer_pengaturan_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PengaturanActivity"
+    tools:context="com.aiopos.apps.activity.PengaturanActivity"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 

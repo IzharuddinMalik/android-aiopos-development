@@ -5,7 +5,7 @@
     android:id="@+id/drawer_shift_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ShiftActivity"
+    tools:context="com.aiopos.apps.activity.ShiftActivity"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 

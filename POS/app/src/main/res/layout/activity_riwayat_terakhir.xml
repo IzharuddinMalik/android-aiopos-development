@@ -5,7 +5,7 @@
     android:id="@+id/drawer_riwayat_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.RiwayatTerakhirActivity">
+    tools:context="com.aiopos.apps.activity.RiwayatTerakhirActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

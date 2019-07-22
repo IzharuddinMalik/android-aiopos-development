@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aio.pos">
+    package="com.aiopos.apps">
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,79 +16,73 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
 
-        <service android:name=".util.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
-        <activity android:name=".activity.DeviceList"></activity>
-        <activity android:name=".activity.DetailRiwayatTransaksiActivity" />
-        <activity android:name=".activity.RiwayatTerakhirActivity" />
-        <activity android:name=".activity.PembayaranSuksesActivity" />
-        <activity android:name=".activity.PembayaranActivity" />
-        <activity android:name=".activity.DetailTransaksiTesimpanActivity" />
-        <activity android:name=".activity.TransaksiTersimpanActivity" />
+        <activity android:name="com.aiopos.apps.activity.DeviceList"></activity>
+        <activity android:name="com.aiopos.apps.activity.DetailRiwayatTransaksiActivity" />
+        <activity android:name="com.aiopos.apps.activity.RiwayatTerakhirActivity" />
+        <activity android:name="com.aiopos.apps.activity.PembayaranSuksesActivity" />
+        <activity android:name="com.aiopos.apps.activity.PembayaranActivity" />
+        <activity android:name="com.aiopos.apps.activity.DetailTransaksiTesimpanActivity" />
+        <activity android:name="com.aiopos.apps.activity.TransaksiTersimpanActivity" />
         <activity
-            android:name=".activity.RingkasanOrderActivity"
+            android:name="com.aiopos.apps.activity.RingkasanOrderActivity"
             android:label="@string/title_activity_ringkasan_order"
             android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
-        <activity android:name=".activity.BantuanActivity" />
-        <activity android:name=".activity.PrinterActivity" />
+        <activity android:name="com.aiopos.apps.activity.BantuanActivity" />
+        <activity android:name="com.aiopos.apps.activity.PrinterActivity" />
         <activity
-            android:name=".activity.ProfilActivity"
+            android:name="com.aiopos.apps.activity.ProfilActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.PengaturanActivity"
+            android:name="com.aiopos.apps.activity.PengaturanActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.DetailShiftActivity"
+            android:name="com.aiopos.apps.activity.DetailShiftActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ShiftHistoryActivity"
+            android:name="com.aiopos.apps.activity.ShiftHistoryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ShiftOtomatisActivity"
+            android:name="com.aiopos.apps.activity.ShiftOtomatisActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ShiftBerakhirLastActivity"
+            android:name="com.aiopos.apps.activity.ShiftBerakhirLastActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ShiftBerakhirActivity"
+            android:name="com.aiopos.apps.activity.ShiftBerakhirActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ShiftSaatIniActivity"
+            android:name="com.aiopos.apps.activity.ShiftSaatIniActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.PilihanShiftActivity"
+            android:name="com.aiopos.apps.activity.PilihanShiftActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ShiftActivity"
+            android:name="com.aiopos.apps.activity.ShiftActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.DetailPelangganActivity"
+            android:name="com.aiopos.apps.activity.DetailPelangganActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.EditPelangganActivity"
+            android:name="com.aiopos.apps.activity.EditPelangganActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.AddPelangganActivity"
+            android:name="com.aiopos.apps.activity.AddPelangganActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.PelangganActivity"
+            android:name="com.aiopos.apps.activity.PelangganActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.Dashboard"
+            android:name="com.aiopos.apps.activity.Dashboard"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.LupaKataSandiActivity"
+            android:name="com.aiopos.apps.activity.LupaKataSandiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.aiopos.apps.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.aiopos.apps.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
