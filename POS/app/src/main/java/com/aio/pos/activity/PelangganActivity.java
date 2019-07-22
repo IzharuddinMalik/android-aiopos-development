@@ -81,7 +81,7 @@ public class PelangganActivity extends AppCompatActivity {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if ((width % 9)==0 && (height % 16)==0){
+        if (getResources().getConfiguration().smallestScreenWidthDp == 360){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

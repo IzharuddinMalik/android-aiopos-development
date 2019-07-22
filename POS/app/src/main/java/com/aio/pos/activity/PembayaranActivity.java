@@ -154,7 +154,7 @@ public class PembayaranActivity extends AppCompatActivity {
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if ((width % 9)==0 && (height % 16)==0){
+        if (getResources().getConfiguration().smallestScreenWidthDp == 360){
 
 //            pas.setEnabled(false);
 //            limapuluh.setEnabled(false);
