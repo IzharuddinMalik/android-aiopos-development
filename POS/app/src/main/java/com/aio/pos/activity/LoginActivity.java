@@ -69,11 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             loginRequest();
         });
 
-        btnDaftar.setOnClickListener(view -> {
-            Uri uri = Uri.parse("https://backoffice.aiopos.id/home/register");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        });
+
 
         View toastsucces = getLayoutInflater().inflate(R.layout.toast_success, null);
         View toastinfo = getLayoutInflater().inflate(R.layout.toast_information, null);
@@ -88,9 +84,16 @@ public class LoginActivity extends AppCompatActivity {
         int height = size.y;
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
+        Log.i("Tes", "iki" + getResources().getConfiguration().smallestScreenWidthDp);
 
-        if ((width % 9)==0 && (height % 16)==0){
+        if (getResources().getConfiguration().smallestScreenWidthDp == 360){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+            btnDaftar.setOnClickListener(view -> {
+                Uri uri = Uri.parse("https://backoffice.aiopos.id/home/register");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            });
         } else {
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

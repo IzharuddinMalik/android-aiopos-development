@@ -175,7 +175,7 @@ public class Dashboard extends AppCompatActivity
         Log.d("Width", "" + width);
         Log.d("height", "" + height);
 
-        if ((width % 9)==0 && (height % 16)==0){
+        if (getResources().getConfiguration().smallestScreenWidthDp == 360){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             llDashboardLihatPesanan.setOnClickListener(v -> {
 //                startActivity(new Intent(this, RingkasanOrderActivity.class));
