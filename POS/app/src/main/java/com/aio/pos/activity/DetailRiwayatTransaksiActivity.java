@@ -46,6 +46,7 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -316,8 +317,8 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                     os.write(" ----------------------------- \n\n".getBytes());
 
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
-                    int subtotalItem = Integer.parseInt(hargaProduk) * Integer.parseInt(jumlahProduk);
                     for (int k=0;k<listPesanan.size();k++){
+                        int subtotalItem = Integer.parseInt(listPesanan.get(k).getHargaProduk()) * Integer.parseInt(listPesanan.get(k).getJumlahProduk());
                         os.write((listPesanan.get(k).getNamaProduk() + "\n").getBytes());
                         os.write((listPesanan.get(k).getHargaProduk() + " x " + listPesanan.get(k).getJumlahProduk() + " = " + subtotalItem + "\n\n").getBytes());
                     }

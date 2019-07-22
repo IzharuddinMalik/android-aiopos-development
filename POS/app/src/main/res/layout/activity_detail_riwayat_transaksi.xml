@@ -266,7 +266,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cetak" />
+            android:text="Cetak"
+            android:background="@color/colorBlueBasic"
+            android:textColor="@color/colorWhiteffffff"/>
 
     </LinearLayout>
 
