@@ -37,7 +37,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.PesananV
 //            holder.hargaorder.setText(produkModel.getHargaProduk());
 //            holder.jumlahorder.setText(produkModel.getJumlahProduk());
 //        }
-        holder.namaorder.setText(produkModel.getNamaProduk());
+        holder.namaorder.setText(produkModel.getNamaProduk()+produkModel.getNamaVariant());
         holder.hargaorder.setText(produkModel.getHargaProduk());
         holder.jumlahorder.setText(produkModel.getJumlahProduk());
     }

@@ -71,7 +71,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
     private ProgressDialog mBluetoothConnectProgressDialog;
     private BluetoothSocket mBluetoothSocket;
     BluetoothDevice mBluetoothDevice;
-    String namaProduk, hargaProduk, jumlahProduk, subTotalHarga, totalHarga, kodeTransHD, tglTransHD, jamTransHD, metodePembayaran, namaPelanggan;
+    String namaProduk,namaVariant, hargaProduk, jumlahProduk, subTotalHarga, totalHarga, kodeTransHD, tglTransHD, jamTransHD, metodePembayaran, namaPelanggan;
     JSONArray arrHarga;
     String namaBT="";
 
@@ -219,9 +219,10 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                                 for(int j=0;j<arrHarga.length();j++){
                                     JSONObject objharga = arrHarga.getJSONObject(j);
                                     namaProduk = objharga.getString("nama_produk");
+                                    namaVariant = objharga.getString("nama_variant");
                                     hargaProduk = objharga.getString("harga_satuan");
                                     jumlahProduk = objharga.getString("qty");
-                                    listPesanan.add(j, new Produk("",""+namaProduk,"","",""+hargaProduk,"",""+jumlahProduk,""));
+                                    listPesanan.add(j, new Produk("",""+namaProduk,"",""+namaVariant,""+hargaProduk,"",""+jumlahProduk,""));
                                 }
                                 adapter = new AdapterPesanan(DetailRiwayatTransaksiActivity.this, listPesanan);
                                 final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DetailRiwayatTransaksiActivity.this);
@@ -311,7 +312,7 @@ public class DetailRiwayatTransaksiActivity extends Activity implements Runnable
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
                     for (int k=0;k<listPesanan.size();k++){
                         int subtotalItem = Integer.parseInt(listPesanan.get(k).getHargaProduk()) * Integer.parseInt(listPesanan.get(k).getJumlahProduk());
-                        os.write((listPesanan.get(k).getNamaProduk() + "\n").getBytes());
+                        os.write((listPesanan.get(k).getNamaProduk()+listPesanan.get(k).getNamaVariant() + "\n").getBytes());
                         os.write((listPesanan.get(k).getHargaProduk() + " x " + listPesanan.get(k).getJumlahProduk() + " = " + subtotalItem + "\n\n").getBytes());
                     }
 

@@ -275,59 +275,65 @@ public class AddPelangganActivity extends AppCompatActivity {
             telp.setError("Wajib Diisi!");
             telp.requestFocus();
         }
+        if (emailPelanggan.isEmpty()){
+            email.setError("Wajib Diisi!");
+            email.requestFocus();
+        }
 
-        pref = new SharedPrefManager(this);
-        HashMap<String, String> user = pref.getUserDetails();
-        String idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
-        String idoutlet = user.get(SharedPrefManager.ID_OUTLET);
+        if(namaPelanggan.length()!=0 && teleponPelanggan.length()!=0){
+            pref = new SharedPrefManager(this);
+            HashMap<String, String> user = pref.getUserDetails();
+            String idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
+            String idoutlet = user.get(SharedPrefManager.ID_OUTLET);
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("idbusiness", idbusiness);
-        params.put("idoutlet", idoutlet);
-        params.put("province_id", idProv);
-        params.put("regencies_id", idKab);
-        params.put("district_id", idKec);
-        params.put("nama_pelanggan", namaPelanggan);
-        params.put("email_pelanggan", emailPelanggan);
-        params.put("telp_pelanggan", teleponPelanggan);
-        params.put("telepon_pelanggan2", telepon2Pelanggan);
-        mApiInterface = APIUrl.getAPIService();
-        mApiInterface.insertPelanggan(params,idbusiness,idoutlet,idProv,idKab,idKec,namaPelanggan,
-                emailPelanggan,teleponPelanggan,telepon2Pelanggan).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
-                    try{
-                        String result = response.body().string();
-                        JSONObject jsonResult = new JSONObject(result);
+            HashMap<String, String> params = new HashMap<>();
+            params.put("idbusiness", idbusiness);
+            params.put("idoutlet", idoutlet);
+            params.put("province_id", idProv);
+            params.put("regencies_id", idKab);
+            params.put("district_id", idKec);
+            params.put("nama_pelanggan", namaPelanggan);
+            params.put("email_pelanggan", emailPelanggan);
+            params.put("telp_pelanggan", teleponPelanggan);
+            params.put("telepon_pelanggan2", ""+telepon2Pelanggan);
+            mApiInterface = APIUrl.getAPIService();
+            mApiInterface.insertPelanggan(params,idbusiness,idoutlet,idProv,idKab,idKec,namaPelanggan,
+                    emailPelanggan,teleponPelanggan,telepon2Pelanggan).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()){
+                        try{
+                            String result = response.body().string();
+                            JSONObject jsonResult = new JSONObject(result);
 
-                        Log.i("Isi",
-                                "ID Bisnis:"+idbusiness+
-                                "ID Outlet"+idoutlet+
-                                "province_id"+idProv+
-                                "regencies_id"+idKab+
-                                "district_id"+idKec+
-                                        "nama_pelanggan" +namaPelanggan+
-                                "email_pelanggan"+emailPelanggan+
-                                "telp_pelanggan"+teleponPelanggan);
+                            Log.i("Isi",
+                                    "ID Bisnis:"+idbusiness+
+                                            "ID Outlet"+idoutlet+
+                                            "province_id"+idProv+
+                                            "regencies_id"+idKab+
+                                            "district_id"+idKec+
+                                            "nama_pelanggan" +namaPelanggan+
+                                            "email_pelanggan"+emailPelanggan+
+                                            "telp_pelanggan"+teleponPelanggan);
 
-                        Log.i("Hasil",jsonResult.getString("message"));
+                            Log.i("Hasil",jsonResult.getString("message"));
 
-                    } catch (IOException e){
-                        e.printStackTrace();
-                    } catch (JSONException e){
-                        e.printStackTrace();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    } else{
+                        Log.i("Hasil",response.toString());
                     }
-                } else{
-                    Log.i("Hasil",response.toString());
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("Hasil",t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.i("Hasil",t.toString());
+                }
+            });
+        }
     }
 
 }

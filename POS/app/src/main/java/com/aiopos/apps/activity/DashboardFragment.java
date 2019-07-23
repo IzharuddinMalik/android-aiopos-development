@@ -92,15 +92,18 @@ public class DashboardFragment extends Fragment {
         produk = new ArrayList<Produk>();
         produk.clear();
 
+
         for(int i=0;i<produkModels.size();i++){
 
             ProdukModel prod = produkModels.get(i);
+
             if(prod.getDataProduk().size()==0){
 
             }else{
                 for(int j=0;j<prod.getDataProduk().size();j++){
 
                     Produk isiprod = prod.getDataProduk().get(j);
+                    Log.i("data",""+isiprod.getNamaVariant());
 
 
                     Log.e("ONCE", " == "+prod.getNamaKategori() + " --> "+isiprod.getNamaProduk());
@@ -110,6 +113,7 @@ public class DashboardFragment extends Fragment {
 
         produk = produkModels.get(0).getDataProduk();
 
+        Log.i("data",""+produk);
         adapter = new AdapterPilihProduk(getContext(), produk);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recProduk.setLayoutManager(mLayoutManager);

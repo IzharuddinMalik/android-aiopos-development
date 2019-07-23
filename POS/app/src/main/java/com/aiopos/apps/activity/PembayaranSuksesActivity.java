@@ -229,7 +229,7 @@ public class PembayaranSuksesActivity extends AppCompatActivity implements Runna
                     os.write(PrinterCommands.ESC_ALIGN_LEFT);
                     for (int k=0;k<listPesanan.size();k++){
                         int subtotalItem = Integer.parseInt(listPesanan.get(k).getHargaProduk()) * Integer.parseInt(listPesanan.get(k).getJumlahProduk());
-                        os.write((listPesanan.get(k).getNamaProduk() + "\n").getBytes());
+                        os.write((listPesanan.get(k).getNamaProduk()+listPesanan.get(k).getNamaVariant() + "\n").getBytes());
                         os.write((listPesanan.get(k).getHargaProduk() + " x " + listPesanan.get(k).getJumlahProduk() + " = " + subtotalItem + "\n\n").getBytes());
                     }
 
