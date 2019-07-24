@@ -19,19 +19,19 @@
             android:background="#DB0000">
 
             <TextView
-                android:id="@+id/tvDialogFormHapusPesanan"
+                android:id="@+id/tvDialogFormHapusPelanggan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:gravity="center_vertical"
-                android:text="Hapus Pesanan"
+                android:text="Hapus Pelanggan"
                 android:textColor="@color/colorWhiteffffff"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvDialogFormHapusPesanan2"
+            android:id="@+id/tvDialogFormHapusPelanggan2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvTidakMenghapusPesanan"
+                android:id="@+id/tvTidakMenghapusPelanggan"
                 android:text="Tidak"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/colorblack"
@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvYaMenghapusPesanan"
+                android:id="@+id/tvYaMenghapusPelanggan"
                 android:text="Ya"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/colorblack"

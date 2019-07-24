@@ -16,28 +16,29 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
-            android:background="#DB0000">
+            android:background="#2BBB4C">
 
             <TextView
-                android:id="@+id/tvDialogFormHapusPesanan"
+                android:id="@+id/tvDialogFormTambahPelanggan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:gravity="center_vertical"
-                android:text="Hapus Pesanan"
+                android:text="Tambah Pelanggan"
                 android:textColor="@color/colorWhiteffffff"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvDialogFormHapusPesanan2"
+            android:id="@+id/tvDialogFormTambahPelanggan2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_20sdp"
-            android:text="Anda yakin ingin menghapus pesanan ini?"
+            android:text="Apakah anda yakin ingin menyimpan
+data pelanggan ini?"
             android:textColor="@color/colorblack"
             android:textSize="@dimen/_15sdp" />
         <LinearLayout
@@ -50,7 +51,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvTidakMenghapusPesanan"
+                android:id="@+id/tvTidakMenambahPelanggan"
                 android:text="Tidak"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/colorblack"
@@ -58,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvYaMenghapusPesanan"
+                android:id="@+id/tvYaMenambahPelanggan"
                 android:text="Ya"
                 android:textSize="@dimen/_15ssp"
                 android:textColor="@color/colorblack"
