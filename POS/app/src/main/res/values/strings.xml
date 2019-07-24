@@ -73,4 +73,5 @@
         <item>Jawa Timur</item>
     </string-array>
     <string name="title_activity_ringkasan_order">RingkasanOrderActivity</string>
+    <string name="lupa">Untuk mengganti kata sandi akun Anda, masukkan alamat email yang terdaftar di UltraPOS dan kami akan mengirimkan instruksi untuk menyetel ulang kata sandi Anda.</string>
 </resources>

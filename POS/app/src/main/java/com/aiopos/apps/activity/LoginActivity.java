@@ -8,10 +8,13 @@ import android.net.Uri;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aiopos.apps.R;
@@ -42,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvLupaKataSandi;
     APIConnect apiConnect;
     BaseApiInterface mApiInterface;
+    ImageView passshow;
     Dialog dialogLoading;
     SharedPrefManager pref;
     @Override
@@ -53,16 +57,31 @@ public class LoginActivity extends AppCompatActivity {
         tietEmail = findViewById(R.id.tietEmailLogin);
         tietPassword = findViewById(R.id.tietPasswordLogin);
         tvLupaKataSandi = findViewById(R.id.tvLupaKataSandi);
+        passshow = findViewById(R.id.ivPassShow);
         btnDaftar = findViewById(R.id.btnRegister);
 
         tvLupaKataSandi.setOnClickListener(v -> {
             startActivity(new Intent(this, LupaKataSandiActivity.class));
         });
 
+        passshow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch ( event.getAction() ) {
+                    case MotionEvent.ACTION_DOWN:
+                        tietPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        tietPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        break;
+                }
+                return true;
+            }
+        });
+
         btnLogin.setOnClickListener(v -> {
             loginRequest();
         });
-
 
 
         View toastsucces = getLayoutInflater().inflate(R.layout.toast_success, null);

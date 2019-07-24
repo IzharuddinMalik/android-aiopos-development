@@ -7,18 +7,12 @@
     tools:context="com.aiopos.apps.activity.MainActivity"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#ffffff">
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        app:srcCompat="@drawable/iconpos" />
+    android:background="@drawable/background_gradient">
 
     <ImageView
         android:id="@+id/ivSplashScreen"
-        android:layout_width="@dimen/_130sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:src="@drawable/logopos" />
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_150sdp"
+        android:src="@drawable/splashicon" />
 
 </LinearLayout>

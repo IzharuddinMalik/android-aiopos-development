@@ -14,4 +14,6 @@
     <color name="colorWhiteffffff">#ffffff</color>
     <color name="colorBlueBasic">#00A1ED</color>
     <color name="colorblack">#000000</color>
+    <color name="btngreen">#2BBB4C</color>
+    <color name="btnblue">#44C3FF</color>
 </resources>
