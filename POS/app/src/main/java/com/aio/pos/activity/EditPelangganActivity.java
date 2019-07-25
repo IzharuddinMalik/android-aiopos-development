@@ -2,15 +2,18 @@ package com.aio.pos.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.aio.pos.R;
 import com.aio.pos.api.APIUrl;
@@ -40,6 +43,11 @@ public class EditPelangganActivity extends AppCompatActivity {
     String idProv,idKab,idKec;
     Button submitedit;
     SharedPrefManager pref;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
+    View dialogView;
+    TextView tvYaEditPelanggan, tvBatalEditPelanggan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +75,21 @@ public class EditPelangganActivity extends AppCompatActivity {
         });
 
         submitedit.setOnClickListener(v -> {
+            popupEditPelanggan();
+        });
+    }
+
+    public void popupEditPelanggan(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_edit_pelanggan,null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        tvYaEditPelanggan = dialogView.findViewById(R.id.tvYaEditPelanggan);
+        tvBatalEditPelanggan = dialogView.findViewById(R.id.tvTidakEditPelanggan);
+
+        tvYaEditPelanggan.setOnClickListener(view -> {
             editRequest();
 
             pref = new SharedPrefManager(this);
@@ -78,6 +101,19 @@ public class EditPelangganActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(intent);
         });
+
+        tvBatalEditPelanggan.setOnClickListener(view -> {
+            pref = new SharedPrefManager(this);
+            HashMap<String, String> user = pref.getUserDetails();
+            String idctm = getIntent().getStringExtra("idctm");
+
+            Intent intent = new Intent(this, DetailPelangganActivity.class);
+            intent.putExtra("idctm", idctm);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
+        });
+
+        dialog.show();
     }
 
     public void getAllDataProvinsi(){
@@ -273,7 +309,14 @@ public class EditPelangganActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        startActivity(new Intent(this, DetailPelangganActivity.class));
+        pref = new SharedPrefManager(this);
+        HashMap<String, String> user = pref.getUserDetails();
+        String idctm = getIntent().getStringExtra("idctm");
+
+        Intent intent = new Intent(this, DetailPelangganActivity.class);
+        intent.putExtra("idctm", idctm);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 
     public void getDataEdit(){

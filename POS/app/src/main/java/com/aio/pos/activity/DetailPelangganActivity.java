@@ -1,9 +1,12 @@
 package com.aio.pos.activity;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +36,11 @@ public class DetailPelangganActivity extends AppCompatActivity {
     private SharedPrefManager pref;
     private BaseApiInterface mApiInterface;
     String idPelanggan ,idOutlet ,namaPelanggan ,telpPelanggan ,emailPelangan ,provinsiPelanggan ,kabupatenPelanggan ,kecamatanPelanggan,telpPelanggan2 = "";
-    Button btnPilihPelanggan;
+    Button btnHapusPelanggan;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
+    View dialogView;
+    TextView tvYaHapusPelanggan, tvBatalHapusPelanggan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +59,9 @@ public class DetailPelangganActivity extends AppCompatActivity {
 
         getDetailPelanggan();
 
-        btnPilihPelanggan = findViewById(R.id.btnMenuDetailPelangganPilihPelanggan);
-        btnPilihPelanggan.setOnClickListener(view -> {
-            Intent intent = new Intent(this, Dashboard.class);
-            intent.putExtra("namaPelanggan", tvDetailNamaPelanggan.getText());
-            intent.putExtra("idctm", tvDetailIDPelanggan.getText());
-            startActivity(intent);
+        btnHapusPelanggan = findViewById(R.id.btnMenuDetailPelangganHapusPelanggan);
+        btnHapusPelanggan.setOnClickListener(view -> {
+            popupHapusPelanggan();
         });
 
         ivDetailBtnEditPelanggan.setOnClickListener(v -> {
@@ -142,5 +146,33 @@ public class DetailPelangganActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void popupHapusPelanggan(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_hapus_pelanggan,null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        tvBatalHapusPelanggan = dialogView.findViewById(R.id.tvTidakMenghapusPelanggan);
+        tvYaHapusPelanggan = dialogView.findViewById(R.id.tvYaMenghapusPelanggan);
+
+        tvYaHapusPelanggan.setOnClickListener(view -> {
+
+        });
+
+        tvBatalHapusPelanggan.setOnClickListener(view -> {
+            pref = new SharedPrefManager(this);
+            HashMap<String, String> user = pref.getUserDetails();
+            String idctm = getIntent().getStringExtra("idctm");
+
+            Intent intent = new Intent(this, DetailPelangganActivity.class);
+            intent.putExtra("idctm", idctm);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
+        });
+
+        dialog.show();
     }
 }

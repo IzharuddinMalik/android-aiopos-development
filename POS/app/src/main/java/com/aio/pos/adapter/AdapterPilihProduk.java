@@ -3,6 +3,11 @@ package com.aio.pos.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,8 +34,11 @@ import com.aio.pos.activity.DashboardFragment;
 import com.squareup.picasso.Picasso;
 import com.aio.pos.model.Produk;
 import com.aio.pos.util.StylingUtils;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.ProdukViewHolder> implements Filterable {
 
@@ -37,6 +46,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
     private ArrayList<Produk> listProduk;
     private ArrayList<Produk> mFilteredList;
     StylingUtils stylingUtils;
+    ArrayList<String> arrjumlahPesanan= new ArrayList<String>();
 
     public AdapterPilihProduk(Context context, ArrayList<Produk> listProduk){
         this.mCtx = context;
@@ -162,7 +172,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                 });
 
             } else {
-//                plus=view.findViewById(R.id.plus);
+
                 minus=view.findViewById(R.id.minus);
 
                 inputJumlahProduk.addTextChangedListener(new TextWatcher() {
@@ -176,6 +186,11 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                         if(s.length()!=0){
                             counter=Integer.parseInt(""+s);
                             visible();
+
+                            if (inputJumlahProduk.getText().toString().length() == 0){
+                                inputJumlahProduk.setError("Isikan Jumlah Produk");
+                                inputJumlahProduk.requestFocus();
+                            }
 
                             int position = getAdapterPosition();
                             Log.i("Posisi",listProduk.get(position).getNamaProduk()+" "+inputJumlahProduk.getText()+position);
@@ -204,6 +219,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
                     }
                 });
+
 //                plus.setOnClickListener(v -> {
 //                    counter++;
 //                    visible();
@@ -242,25 +258,65 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
     }
 
     public void onBindViewHolder(final ProdukViewHolder holder, final int position){
-
-//        if (listProduk == mFilteredList){
-//            holder.namaProduk.setText(mProduk.getNamaProduk());
-//            holder.hargaProduk.setText(mProduk.getHargaProduk());
-//            Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + mFilteredList.get(position).getFotoProduk()).into(holder.gambarProduk);
-//        } else {
-//            if (listProduk.get(position).getIdVariant().equals("")){
-//                holder.namaProduk.setText(produk.getNamaProduk());
-//                holder.hargaProduk.setText(produk.getHargaProduk());
-//            } else{
-//                holder.namaProduk.setText(produk.getNamaVariant());
-//                holder.hargaProduk.setText(produk.getHargaProduk());
-//            }
-//            Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + listProduk.get(position).getFotoProduk()).into(holder.gambarProduk);
-//        }
         holder.namaProduk.setText(mFilteredList.get(position).getNamaProduk()+mFilteredList.get(position).getNamaVariant());
         Log.i("Isi Holder",""+holder.namaProduk.getText());
         holder.hargaProduk.setText(mFilteredList.get(position).getHargaProduk());
-        Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + mFilteredList.get(position).getFotoProduk()).into(holder.gambarProduk);
+        Picasso.with(mCtx).load("http://backoffice.aiopos.id/picture/produk/" + mFilteredList.get(position).getFotoProduk()).transform(new CircleTransform()).into(holder.gambarProduk);
+    }
+
+    class CircleTransform implements Transformation {
+
+        boolean mCircleSeparator = false;
+
+        public CircleTransform() {
+        }
+
+        public CircleTransform(boolean circleSeparator) {
+            mCircleSeparator = circleSeparator;
+        }
+
+        @Override
+        public Bitmap transform(Bitmap source) {
+            int size = Math.min(source.getWidth(), source.getHeight());
+            int x = (source.getWidth() - size) / 2;
+            int y = (source.getHeight() - size) / 2;
+            Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+            if (squaredBitmap != source) {
+                source.recycle();
+            }
+            Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+            Canvas canvas = new Canvas(bitmap);
+            BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG);
+            paint.setShader(shader);
+            float r = size / 2f;
+            canvas.drawCircle(r, r, r - 1, paint);
+            // Make the thin border:
+            Paint paintBorder = new Paint();
+            paintBorder.setStyle(Paint.Style.STROKE);
+            paintBorder.setColor(Color.argb(84,0,0,0));
+            paintBorder.setAntiAlias(true);
+            paintBorder.setStrokeWidth(1);
+            canvas.drawCircle(r, r, r-1, paintBorder);
+
+            // Optional separator for stacking:
+            if (mCircleSeparator) {
+                Paint paintBorderSeparator = new Paint();
+                paintBorderSeparator.setStyle(Paint.Style.STROKE);
+                paintBorderSeparator.setColor(Color.parseColor("#FFFFFF"));
+                paintBorderSeparator.setAntiAlias(true);
+                paintBorderSeparator.setStrokeWidth(4);
+                canvas.drawCircle(r, r, r+1, paintBorderSeparator);
+            }
+            squaredBitmap.recycle();
+            return bitmap;
+        }
+
+
+        @Override
+        public String key() {
+            return "circle";
+        }
     }
 
     public Fragment getItem(int position) {

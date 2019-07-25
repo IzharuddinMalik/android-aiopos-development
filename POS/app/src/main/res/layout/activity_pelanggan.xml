@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@android:color/white">
+        android:background="@drawable/bacground_no_border">
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,17 +66,25 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <SearchView
-            android:id="@+id/svMenuPelanggan"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:queryHint="Cari Pelanggan"
-            android:searchHintIcon="@drawable/ic_search_black_24dp"
-            android:searchIcon="@drawable/ic_search_black_24dp"
-            android:theme="@style/AppTheme">
-
-        </SearchView>
+            app:cardCornerRadius="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp">
+            <SearchView
+                android:id="@+id/svMenuPelanggan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:queryHint="Cari Pelanggan"
+                android:searchHintIcon="@drawable/ic_search_black_24dp"
+                android:searchIcon="@drawable/ic_search_black_24dp"
+                android:theme="@style/AppTheme">
+            </SearchView>
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
