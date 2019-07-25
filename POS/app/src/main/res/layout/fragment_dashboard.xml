@@ -4,23 +4,22 @@
     android:layout_height="match_parent">
 
     <SearchView
+        android:id="@+id/svDashboardNamaProduk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:searchIcon="@drawable/ic_search_black_24dp"
-        android:searchHintIcon="@drawable/ic_search_black_24dp"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/background_search"
         android:queryHint="Nama Produk"
-        android:background="@android:color/transparent"
-        android:theme="@style/AppTheme"
-        android:id="@+id/svDashboardNamaProduk">
-
+        android:gravity="center_vertical"
+        android:searchHintIcon="@drawable/ic_search_black_24dp"
+        android:searchIcon="@drawable/ic_search_black_24dp"
+        android:theme="@style/AppTheme">
     </SearchView>
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rvDashboardListProduk"
-        android:layout_weight="1"
-        android:layout_marginTop="@dimen/_10sdp">
+        android:layout_weight="1">
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

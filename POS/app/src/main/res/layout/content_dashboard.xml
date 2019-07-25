@@ -21,13 +21,14 @@
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorHeight="1dp"
-            app:tabSelectedTextColor="@color/colorBlueBasic" />
+            android:background="@color/colorBlueBasic"
+            app:tabSelectedTextColor="@color/colorWhiteffffff" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/frame_layout"
-            android:background="@color/colorWhiteffffff"
+            android:background="@drawable/bacground_no_border"
             android:layout_weight="1"></FrameLayout>
     </LinearLayout>
 

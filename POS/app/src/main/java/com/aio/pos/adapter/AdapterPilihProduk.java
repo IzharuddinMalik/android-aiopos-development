@@ -92,7 +92,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
         ImageView gambarProduk;
         TextView namaProduk, hargaProduk;
         EditText inputJumlahProduk, jumlahPesanan;
-        Button plus,minus;
+        Button minus;
         private int counter = 0;
         LinearLayout llDashboardLihatPesanan;
 
@@ -162,7 +162,7 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                 });
 
             } else {
-                plus=view.findViewById(R.id.plus);
+//                plus=view.findViewById(R.id.plus);
                 minus=view.findViewById(R.id.minus);
 
                 inputJumlahProduk.addTextChangedListener(new TextWatcher() {
@@ -204,12 +204,12 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
 
                     }
                 });
-                plus.setOnClickListener(v -> {
-                    counter++;
-                    visible();
-                    inputJumlahProduk.setText(""+counter);
-
-                });
+//                plus.setOnClickListener(v -> {
+//                    counter++;
+//                    visible();
+//                    inputJumlahProduk.setText(""+counter);
+//
+//                });
 
                 minus.setOnClickListener(v -> {
                     counter=0;
