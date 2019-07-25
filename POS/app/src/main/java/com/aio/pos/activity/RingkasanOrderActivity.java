@@ -84,7 +84,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     private String idbusiness,idoutlet;
     private BaseApiInterface mApiInterface;
     public String SalesType,IDSalType, idtb, diskonBaru;
-    private String idcop, idctm, noinv_transHD, statusBayar, idUser, idSaltype, totalTransHD, idTax, idSaltype2;
+    private String idcop, idctm, noinv_transHD, statusBayar, idUser, idSaltype, totalTransHD, idTax, idSaltype2, namaPelanggan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +113,7 @@ public class RingkasanOrderActivity extends AppCompatActivity {
         totalTransHD = getIntent().getStringExtra("total_transHD");
         datajumlahPesanan = bundle.getStringArrayList("jumlahPesanan");
         idTax = getIntent().getStringExtra("idtax");
+        namaPelanggan = getIntent().getStringExtra("namaPelanggan");
 
         selectionData();
 
@@ -260,15 +261,54 @@ public class RingkasanOrderActivity extends AppCompatActivity {
     }
 
     public void back(View view){
-        startActivity(new Intent(this, Dashboard.class));
-        resetOrder();
-//        finish();
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("idtb", idtb);
+        intent.putExtra("idbusiness", idbusiness);
+        intent.putExtra("idcop", "0");
+        intent.putExtra("idoutlet", idoutlet);
+        intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+        intent.putExtra("noinv_transHD", "0");
+        intent.putExtra("diskon", diskonBaru);
+        intent.putExtra("status_transHD", "1");
+        intent.putExtra("idProduk", arridProduk);
+        intent.putExtra("namaProduk", arrnamaProduk);
+        intent.putExtra("idVariant", arridVariant);
+        intent.putExtra("namaVariant", arrnamaVariant);
+        intent.putExtra("hargaPesanan", arrhargaPesanan);
+        intent.putExtra("jumlahPesanan", arrjumlahPesanan);
+        intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+        intent.putExtra("iduser", idUser);
+        intent.putExtra("idsaltype", idSaltype2);
+        intent.putExtra("idtax", idTax);
+        intent.putExtra("namaPelanggan", namaPelanggan);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, Dashboard.class));
-        resetOrder();
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("idtb", idtb);
+        intent.putExtra("idbusiness", idbusiness);
+        intent.putExtra("idcop", "0");
+        intent.putExtra("idoutlet", idoutlet);
+        intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+        intent.putExtra("noinv_transHD", "0");
+        intent.putExtra("diskon", diskonBaru);
+        intent.putExtra("status_transHD", "1");
+        intent.putExtra("idProduk", arridProduk);
+        intent.putExtra("namaProduk", arrnamaProduk);
+        intent.putExtra("idVariant", arridVariant);
+        intent.putExtra("namaVariant", arrnamaVariant);
+        intent.putExtra("hargaPesanan", arrhargaPesanan);
+        intent.putExtra("jumlahPesanan", arrjumlahPesanan);
+        intent.putExtra("idctm", getIntent().getStringExtra("idctm"));
+        intent.putExtra("iduser", idUser);
+        intent.putExtra("idsaltype", idSaltype2);
+        intent.putExtra("idtax", idTax);
+        intent.putExtra("namaPelanggan", namaPelanggan);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public void selectionData(){

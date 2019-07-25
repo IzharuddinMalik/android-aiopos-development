@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import com.aio.pos.R;
 import com.aio.pos.adapter.AdapterDashboardListOrder;
+import com.aio.pos.adapter.AdapterPilihProduk;
 import com.aio.pos.adapter.AdapterTipePenjualan;
 import com.aio.pos.adapter.TabAdapter;
 import com.aio.pos.api.APIConnect;
@@ -50,6 +51,7 @@ import com.aio.pos.model.Produk;
 import com.aio.pos.model.ProdukModel;
 import com.aio.pos.model.TipeModel;
 import com.aio.pos.api.SharedPrefManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +73,7 @@ public class Dashboard extends AppCompatActivity
 
     TabLayout tabLayout;
     TabAdapter adapter;
-    ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama;
+    ImageView ivKeranjang, ivOptionMenu, ivSearch, ivCancelDialogDiskon, ivCancelDialogNama, ivlogoBisnis;
     LinearLayout llDashboardBukaPelanggan,llDashboardLihatPesanan;
     SearchView svNamaProduk;
     int backpress;
@@ -103,8 +105,9 @@ public class Dashboard extends AppCompatActivity
     RecyclerView recPesanan, recTipePenjualan;
     AdapterTipePenjualan adapterTipePenjualan;
     List<TipeModel> listTipe;
-    TextView tvOKDialogCatatan;
+    TextView tvOKDialogCatatan, tvDashboardNavNamaBisnis, tvDashboardLocOutlet, tvDashboardNamaPelangganMobile;
     Button btnDashboardSimpanPesanan, btnDashboardBayarPesanan;
+    ImageView ivIconPelanggan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +127,18 @@ public class Dashboard extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         tvDashboardNavNama = header.findViewById(R.id.tvDashboardNamaAkun);
+        tvDashboardNavNamaBisnis = header.findViewById(R.id.tvDashboardNamaBisnis);
+        tvDashboardLocOutlet = header.findViewById(R.id.tvLokasiOutlet);
+        ivlogoBisnis = header.findViewById(R.id.ivLogoBisnis);
         pref = new SharedPrefManager(Dashboard.this);
         HashMap<String, String> user = pref.getUserDetails();
         String nama = user.get(SharedPrefManager.NAMA_USER);
+        String bisnis = user.get(SharedPrefManager.NAMA_BISNIS);
+        String locOutlet = user.get(SharedPrefManager.ALAMAT_OUTLET);
         tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
+        tvDashboardNavNamaBisnis.setText(Html.fromHtml("<b>" + bisnis + "</b>"));
+        tvDashboardLocOutlet.setText(Html.fromHtml("<b>" + locOutlet + "</b>"));
+        Picasso.with(Dashboard.this).load("http://backoffice.aiopos.id/picture/" + user.get(SharedPrefManager.IMG_BUSINESS)).into(ivlogoBisnis);
 
         idbusiness = user.get(SharedPrefManager.ID_BUSINESS);
         idUser = user.get(SharedPrefManager.ID_USER);
@@ -142,22 +153,6 @@ public class Dashboard extends AppCompatActivity
         tvDashboardNilaiCatatanSemua = findViewById(R.id.tvDashboardNilaiCatatanSemua);
         tvDashboardCatatan = findViewById(R.id.tvDashboardCatatanSemua);
         tvDashboardDiskonSemua = findViewById(R.id.tvDashboardDiskonSemua);
-
-        tvDashboardNamaPelanggan = findViewById(R.id.tvDashboardBukaPelanggan);
-
-//        if (!tvDashboardNamaPelanggan.equals(null)){
-//            tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("namaPelanggan"));
-//        } else {
-//            tvDashboardNamaPelanggan.setText("Nama Pelanggan");
-//        }
-
-        String namapelanggan=""+getIntent().getStringExtra("namaPelanggan");
-        Log.i("Nama",namapelanggan);
-        if (namapelanggan.equals("null")){
-
-        } else {
-            tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("namaPelanggan"));
-        }
 
         ivSearch = findViewById(R.id.ivDashboardGambarSearch);
         svNamaProduk = findViewById(R.id.svDashboardNamaProduk);
@@ -199,9 +194,26 @@ public class Dashboard extends AppCompatActivity
                 intent.putExtra("iduser", idUser);
                 intent.putExtra("idsaltype", idSaltype2);
                 intent.putExtra("idtax", idTax);
+                intent.putExtra("namaPelanggan", getIntent().getStringExtra("namaPelanggan"));
 
                 startActivity(intent);
             });
+
+            ivIconPelanggan = findViewById(R.id.ivDashboardBukaPelanggan);
+            ivIconPelanggan.setOnClickListener(view -> {
+                Intent intent = new Intent(this, PelangganActivity.class);
+                startActivity(intent);
+            });
+
+            tvDashboardNamaPelangganMobile = findViewById(R.id.tvDashboardNamaPelanggan);
+
+            String namapelangganmobile=""+getIntent().getStringExtra("namaPelanggan");
+            Log.i("Nama",namapelangganmobile);
+            if (namapelangganmobile.equals("null")){
+                tvDashboardNamaPelangganMobile.setText("-");
+            } else {
+                tvDashboardNamaPelangganMobile.setText(getIntent().getStringExtra("namaPelanggan"));
+            }
         }else{
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -216,12 +228,22 @@ public class Dashboard extends AppCompatActivity
             btnDashboardBayarPesanan.setOnClickListener(view -> {
                 bayar();
             });
+            tvDashboardNamaPelanggan = findViewById(R.id.tvDashboardBukaPelanggan);
+
+            String namapelanggan=""+getIntent().getStringExtra("namaPelanggan");
+            Log.i("Nama",namapelanggan);
+            if (namapelanggan.equals("null")){
+
+            } else {
+                tvDashboardNamaPelanggan.setText(getIntent().getStringExtra("namaPelanggan"));
+            }
+
+            llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
+            llDashboardBukaPelanggan.setOnClickListener(v -> {
+                startActivity(new Intent(this, PelangganActivity.class));
+            });
         }
 
-        llDashboardBukaPelanggan = findViewById(R.id.llDashboardBukaPelanggan);
-        llDashboardBukaPelanggan.setOnClickListener(v -> {
-            startActivity(new Intent(this, PelangganActivity.class));
-        });
         getAllListProduk();
 
         pesananModels = new ArrayList<PesananModel>();
@@ -555,6 +577,7 @@ public class Dashboard extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        setTitleColor(R.color.colorBlueBasic);
 
         if (id == R.id.nav_transaksi) {
             startActivity(new Intent(this, Dashboard.class));

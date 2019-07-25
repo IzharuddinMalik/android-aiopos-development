@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.EditPelangganActivity"
     android:orientation="vertical"
-    android:background="@drawable/background_gradient">
+    android:background="@drawable/bacground_no_border">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -200,7 +200,7 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"

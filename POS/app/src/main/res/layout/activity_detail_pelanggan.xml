@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.DetailPelangganActivity"
     android:orientation="vertical"
-    android:background="@drawable/background_gradient">
+    android:background="@drawable/bacground_no_border">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
