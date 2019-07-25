@@ -2,6 +2,7 @@ package com.aio.pos.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -164,24 +165,32 @@ public class PembayaranActivity extends AppCompatActivity {
             total.setText("Rp. "+totalbayar);
 
             pas.setOnClickListener(v -> {
+                resetcolor();
+                pas.setTextColor(getResources().getColor(R.color.btngreen));
                 totalKembalian=0;
                 idtunai="0";
                 Log.i("Pas",""+totalKembalian);
             });
 
             limapuluh.setOnClickListener(v -> {
+                resetcolor();
+                limapuluh.setTextColor(getResources().getColor(R.color.btngreen));
                 totalKembalian=50000-Integer.parseInt(totalbayar);
                 idtunai="0";
                 Log.i("Sisa 50",""+totalKembalian);
             });
 
             seratus.setOnClickListener(v -> {
+                resetcolor();
+                seratus.setTextColor(getResources().getColor(R.color.btngreen));
                 totalKembalian=100000-Integer.parseInt(totalbayar);
                 idtunai="0";
                 Log.i("Sisa 100",""+totalKembalian);
             });
 
             duaratus.setOnClickListener(v -> {
+                resetcolor();
+                duaratus.setTextColor(getResources().getColor(R.color.btngreen));
                 totalKembalian=200000-Integer.parseInt(totalbayar);
                 idtunai="0";
                 Log.i("Sisa 200",""+totalKembalian);
@@ -261,6 +270,12 @@ public class PembayaranActivity extends AppCompatActivity {
                 edc_list();
             });
         }
+    }
+    public void resetcolor(){
+        pas.setTextColor(getResources().getColor(R.color.colorblack));
+        limapuluh.setTextColor(getResources().getColor(R.color.colorblack));
+        seratus.setTextColor(getResources().getColor(R.color.colorblack));
+        duaratus.setTextColor(getResources().getColor(R.color.colorblack));
     }
 
     @Override

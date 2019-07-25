@@ -56,50 +56,59 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:queryHint="Cari Transaksi"
-        android:searchHintIcon="@drawable/ic_search_black_24dp"
-        android:searchIcon="@drawable/ic_search_black_24dp"
-        android:theme="@style/AppTheme">
-
-    </SearchView>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bacground_no_border">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_weight="1"
-            android:background="@color/colorBlueBasic"
-            android:clickable="false"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/_15sdp"
-            android:text="Senin"
-            android:textColor="@color/colorWhiteffffff"
-            android:textSize="@dimen/_15sdp" />
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_search"
+            android:queryHint="Cari Transaksi"
+            android:layout_margin="@dimen/_5sdp"
+            android:searchHintIcon="@drawable/ic_search_black_24dp"
+            android:searchIcon="@drawable/ic_search_black_24dp"
+            android:theme="@style/AppTheme" />
 
-        <TextView
-            android:id="@+id/tvJumlahRiwayatTransaksi"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_weight="1"
-            android:background="@color/colorBlueBasic"
-            android:clickable="false"
-            android:gravity="right|center_vertical"
-            android:paddingLeft="@dimen/_15sdp"
-            android:text="3 Transaksi"
-            android:textColor="@color/colorWhiteffffff"
-            android:textSize="@dimen/_15sdp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@color/colorBlueBasic"
+                android:clickable="false"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/_15sdp"
+                android:text="Senin"
+                android:textColor="@color/colorWhiteffffff"
+                android:textSize="@dimen/_15sdp" />
+
+            <TextView
+                android:id="@+id/tvJumlahRiwayatTransaksi"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@color/colorBlueBasic"
+                android:clickable="false"
+                android:gravity="right|center_vertical"
+                android:paddingLeft="@dimen/_15sdp"
+                android:text="3 Transaksi"
+                android:textColor="@color/colorWhiteffffff"
+                android:textSize="@dimen/_15sdp" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTransaksiTersimpan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"/>
+
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTransaksiTersimpan"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>

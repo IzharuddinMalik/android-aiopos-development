@@ -59,7 +59,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/bacground_no_border">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -104,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom"
-            android:background="@color/colorBlueBasic"
+            android:background="@drawable/total_background"
             android:paddingTop="@dimen/_10sdp"
             android:orientation="vertical">
 
@@ -128,6 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Subtotal"
+                        android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_13sdp" />
                 </LinearLayout>
 
@@ -143,6 +145,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="TextView"
+                        android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_13sdp" />
                 </LinearLayout>
             </LinearLayout>
@@ -167,6 +170,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Diskon"
+                        android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_13sdp" />
                 </LinearLayout>
 
@@ -182,6 +186,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="TextView"
+                        android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_13sdp" />
                 </LinearLayout>
             </LinearLayout>
@@ -207,6 +212,7 @@
                         android:layout_height="wrap_content"
                         android:text="Total"
                         android:textStyle="bold"
+                        android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
@@ -222,6 +228,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="Rp. 123123"
+                        android:textColor="@color/colorWhiteffffff"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -237,21 +244,23 @@
                     android:id="@+id/btnSimpanOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@color/colorWhiteffffff"
-                    android:text="Simpan"
-                    android:textColor="@color/colorBlueBasic"/>
+                    android:background="@drawable/round_blue_button"
+                    android:text="Simpan Pesanan"
+                    android:textSize="@dimen/_9sdp"
+                    android:textColor="@color/colorWhiteffffff"/>
 
                 <Button
                     android:id="@+id/btnBayarOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@color/colorWhiteffffff"
-                    android:text="Bayar"
-                    android:textColor="@color/colorBlueBasic"/>
+                    android:background="@drawable/round_green_button"
+                    android:text="Bayar Pesanan"
+                    android:textSize="@dimen/_9sdp"
+                    android:textColor="@color/colorWhiteffffff"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
