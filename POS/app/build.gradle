@@ -6,16 +6,27 @@ android {
         applicationId "com.aio.pos"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 10
+        versionName "1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            storeFile file("/Users/macbook/Documents/android-moka-development/aiopos.jks")
+            storePassword "aiopos"
+            keyAlias "key-aiopos"
+            keyPassword "aiopos"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 //            buildConfigField 'String', 'BASE_URL', '"http://pos.ultrapreneur.id/"'
+            signingConfig signingConfigs.release
         }
     }
     lintOptions {

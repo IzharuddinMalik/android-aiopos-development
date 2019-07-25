@@ -162,8 +162,6 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                 });
 
             } else {
-                plus=view.findViewById(R.id.plus);
-                minus=view.findViewById(R.id.minus);
 
                 inputJumlahProduk.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -203,19 +201,6 @@ public class AdapterPilihProduk extends RecyclerView.Adapter<AdapterPilihProduk.
                     public void afterTextChanged(Editable s) {
 
                     }
-                });
-                plus.setOnClickListener(v -> {
-                    counter++;
-                    visible();
-                    inputJumlahProduk.setText(""+counter);
-
-                });
-
-                minus.setOnClickListener(v -> {
-                    counter=0;
-                    visible();
-                    ((Dashboard)mCtx).resetOrder();
-                    inputJumlahProduk.setText(null);
                 });
 
                 a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

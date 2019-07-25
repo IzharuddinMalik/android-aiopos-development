@@ -2,15 +2,18 @@ package com.aio.pos.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.aio.pos.R;
 import com.aio.pos.api.APIUrl;
@@ -40,6 +43,10 @@ public class AddPelangganActivity extends AppCompatActivity {
     TextInputEditText nama,telp,telp2, email;
     Spinner spProvinsi,spKabupaten,spKecamatan;
     String idProv,idKab,idKec;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
+    View dialogView;
+    TextView tvYaTambahPelanggan, tvBatalTambahPelanggan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,21 @@ public class AddPelangganActivity extends AppCompatActivity {
         });
 
         submitTambah.setOnClickListener(v -> {
+            popupTambahPelanggan();
+        });
+    }
+
+    public void popupTambahPelanggan(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_form_tambah_pelanggan,null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        tvYaTambahPelanggan = dialogView.findViewById(R.id.tvYaMenambahPelanggan);
+        tvBatalTambahPelanggan = dialogView.findViewById(R.id.tvTidakMenambahPelanggan);
+
+        tvYaTambahPelanggan.setOnClickListener(v -> {
             tambahRequest();
 
             pref = new SharedPrefManager(this);
@@ -75,6 +97,13 @@ public class AddPelangganActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(intent);
         });
+
+        tvBatalTambahPelanggan.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PelangganActivity.class);
+            startActivity(intent);
+        });
+
+        dialog.show();
     }
 
     public void onBackPressed(){

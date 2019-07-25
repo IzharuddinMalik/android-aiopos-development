@@ -6,11 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.aio.pos.R;
+import com.aio.pos.activity.Dashboard;
 import com.aio.pos.activity.DetailPelangganActivity;
 import com.aio.pos.model.PelangganModel;
 import com.aio.pos.util.StylingUtils;
@@ -30,6 +32,7 @@ public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPela
     public class PelangganViewHolder extends RecyclerView.ViewHolder{
         CircleImageView listGambarPelanggan;
         TextView listNamaPelanggan, listNoTelpPelanggan, listEmailPelanggan;
+        Button btnPilihPelanggan, btnDetailPelanggan;
 
         public PelangganViewHolder(View view){
             super(view);
@@ -39,11 +42,25 @@ public class AdapterPilihPelanggan extends RecyclerView.Adapter<AdapterPilihPela
             listNoTelpPelanggan = view.findViewById(R.id.tvMenuPelangganListNoTelpPelanggan);
             listEmailPelanggan = view.findViewById(R.id.tvMenuPelangganListEmailPelanggan);
 
-            view.setOnClickListener(v -> {
+            btnPilihPelanggan = view.findViewById(R.id.btnPelangganPilihPelanggan);
+            btnDetailPelanggan = view.findViewById(R.id.btnDetailPelanggan);
+
+            btnDetailPelanggan.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION){
                     Intent intent = new Intent(view.getContext(), DetailPelangganActivity.class);
                     intent.putExtra("idctm", listPelanggan.get(position).getIdPelanggan());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(intent);
+                }
+            });
+
+            btnPilihPelanggan.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position!= RecyclerView.NO_POSITION){
+                    Intent intent = new Intent(view.getContext(), Dashboard.class);
+                    intent.putExtra("idctm", listPelanggan.get(position).getIdPelanggan());
+                    intent.putExtra("namaPelanggan", listPelanggan.get(position).getNamaPelanggan());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     view.getContext().startActivity(intent);
                 }
