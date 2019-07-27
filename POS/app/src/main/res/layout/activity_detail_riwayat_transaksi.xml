@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.DetailRiwayatTransaksiActivity">
+    tools:context=".activity.DetailRiwayatTransaksiActivity"
+    android:background="@drawable/bacground_no_border">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -58,9 +59,9 @@
             android:id="@+id/textView35"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorGraye6e6e6"
+            android:background="@color/colorBlueBasic"
             android:padding="@dimen/_10sdp"
-            android:textColor="@color/colorBlueBasic"
+            android:textColor="@color/colorWhiteffffff"
             android:text="Informasi Transaksi"
             android:textSize="@dimen/_14sdp" />
 
@@ -88,7 +89,7 @@
                 <ImageView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:src="@drawable/ic_store_blue_24dp" />
+                    android:src="@drawable/ic_store_white_24dp" />
 
                 <TextView
                     android:id="@+id/tvDetailNamaOutletRiwayat"
@@ -96,7 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@color/colorWhiteffffff"/>
             </LinearLayout>
 
             <LinearLayout
@@ -109,7 +111,7 @@
                 <ImageView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:src="@drawable/ic_description_blue_24dp" />
+                    android:src="@drawable/ic_description_white_24dp" />
 
                 <TextView
                     android:id="@+id/tvDetailKodeTransaksiRiwayat"
@@ -117,7 +119,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@color/colorWhiteffffff"/>
             </LinearLayout>
 
             <LinearLayout
@@ -130,7 +133,7 @@
                 <ImageView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:src="@drawable/ic_person_bluebasic_24dp" />
+                    android:src="@drawable/ic_person_white_24dp" />
 
                 <TextView
                     android:id="@+id/tvDetailNamaPelangganRiwayat"
@@ -138,7 +141,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@color/colorWhiteffffff"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -160,7 +164,7 @@
                     android:id="@+id/imageView4"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:src="@drawable/ic_access_time_blue_24dp" />
+                    android:src="@drawable/ic_access_time_white_24dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -173,7 +177,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorWhiteffffff"/>
 
                     <TextView
                         android:id="@+id/tvJamTransaksi"
@@ -181,7 +186,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorWhiteffffff"/>
 
                 </LinearLayout>
 
@@ -196,7 +202,7 @@
                 <ImageView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:src="@drawable/ic_payment_blue_24dp" />
+                    android:src="@drawable/ic_payment_white_24dp" />
 
                 <TextView
                     android:id="@+id/tvDetailMetodePembayaranRiwayat"
@@ -204,7 +210,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@color/colorWhiteffffff"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -213,10 +220,11 @@
         android:id="@+id/textView36"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorGraye6e6e6"
+        android:background="@color/colorBlueBasic"
         android:padding="@dimen/_10sdp"
         android:text="Pesanan"
-        android:textSize="@dimen/_14sdp" />
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/colorWhiteffffff"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -232,28 +240,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/colorBlueBasic">
 
         <TextView
             android:id="@+id/textView38"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorGraye6e6e6"
+            android:background="@color/colorBlueBasic"
             android:padding="@dimen/_10sdp"
             android:text="Total"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/colorWhiteffffff"/>
 
         <TextView
             android:id="@+id/tvTotalDetailRiwayat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorGraye6e6e6"
+            android:background="@color/colorBlueBasic"
             android:gravity="right"
             android:padding="@dimen/_10sdp"
             android:text="TextView"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/colorWhiteffffff"/>
     </LinearLayout>
 
     <LinearLayout

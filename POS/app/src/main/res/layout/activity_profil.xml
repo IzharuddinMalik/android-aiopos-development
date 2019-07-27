@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.ProfilActivity">
+    tools:context=".activity.ProfilActivity"
+    android:background="@drawable/bacground_no_border">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -63,22 +64,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_10sdp">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_80sdp"
-                android:src="@mipmap/ic_launcher"/>
-
-            <TextView
-                android:id="@+id/tvMenuDetailPelangganKecamatanMember2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Bisnis"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
+                android:id="@+id/ivMenuProfilImageBisnis"/>
 
             <TextView
                 android:id="@+id/tvMenuProfilNamaBisnis"
@@ -86,20 +77,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Kecamatan"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
+                android:text="Nama Bisnis"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganIDMember"
+                android:id="@+id/tvMenuProfilNamaBisnis2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Email Akun"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
+                android:text="Nama Kecamatan"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp" />
 
             <TextView
                 android:id="@+id/tvMenuProfilEmailAkun"
@@ -107,20 +98,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="1234567"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
+                android:text="Email Akun"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganProvinsiMember"
+                android:id="@+id/tvMenuProfilEmailAkun2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Outlet"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
+                android:text="1234567"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp" />
 
             <TextView
                 android:id="@+id/tvMenuProfilOutlet"
@@ -128,20 +119,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Provinsi"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
+                android:text="Outlet"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganKabKotMember"
+                android:id="@+id/tvMenuProfilOutlet2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Tipe Akun"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
+                android:text="Nama Provinsi"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp" />
 
             <TextView
                 android:id="@+id/tvMenuProfilTipeAkun"
@@ -149,20 +140,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Kab / Kota"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
+                android:text="Tipe Akun"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvMenuDetailPelangganKecamatanMember"
+                android:id="@+id/tvMenuProfilTipeAkun2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Alamat Bisnis"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
+                android:text="Nama Kab / Kota"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp" />
 
             <TextView
                 android:id="@+id/tvMenuProfilAlamatBisnis"
@@ -170,8 +161,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:text="Alamat Bisnis"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvMenuProfilAlamatBisnis2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="Nama Kecamatan"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/_16ssp" />
 
         </LinearLayout>

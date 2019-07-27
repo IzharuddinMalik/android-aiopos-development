@@ -3,21 +3,26 @@ package com.aio.pos.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import com.aio.pos.R;
 import com.aio.pos.activity.DetailRiwayatTransaksiActivity;
+import com.aio.pos.model.Produk;
 import com.aio.pos.model.TransaksiModel;
 import com.aio.pos.util.StylingUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterRiwayatTransaksi extends RecyclerView.Adapter<AdapterRiwayatTransaksi.RiwayatViewHolder> {
     private Context mCtx;
     private List<TransaksiModel> listRiwayat;
+    private List<TransaksiModel> mFilteredList;
     StylingUtils stylingUtils;
     @Override
     public RiwayatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,12 +33,12 @@ public class AdapterRiwayatTransaksi extends RecyclerView.Adapter<AdapterRiwayat
 
     @Override
     public void onBindViewHolder(final RiwayatViewHolder holder, final int position) {
-        final TransaksiModel transaksiModel = listRiwayat.get(position);
+        final TransaksiModel transaksiModel = mFilteredList.get(position);
         holder.total.setText(transaksiModel.getTotal());
         holder.status.setText(transaksiModel.getStatus());
         holder.jam.setText(transaksiModel.getJam());
 
-        if(transaksiModel.getTipepembayaran().equals("0")){
+        if(mFilteredList.get(position).getTipepembayaran().equals("0")){
             holder.JenisPembayaran.setText("Tunai");
         }else {
             holder.JenisPembayaran.setText("EDC");
@@ -42,7 +47,47 @@ public class AdapterRiwayatTransaksi extends RecyclerView.Adapter<AdapterRiwayat
 
     @Override
     public int getItemCount() {
-        return listRiwayat.size();
+        return mFilteredList.size();
+    }
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+
+                if (charString.isEmpty()) {
+
+                    mFilteredList = listRiwayat;
+                } else {
+
+                    ArrayList<TransaksiModel> filteredList = new ArrayList<TransaksiModel>();
+
+                    int pos = 0;
+                    for (TransaksiModel name : listRiwayat) {
+
+                        if (name.getTipepembayaran().toLowerCase().contains(charString) || name.getTipepembayaran().toUpperCase().contains(charString)) {
+                            filteredList.add(pos, new TransaksiModel(name.getIdtrans(), name.getTotal(),name.getNomor(),name.getStatus(),name.getJam(), name.getTipepembayaran()));
+                            pos = pos+1;
+                        }
+                    }
+
+                    mFilteredList = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mFilteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mFilteredList = (ArrayList<TransaksiModel>) filterResults.values;
+                notifyDataSetChanged();
+                Log.i("HASIL FILTER"," == " + mFilteredList);
+            }
+        };
     }
 
     public class RiwayatViewHolder extends RecyclerView.ViewHolder{
@@ -74,6 +119,7 @@ public class AdapterRiwayatTransaksi extends RecyclerView.Adapter<AdapterRiwayat
     public AdapterRiwayatTransaksi(Context context, List<TransaksiModel> listRiwayat){
         this.mCtx = context;
         this.listRiwayat = listRiwayat;
+        this.mFilteredList = listRiwayat;
 
         stylingUtils = new StylingUtils();
     }

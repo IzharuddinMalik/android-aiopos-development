@@ -15,8 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".activity.DeviceList"></activity>
+        <activity android:name=".activity.DeviceList" />
         <activity android:name=".activity.DetailRiwayatTransaksiActivity" />
         <activity android:name=".activity.RiwayatTerakhirActivity" />
         <activity android:name=".activity.PembayaranSuksesActivity" />

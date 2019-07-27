@@ -160,7 +160,7 @@ public class Dashboard extends AppCompatActivity
         recPesanan = findViewById(R.id.rvDashboardDaftarPesanan);
 
         ivKeranjang.setOnClickListener(v -> {
-            startActivity(new Intent(this,TransaksiTersimpanActivity.class));
+            popupComingSoon();
         });
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -289,6 +289,16 @@ public class Dashboard extends AppCompatActivity
         cvCatatanPesanan.setOnClickListener(view -> {
             dialogCatatan();
         });
+
+        dialog.show();
+    }
+
+    public void popupComingSoon(){
+        dialog = new AlertDialog.Builder(this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.activity_coming_soon, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
 
         dialog.show();
     }

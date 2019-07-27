@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.aio.pos.R;
@@ -29,6 +31,7 @@ import com.aio.pos.model.TransaksiModel;
 import com.aio.pos.api.APIUrl;
 import com.aio.pos.api.BaseApiInterface;
 import com.aio.pos.api.SharedPrefManager;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +56,9 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
     private SharedPrefManager pref;
     private String iduser;
     private BaseApiInterface mApiInterface;
-    TextView tvDashboardNavNama;
+    TextView tvDashboardNavNama, tvDashboardNavNamaBisnis, tvDashboardLocOutlet;
+    ImageView ivlogoBisnis;
+    SearchView svMenuRiwayatTransaksi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,33 +92,24 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
 
         View header = navigationView.getHeaderView(0);
         tvDashboardNavNama = header.findViewById(R.id.tvDashboardNamaAkun);
+        tvDashboardNavNamaBisnis = header.findViewById(R.id.tvDashboardNamaBisnis);
+        tvDashboardLocOutlet = header.findViewById(R.id.tvLokasiOutlet);
+        ivlogoBisnis = header.findViewById(R.id.ivLogoBisnis);
         pref = new SharedPrefManager(this);
         HashMap<String, String> user = pref.getUserDetails();
         String nama = user.get(SharedPrefManager.NAMA_USER);
         tvDashboardNavNama.setText(Html.fromHtml("<b>" + nama+ "</b>"));
+        String bisnis = user.get(SharedPrefManager.NAMA_BISNIS);
+        String locOutlet = user.get(SharedPrefManager.ALAMAT_OUTLET);
+        tvDashboardNavNamaBisnis.setText(Html.fromHtml("<b>" + bisnis + "</b>"));
+        tvDashboardLocOutlet.setText(Html.fromHtml("<b>" + locOutlet + "</b>"));
+        Picasso.with(RiwayatTerakhirActivity.this).load("http://backoffice.aiopos.id/picture/" + user.get(SharedPrefManager.IMG_BUSINESS)).into(ivlogoBisnis);
 
         recTransaksi = findViewById(R.id.rvRiwayatTransaksi);
         JumlahTransaki=findViewById(R.id.tvJumlahRiwayatTransaksi);
         getAlllistriwayat();
 
-//        listTransaksi = new ArrayList<>();
-//        listTransaksi.clear();
-//
-//        listTransaksi.add(0, new TransaksiModel("15000", "2", "Selesai", "15.20"));
-//        listTransaksi.add(1, new TransaksiModel("15000", "1", "Selesai", "10.00"));
-//        listTransaksi.add(2, new TransaksiModel("15000", "3", "Selesai", "13.30"));
-//
-//        adapter = new AdapterRiwayatTransaksi(this,listTransaksi);
-//        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-//        recTransaksi.setLayoutManager(mLayoutManager);
-//        recTransaksi.setItemAnimator(new DefaultItemAnimator());
-//        recTransaksi.setItemViewCacheSize(listTransaksi.size());
-//        recTransaksi.setDrawingCacheEnabled(true);
-//        recTransaksi.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-//        recTransaksi.setAdapter(adapter);
-//        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.animation_slide_from_right);
-//        recTransaksi.setLayoutAnimation(animation);
-//        adapter.notifyDataSetChanged();
+//        svMenuRiwayatTransaksi = findViewById(R.id.svMenuRiwayatTransaksi);
     }
 
 
@@ -182,6 +178,19 @@ public class RiwayatTerakhirActivity extends AppCompatActivity implements Naviga
                         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(RiwayatTerakhirActivity.this, R.anim.animation_slide_from_right);
                         recTransaksi.setLayoutAnimation(animation);
                         adapter.notifyDataSetChanged();
+
+//                        svMenuRiwayatTransaksi.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                            @Override
+//                            public boolean onQueryTextSubmit(String s) {
+//                                return false;
+//                            }
+//
+//                            @Override
+//                            public boolean onQueryTextChange(String newText) {
+//                                adapter.getFilter().filter(newText);
+//                                return true;
+//                            }
+//                        });
                     }catch (JSONException e){
                         e.printStackTrace();
                     } catch (IOException e){

@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tvMenuPelangganJudulMenu"
+                        android:id="@+id/tvMenuPrinterJudulPrinter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_5sdp"
@@ -57,7 +57,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tvMenuPrinterPrinterYangTersedia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Printer Yang Tersedia"
@@ -65,65 +65,10 @@
         android:textSize="@dimen/_15sdp"
         android:layout_margin="@dimen/_10sdp"/>
 
-    <ScrollView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/lvMenuPrinterListPrinter">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvMenuProfilNamaBisnis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Kecamatan"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
-
-            <TextView
-                android:id="@+id/tvMenuDetailPelangganNoIDMember"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="1234567"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
-
-            <TextView
-                android:id="@+id/tvMenuDetailPelangganNamaProvinsiMember"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Provinsi"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
-
-            <TextView
-                android:id="@+id/tvMenuDetailPelangganNamaKabKotMember"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Kab / Kota"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
-
-            <TextView
-                android:id="@+id/tvMenuDetailPelangganNamaKecamatanMember"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nama Kecamatan"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_16ssp" />
-
-        </LinearLayout>
-    </ScrollView>
+    </ListView>
 </LinearLayout>

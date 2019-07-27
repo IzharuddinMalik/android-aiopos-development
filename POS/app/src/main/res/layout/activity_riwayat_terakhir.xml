@@ -41,37 +41,38 @@
                 android:orientation="vertical"
                 android:background="@drawable/bacground_no_border">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <SearchView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_search"
-                        android:queryHint="Cari Riwayat Transaksi"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:searchHintIcon="@drawable/ic_search_black_24dp"
-                        android:searchIcon="@drawable/ic_search_black_24dp"
-                        android:theme="@style/AppTheme" />
+                    <!--<SearchView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:background="@drawable/background_search"-->
+                        <!--android:queryHint="Cari Riwayat Transaksi"-->
+                        <!--android:layout_margin="@dimen/_5sdp"-->
+                        <!--android:searchHintIcon="@drawable/ic_search_black_24dp"-->
+                        <!--android:searchIcon="@drawable/ic_search_black_24dp"-->
+                        <!--android:theme="@style/AppTheme"-->
+                        <!--android:id="@+id/svMenuRiwayatTransaksi"/>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/background_search"
-                        android:layout_weight="2"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp">
-                        <Spinner
-                            android:id="@+id/spinner2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:spinnerMode="dialog"/>
-                    </LinearLayout>
-                </LinearLayout>
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:background="@drawable/background_search"-->
+                        <!--android:layout_weight="2"-->
+                        <!--android:layout_marginTop="@dimen/_5sdp"-->
+                        <!--android:layout_marginBottom="@dimen/_5sdp"-->
+                        <!--android:layout_marginRight="@dimen/_5sdp">-->
+                        <!--<Spinner-->
+                            <!--android:id="@+id/spinner2"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:spinnerMode="dialog"/>-->
+                    <!--</LinearLayout>-->
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

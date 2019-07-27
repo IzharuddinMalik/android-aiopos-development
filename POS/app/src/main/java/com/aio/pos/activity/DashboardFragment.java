@@ -139,43 +139,4 @@ public class DashboardFragment extends Fragment {
             }
         });
     }
-
-//    public void showrecyclerMobile(){
-//
-//        List<ProdukModel> produkModels = new ArrayList<ProdukModel>();
-//        produkModels.clear();
-//
-//        produkModels = ((Dashboard)context).getProdukModels(Integer.parseInt(((Dashboard)context).gettabpos()));
-//
-//        produk = new ArrayList<Produk>();
-//        produk.clear();
-//
-//        for(int i=0;i<produkModels.size();i++){
-//
-//            ProdukModel prod = produkModels.get(i);
-//            if(prod.getDataProduk().size()==0){
-//
-//            }else{
-//                for(int j=0;j<prod.getDataProduk().size();j++){
-//
-//                    Produk isiprod = prod.getDataProduk().get(j);
-//
-//
-//                    Log.e("ONCE", " == "+prod.getNamaKategori() + " --> "+isiprod.getNamaProduk());
-//                }
-//            }
-//        }
-//
-//        produk = produkModels.get(0).getDataProduk();
-//
-//        adapter = new AdapterPilihProduk(getContext(), produk);
-//        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-//        recProduk.setLayoutManager(mLayoutManager);
-//        recProduk.setItemAnimator(new DefaultItemAnimator());
-//        recProduk.setItemViewCacheSize(produk.size());
-//        recProduk.setDrawingCacheEnabled(true);
-//        recProduk.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-//        recProduk.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-//    }
 }
